@@ -14,7 +14,7 @@
 // 4. External library headers
 #include <xmscore/misc/boost_defines.h>
 #include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
-#include <xmscore/stl/vector.h>
+#include <xmscore/stl/vector.h>       // VecPt3d
 
 // 5. Shared code headers
 
@@ -27,37 +27,32 @@ namespace xms
 //----- Constants / Enumerations -----------------------------------------------
 
 //----- Structs / Classes ------------------------------------------------------
+class XmStamper3dPts;
 class XmStamperIo;
-class XmStamperCenterlineProfile;
-class Observer;
+class TrTin;
 
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmBathymetryIntersector
+/// \brief Intersects a feature stamp with a TIN
+class XmBathymetryIntersector
 {
 public:
-  static BSHP<XmStamper> New();
+  static BSHP<XmBathymetryIntersector> New(BSHP<TrTin> a_tin, BSHP<TrTin> a_stamp);
 
-  XmStamper();
-  virtual ~XmStamper();
+  XmBathymetryIntersector();
+  virtual ~XmBathymetryIntersector();
+
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
-
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
-
-  virtual void SetObserver(BSHP<Observer> a) = 0;
+  virtual void IntersectCenterLine(XmStamperIo& a_io) = 0;
+  virtual void DecomposeCenterLine(XmStamperIo& a_io, std::vector<XmStamperIo>& a_vIo) = 0;
+  virtual void IntersectXsects(XmStamper3dPts& a_pts) = 0;
+  virtual void IntersectEndCaps(XmStamperIo& a_io, XmStamper3dPts& a_pts) = 0;
 
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
+  XM_DISALLOW_COPY_AND_ASSIGN(XmBathymetryIntersector);
   /// \endcond
-}; // XmStamper
+}; // XmBathymetryIntersector
 
 } // namespace xms

@@ -14,7 +14,7 @@
 // 4. External library headers
 #include <xmscore/misc/boost_defines.h>
 #include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
-#include <xmscore/stl/vector.h>
+#include <xmscore/stl/vector.h>       // VecPt3d
 
 // 5. Shared code headers
 
@@ -28,36 +28,30 @@ namespace xms
 
 //----- Structs / Classes ------------------------------------------------------
 class XmStamperIo;
-class XmStamperCenterlineProfile;
-class Observer;
+class XmStamper3dPts;
 
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmStampEndCap
+/// \brief End caps for feature stamping
+class XmStampEndCap
 {
 public:
-  static BSHP<XmStamper> New();
+  static BSHP<XmStampEndCap> New();
 
-  XmStamper();
-  virtual ~XmStamper();
+  XmStampEndCap();
+  virtual ~XmStampEndCap();
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
+  virtual void RotateEndCapCrossSections(XmStamperIo& a_io,
+                                         VecPt3d2d& a_left,
+                                         VecPt3d2d& a_right) = 0;
 
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
-
-  virtual void SetObserver(BSHP<Observer> a) = 0;
+  virtual void ConvertTo3dPts(XmStamperIo& a_io, XmStamper3dPts& a_3dpts) = 0;
 
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
+  XM_DISALLOW_COPY_AND_ASSIGN(XmStampEndCap);
   /// \endcond
-}; // XmStamper
+}; // XmStampEndCap
 
 } // namespace xms

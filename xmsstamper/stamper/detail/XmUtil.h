@@ -12,52 +12,48 @@
 // 3. Standard library headers
 
 // 4. External library headers
-#include <xmscore/misc/boost_defines.h>
-#include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
 #include <xmscore/stl/vector.h>
 
 // 5. Shared code headers
 
-//----- Forward declarations ---------------------------------------------------
-
 //----- Namespace declaration --------------------------------------------------
-
 namespace xms
 {
+//----- Forward declarations ---------------------------------------------------
+class XmStampCrossSection;
+
 //----- Constants / Enumerations -----------------------------------------------
 
 //----- Structs / Classes ------------------------------------------------------
-class XmStamperIo;
-class XmStamperCenterlineProfile;
-class Observer;
 
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmUtil
+/// \brief Utility functions
+class XmUtil
 {
 public:
-  static BSHP<XmStamper> New();
+  XmUtil();
+  virtual ~XmUtil();
 
-  XmStamper();
-  virtual ~XmStamper();
+  static void ConvertXsPointsTo3d(const Pt3d& a_cl,
+                                  const VecPt2d& a_pts,
+                                  double a_maxX,
+                                  double a_angle,
+                                  VecPt3d2d& a_3dpts);
+  static void EnsureVectorAtMaxX(VecPt2d& a_pts, double a_maxX);
+  static void GetAnglesFromCenterLine(size_t a_idx,
+                                      const VecPt3d& a_cl,
+                                      double& a_leftAngle,
+                                      double& a_rightAngle);
+  static void ScaleCrossSectionXvals(XmStampCrossSection& a_xs, double a_factor);
+
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
 
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
-
-  virtual void SetObserver(BSHP<Observer> a) = 0;
-
+protected:
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
   /// \endcond
-}; // XmStamper
+}; // StSlopedAbutmentUtil
 
 } // namespace xms

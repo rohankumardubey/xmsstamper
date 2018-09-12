@@ -18,46 +18,45 @@
 
 // 5. Shared code headers
 
-//----- Forward declarations ---------------------------------------------------
-
 //----- Namespace declaration --------------------------------------------------
-
 namespace xms
 {
+//----- Forward declarations ---------------------------------------------------
+class XmStamperIo;
+class XmStamper3dPts;
+struct cs3dPtIdx;
+
 //----- Constants / Enumerations -----------------------------------------------
 
 //----- Structs / Classes ------------------------------------------------------
-class XmStamperIo;
-class XmStamperCenterlineProfile;
-class Observer;
 
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmSlopedAbutmentUtil
+/// \brief Converts sloped abutment to 3d points
+class XmSlopedAbutmentUtil
 {
 public:
-  static BSHP<XmStamper> New();
+  static BSHP<XmSlopedAbutmentUtil> New();
 
-  XmStamper();
-  virtual ~XmStamper();
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
-
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
-
-  virtual void SetObserver(BSHP<Observer> a) = 0;
+  virtual void DoConvertTo3d(bool a_first, XmStamperIo& a_io, XmStamper3dPts& a_3dpts) = 0;
+  virtual void GetEndCapEndPoints(cs3dPtIdx& a_ptIdx,
+                                  VecInt& a_firstEndCapEndPts,
+                                  VecInt& a_lastEndCapEndPts,
+                                  XmStamperIo& a_io) = 0;
+  virtual void GetEndCapBreakLines(XmStamperIo& a_io, cs3dPtIdx& a_ptIdx, VecInt& a_blTypes) = 0;
 
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
+  XM_DISALLOW_COPY_AND_ASSIGN(XmSlopedAbutmentUtil);
+
   /// \endcond
-}; // XmStamper
+
+protected:
+  XmSlopedAbutmentUtil();
+  virtual ~XmSlopedAbutmentUtil();
+
+}; // XmSlopedAbutmentUtil
 
 } // namespace xms

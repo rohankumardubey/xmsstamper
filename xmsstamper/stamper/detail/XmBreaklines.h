@@ -13,51 +13,50 @@
 
 // 4. External library headers
 #include <xmscore/misc/boost_defines.h>
-#include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
 #include <xmscore/stl/vector.h>
+#include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
 
 // 5. Shared code headers
-
-//----- Forward declarations ---------------------------------------------------
 
 //----- Namespace declaration --------------------------------------------------
 
 namespace xms
 {
+//----- Forward declarations ---------------------------------------------------
+class XmStamperIo;
+struct cs3dPtIdx;
+
 //----- Constants / Enumerations -----------------------------------------------
 
 //----- Structs / Classes ------------------------------------------------------
-class XmStamperIo;
-class XmStamperCenterlineProfile;
-class Observer;
 
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmBreaklines
+/// \brief Creates breaklines for the stamp operation
+class XmBreaklines
 {
 public:
-  static BSHP<XmStamper> New();
+  static BSHP<XmBreaklines> New();
 
-  XmStamper();
-  virtual ~XmStamper();
+  /// enumeration to identify types of breaklines
+  enum { BL_CENTERLINE = 0, BL_XSECT, BL_SHOULDER, BL_END };
+
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
+  virtual bool CreateBreaklines(XmStamperIo& a_io, cs3dPtIdx& a_ptIdx, VecInt& a_blTypes) = 0;
 
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
+  virtual const VecInt& GetOuterPolygon() = 0;
 
-  virtual void SetObserver(BSHP<Observer> a) = 0;
+  virtual bool BreaklinesIntersect(const VecInt2d& a_bl, const VecPt3d& a_pts) = 0;
 
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
+  XM_DISALLOW_COPY_AND_ASSIGN(XmBreaklines);
   /// \endcond
-}; // XmStamper
+
+protected:
+  XmBreaklines();
+  virtual ~XmBreaklines();
+}; // XmBathemetryIntersector
 
 } // namespace xms

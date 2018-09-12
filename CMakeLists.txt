@@ -48,11 +48,32 @@ link_directories(${EXT_LIB_DIRS})
 
 # Sources
 set(xmsstamper_sources
-  xmsstamper/stamper/XmStamper.cpp
+	xmsstamper/stamper/XmStamper.cpp
+	xmsstamper/stamper/XmStamperIo.cpp
+	xmsstamper/stamper/detail/XmBathymetryIntersector.cpp
+	xmsstamper/stamper/detail/XmBreaklines.cpp
+	xmsstamper/stamper/detail/XmGuideBankUtil.cpp
+	xmsstamper/stamper/detail/XmSlopedAbutmentUtil.cpp
+	xmsstamper/stamper/detail/XmStampEndCap.cpp
+	xmsstamper/stamper/detail/XmStampInterpCrossSection.cpp
+	xmsstamper/stamper/detail/XmStampTests.cpp
+	xmsstamper/stamper/detail/XmUtil.cpp
 )
 
 set(xmsstamper_headers
   xmsstamper/stamper/XmStamper.h
+  xmsstamper/stamper/XmStamperIo.h
+  xmsstamper/stamper/detail/XmBathymetryIntersector.h
+  xmsstamper/stamper/detail/XmBathymetryIntersector.t.h
+  xmsstamper/stamper/detail/XmBreaklines.h
+  xmsstamper/stamper/detail/XmGuideBankUtil.h
+  xmsstamper/stamper/detail/XmSlopedAbutmentUtil.h
+  xmsstamper/stamper/detail/XmStampEndCap.h
+  xmsstamper/stamper/detail/XmStamper3dPts.h
+  xmsstamper/stamper/detail/XmStampInterpCrossSection.h
+  xmsstamper/stamper/detail/XmStampInterpCrossSection.t.h
+  xmsstamper/stamper/detail/XmStampTests.t.h
+  xmsstamper/stamper/detail/XmUtil.h
 )
 
 # Pybind11 sources
@@ -73,7 +94,7 @@ if (BUILD_TESTING)
  add_definitions(-DCXX_TEST -DCXXTEST4)
 
  list(APPEND xmsstamper_sources
-   xmsstamper/stamper/XmStamper.t.h
+  xmsstamper/stamper/detail/XmUtil.t.h
  )
 
  find_package(CxxTest)

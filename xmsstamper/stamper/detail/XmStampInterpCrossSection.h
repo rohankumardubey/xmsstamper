@@ -14,7 +14,6 @@
 // 4. External library headers
 #include <xmscore/misc/boost_defines.h>
 #include <xmscore/misc/base_macros.h> // for XM_DISALLOW_COPY_AND_ASSIGN
-#include <xmscore/stl/vector.h>
 
 // 5. Shared code headers
 
@@ -27,6 +26,7 @@ namespace xms
 //----- Constants / Enumerations -----------------------------------------------
 
 //----- Structs / Classes ------------------------------------------------------
+class XmStampCrossSection;
 class XmStamperIo;
 class XmStamperCenterlineProfile;
 class Observer;
@@ -34,30 +34,29 @@ class Observer;
 //----- Function prototypes ----------------------------------------------------
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class XmStamper
-/// \brief Performs a feature stamp operation.
-/// \see XmStamperImpl
-class XmStamper
+/// \class XmStampInterpCrossSection
+/// \brief Interpolate cross sections for stamping
+/// \see stStampInterpCrossSectionImpl
+class XmStampInterpCrossSection
 {
 public:
-  static BSHP<XmStamper> New();
+  static BSHP<XmStampInterpCrossSection> New();
 
-  XmStamper();
-  virtual ~XmStamper();
+  XmStampInterpCrossSection();
+  virtual ~XmStampInterpCrossSection();
   /// \cond
-  virtual void DoStamp(XmStamperIo& a_) = 0;
-  virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
-                                                  XmStamperCenterlineProfile& a_profile) = 0;
-
-  virtual const VecPt3d& GetPoints() = 0;
-  virtual const VecInt2d& GetSegments() = 0;
-  virtual const VecInt& GetBreaklineTypes() = 0;
-
-  virtual void SetObserver(BSHP<Observer> a) = 0;
+  virtual void InterpMissingCrossSections(XmStamperIo& a_) = 0;
+  virtual bool ValidCrossSectionsExist(XmStamperIo& a_) = 0;
+  virtual void InterpCs(XmStampCrossSection& a_prev,
+                        XmStampCrossSection& a_next,
+                        double a_percent,
+                        XmStampCrossSection& a_cs) = 0;
+  virtual void InterpFromCenterlineProfile(XmStamperIo& a_io,
+                                           XmStamperCenterlineProfile& a_profile) = 0;
 
 private:
-  XM_DISALLOW_COPY_AND_ASSIGN(XmStamper);
+  XM_DISALLOW_COPY_AND_ASSIGN(XmStampInterpCrossSection);
   /// \endcond
-}; // XmStamper
+}; // XmStampInterpCrossSection
 
 } // namespace xms
