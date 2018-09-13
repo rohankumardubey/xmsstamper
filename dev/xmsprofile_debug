@@ -9,7 +9,6 @@ build_type=Debug
 [options]
 xmscore:xms=True
 xmsinterp:xms=True
-xmsgrid:xms=True
-xmsextractor:xms=True
+xmsstamper:testing=True
 [build_requires]
 [env]

@@ -59,7 +59,7 @@ static void iBuildStamperIo(const std::string& a_path, XmStamperIo& a_io)
 {
   std::string fname(a_path + "xmsng_StamperIo.txt"), line;
   line.reserve(40960);
-  std::fstream is(fname.c_str(), std::ios_base::in);
+  std::ifstream is(fname.c_str());
   char buffer[4096];
   while (is.read(buffer, sizeof(buffer)))
   {
@@ -85,7 +85,8 @@ static void iOutputToFile(const std::string& a_fileName, XmStamperIo a_io)
 //------------------------------------------------------------------------------
 static void iDoTest(const std::string& a_relPath)
 {
-  const std::string path(ttGetXmsngTestPath() + "/stamping/" + a_relPath);
+  std::string path(XMSSTAMPER_TEST_PATH);
+  path += "stamping/" + a_relPath;
   XmStamperIo io;
   iBuildStamperIo(path, io);
   BSHP<XmStamper> s = XmStamper::New();
@@ -172,7 +173,8 @@ void XmStampIntermediateTests::test_SlopedAbutment04_cut()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_SelfIntersect()
 {
-  const std::string path(ttGetXmsngTestPath() + "/stamping/test_intersections/");
+  std::string path(XMSSTAMPER_TEST_PATH);
+  path += "/stamping/test_intersections/";
   XmStamperIo io;
   iBuildStamperIo(path, io);
   BSHP<XmStamper> s = XmStamper::New();

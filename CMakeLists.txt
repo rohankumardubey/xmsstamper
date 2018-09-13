@@ -14,7 +14,7 @@ set(IS_CONDA_BUILD NO CACHE BOOL "Set this if you want to make a conda package."
 set(PYTHON_TARGET_VERSION 3.6 CACHE STRING "Version of python to link to for python wrapping.")
 set(CONDA_PREFIX "" CACHE PATH "Path to the conda environment used to build.")
 set(IS_PYTHON_BUILD NO CACHE BOOL "Set this if you want to build the python bindings.")
-set(XMSStamper_TEST_PATH "../../test_files/" CACHE PATH "Path to test files for testing")
+set(XMSSTAMPER_TEST_PATH "../test_files/" CACHE PATH "Path to test files for testing")
 
 project(xmsstamper C CXX)
 
@@ -90,7 +90,7 @@ set(xmsstamper_py_headers
 
 # Tests
 if (BUILD_TESTING)
- add_definitions(-DXMSStamper_TEST_PATH="${XMSStamper_TEST_PATH}/")
+ add_definitions(-DXMSSTAMPER_TEST_PATH="${XMSSTAMPER_TEST_PATH}/")
  add_definitions(-DCXX_TEST -DCXXTEST4)
 
  list(APPEND xmsstamper_sources
