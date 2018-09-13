@@ -25,12 +25,11 @@ Features {#Features}
 --------
 xmsstamper includes the following functionality:
 
-* Flow trace of a point between 2 velocity vector time steps on an XmGrid.
-* The velocity vectors can be assigned to either the points or to the cells.
+* Insert man-made structures into a natural topography or bathymetry set. In common terms, this means adding an embankment (such as a levy) or dredging a channel. A stamped feature usually follows a linear object or centerline. However, it can also be based around a single point to create a mound or pit, or applied to only one side of a closed line (a polygon) to create a flat topped mound or flat bottomed pit.
 
 The following tutorial is available:
 
-* [Gridrace tutorial](Gridrace_Tutorial.md)
+* [Stamper tutorial](Stamper_Tutorial.md)
 
 Testing {#XmsstamperTesting}
 -------

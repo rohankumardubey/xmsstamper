@@ -7,15 +7,14 @@ The purpose of this tutorial is to provide explanation on how to use the class d
 ## Example - Simple Stamper {#Example_Simple_Stamper}
 This is the "hello world" example for using the stamper library.
 
-This example shows how to trace a point through a simple grid. The testing code for this example is in XmStamperUnitTests::testTutorial. A picture of the example is shown below. Notice that the UGrid is 4 simple squares from (0,0) to (2,2) with each square having a side length of 1. The velocity vectors are mapped to the points.
+This example shows how to insert a man-made structure into a natural topography or bathymetry set.
 
-![Simple XmUGrid with 4 Cells and 9 Velocity Vectors x](xmsstamper_tutorial.png)
+![Simple XmStamper](xmsstamper_tutorial.png)
 
-The basic steps to trace a point through a velocity vector field are as follows:
-1. Create the grid
-2. Create the tracer from the grid
-3. Set up the constraints on the tracer
-4. Set up the velocity vectors for both time steps. Insert timesteps sequentially
-5. Trace the point
+The basic steps to define a linear stamped feature include:
+
+1. Define the stamping coverage and centerline (or focal point) of the stamped feature.
+2. Assign attributes to the centerline including the elevation profile along the centerline and the cross sections along the centerline.
+3. Stamp the feature. This converts the centerline and its attributes to another coverage containing all the extents and details of the feature and a scatter set defining the elevation for the feature.
 
 \snippet xmsstamper/stamper/XmStamper.cpp snip_test_Example_XmStamper
