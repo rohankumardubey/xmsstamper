@@ -42,11 +42,11 @@ namespace xms
 
 ////////////////////////////////////////////////////////////////////////////////
 /// \brief Implementaion of XmStampInterpCrossSection
-class stStampInterpCrossSectionImpl : public XmStampInterpCrossSection
+class XmStampInterpCrossSectionImpl : public XmStampInterpCrossSection
 {
 public:
-  stStampInterpCrossSectionImpl();
-  ~stStampInterpCrossSectionImpl();
+  XmStampInterpCrossSectionImpl();
+  ~XmStampInterpCrossSectionImpl();
 
   virtual void InterpMissingCrossSections(XmStamperIo& a_) override;
   virtual bool ValidCrossSectionsExist(XmStamperIo& a_) override;
@@ -77,30 +77,30 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class stStamperImpl
+/// \class XmStamperImpl
 /// \brief Performs a feature stamp operation
 /// The result of the operation is a TIN and a list of breakline segments.
 ////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------
 /// \brief
 //------------------------------------------------------------------------------
-stStampInterpCrossSectionImpl::stStampInterpCrossSectionImpl()
+XmStampInterpCrossSectionImpl::XmStampInterpCrossSectionImpl()
 : m_observer()
 , m_io(nullptr)
 {
-} // stStampInterpCrossSectionImpl::stStampInterpCrossSectionImpl
+} // XmStampInterpCrossSectionImpl::XmStampInterpCrossSectionImpl
 //------------------------------------------------------------------------------
 /// \brief
 //------------------------------------------------------------------------------
-stStampInterpCrossSectionImpl::~stStampInterpCrossSectionImpl()
+XmStampInterpCrossSectionImpl::~XmStampInterpCrossSectionImpl()
 {
-} // stStampInterpCrossSectionImpl::~stStampInterpCrossSectionImpl
+} // XmStampInterpCrossSectionImpl::~XmStampInterpCrossSectionImpl
 //------------------------------------------------------------------------------
 /// \brief Interpolates the missing cross sections. Modifys the m_cs member of
 /// the XmStamperIo class that is passed to this method.
 /// \param [in,out] a_ The inputs and outputs for the feature stamp operation
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::InterpMissingCrossSections(XmStamperIo& a_)
+void XmStampInterpCrossSectionImpl::InterpMissingCrossSections(XmStamperIo& a_)
 {
   m_io = &a_;
 
@@ -139,35 +139,35 @@ void stStampInterpCrossSectionImpl::InterpMissingCrossSections(XmStamperIo& a_)
     // interpolate the cross section
     InterpCs(prev, next, percent, cs);
   }
-} // stStampInterpCrossSectionImpl::InterpMissingCrossSections
+} // XmStampInterpCrossSectionImpl::InterpMissingCrossSections
 //------------------------------------------------------------------------------
 /// \brief Interpolates the missing cross sections. Modifys the m_cs member of
 /// the XmStamperIo class that is passed to this method.
 /// \param [in,out] a_ The inputs and outputs for the feature stamp operation
 /// \return true if there are any valid cross sections
 //------------------------------------------------------------------------------
-bool stStampInterpCrossSectionImpl::ValidCrossSectionsExist(XmStamperIo& a_)
+bool XmStampInterpCrossSectionImpl::ValidCrossSectionsExist(XmStamperIo& a_)
 {
   m_io = &a_;
   if (FindFirstValidCrossSection() > -1)
     return true;
   return false;
-} // stStampInterpCrossSectionImpl::InterpMissingCrossSections
+} // XmStampInterpCrossSectionImpl::InterpMissingCrossSections
 //------------------------------------------------------------------------------
 /// \brief Finds the first valid cross section in the inputs.
 /// \return The index to the first valid cross section in the inputs. -1 is
 /// returned if no valid cross sections exist.
 //------------------------------------------------------------------------------
-int stStampInterpCrossSectionImpl::FindFirstValidCrossSection()
+int XmStampInterpCrossSectionImpl::FindFirstValidCrossSection()
 {
   return FindNextValidCrossSection(-1);
-} // stStampInterpCrossSectionImpl::FindFirstValidCrossSection
+} // XmStampInterpCrossSectionImpl::FindFirstValidCrossSection
 //------------------------------------------------------------------------------
 /// \brief Finds the last valid cross section in the inputs.
 /// \return The index to the last valid cross section in the inputs. -1 is
 /// returned if no valid cross sections exist.
 //------------------------------------------------------------------------------
-int stStampInterpCrossSectionImpl::FindLastValidCrossSection()
+int XmStampInterpCrossSectionImpl::FindLastValidCrossSection()
 {
   int csIdx(-1);
   for (size_t i = m_io->m_cs.size(); csIdx == -1 && i > 0; --i)
@@ -179,14 +179,14 @@ int stStampInterpCrossSectionImpl::FindLastValidCrossSection()
     }
   }
   return csIdx;
-} // stStampInterpCrossSectionImpl::FindLastValidCrossSection
+} // XmStampInterpCrossSectionImpl::FindLastValidCrossSection
 //------------------------------------------------------------------------------
 /// \brief Finds the first valid cross section after a_idx in the inputs.
 /// \param[in] a_idx Index used to find the next valid cross section
 /// \return The index to the next valid cross section in the inputs. If none
 /// exists then -1 is returned.
 //------------------------------------------------------------------------------
-int stStampInterpCrossSectionImpl::FindNextValidCrossSection(int a_idx)
+int XmStampInterpCrossSectionImpl::FindNextValidCrossSection(int a_idx)
 {
   int csIdx(-1);
   size_t start(0);
@@ -201,7 +201,7 @@ int stStampInterpCrossSectionImpl::FindNextValidCrossSection(int a_idx)
     }
   }
   return csIdx;
-} // stStampInterpCrossSectionImpl::FindNextValidCrossSection
+} // XmStampInterpCrossSectionImpl::FindNextValidCrossSection
 //------------------------------------------------------------------------------
 /// \brief Interpolates a cross section from 2 other cross sections using a
 /// weight (a_percent)
@@ -211,14 +211,14 @@ int stStampInterpCrossSectionImpl::FindNextValidCrossSection(int a_idx)
 /// sections.
 /// \param[out] a_cs The newly interpolated cross section.
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::InterpCs(int a_prev,
+void XmStampInterpCrossSectionImpl::InterpCs(int a_prev,
                                              int a_next,
                                              double a_percent,
                                              XmStampCrossSection& a_cs)
 {
   XmStampCrossSection &pCs(m_io->m_cs[a_prev]), &nCs(m_io->m_cs[a_next]);
   InterpCs(pCs, nCs, a_percent, a_cs);
-} // stStampInterpCrossSectionImpl::InterpCs
+} // XmStampInterpCrossSectionImpl::InterpCs
 //------------------------------------------------------------------------------
 /// \brief Interpolates a cross section from 2 other cross sections using a
 /// weight (a_percent)
@@ -228,7 +228,7 @@ void stStampInterpCrossSectionImpl::InterpCs(int a_prev,
 /// sections.
 /// \param[out] a_cs The newly interpolated cross section.
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
+void XmStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
                                              XmStampCrossSection& a_next,
                                              double a_percent,
                                              XmStampCrossSection& a_cs)
@@ -275,13 +275,13 @@ void stStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
   InterpPts(r1, rs1, rend1, r2, rs2, rend2, a_percent, r3);
   // interpolate max dist
   a_cs.m_rightMax = a_prev.m_rightMax - (a_percent * (a_prev.m_rightMax - a_next.m_rightMax));
-} // stStampInterpCrossSectionImpl::InterpCs
+} // XmStampInterpCrossSectionImpl::InterpCs
 //------------------------------------------------------------------------------
 /// \brief Converts XmStamperCenterlineProfile class to XmStamperIo class inputs
 /// \param[in,out] a_io The stamping input/output class
 /// \param[in] a_profile The stamping centerline profile class
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::InterpFromCenterlineProfile(
+void XmStampInterpCrossSectionImpl::InterpFromCenterlineProfile(
   XmStamperIo& a_io,
   XmStamperCenterlineProfile& a_profile)
 {
@@ -350,7 +350,7 @@ void stStampInterpCrossSectionImpl::InterpFromCenterlineProfile(
     XmStampCrossSection& cs(a_io.m_cs[i]);
     InterpCs(prev, next, percent, cs);
   }
-} // stStampInterpCrossSectionImpl::InterpFromCenterlineProfile
+} // XmStampInterpCrossSectionImpl::InterpFromCenterlineProfile
 //------------------------------------------------------------------------------
 /// \brief Interpolates part of 2 cross sections to part of a new cross section.
 /// Separate interpolations are done for the cross section between the center
@@ -366,7 +366,7 @@ void stStampInterpCrossSectionImpl::InterpFromCenterlineProfile(
 /// sections.
 /// \param[out] a_interpPts Vector of newly interpolated points
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
+void XmStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
                                               int a_beg1,
                                               int a_end1,
                                               VecPt2d& a_v2,
@@ -393,7 +393,7 @@ void stStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
     a_interpPts.push_back(pt);
   }
 
-} // stStampInterpCrossSectionImpl::InterpPts
+} // XmStampInterpCrossSectionImpl::InterpPts
 //------------------------------------------------------------------------------
 /// \brief Calculates parametric t values from a vector of x,y coords based on x
 /// \param[in] a_v vector of x,y
@@ -401,7 +401,7 @@ void stStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
 /// \param[in] a_end Index to the end of the section of a_v
 /// \param[out] a_t Vector of calculated t values
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end, VecDbl& a_t)
+void XmStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end, VecDbl& a_t)
 {
   if (a_v.empty())
     return;
@@ -413,7 +413,7 @@ void stStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end
     double t = (a_v[i].x - a_v[a_beg].x) / diff;
     a_t.push_back(t);
   }
-} // stStampInterpCrossSectionImpl::CalcTvals
+} // XmStampInterpCrossSectionImpl::CalcTvals
 //------------------------------------------------------------------------------
 /// \brief Calculates the x,y location of the point at a_tval
 /// \param[in] a_v vector of x,y
@@ -422,7 +422,7 @@ void stStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end
 /// \param[in] a_tval Parametric tvalue
 /// \return the x,y location of the point at a_tval
 //------------------------------------------------------------------------------
-Pt2d stStampInterpCrossSectionImpl::PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t, double a_tval)
+Pt2d XmStampInterpCrossSectionImpl::PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t, double a_tval)
 {
   if (a_v.empty())
     return Pt2d();
@@ -457,7 +457,7 @@ Pt2d stStampInterpCrossSectionImpl::PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t
   r.x = p1.x + localt * (p2.x - p1.x);
   r.y = p1.y + localt * (p2.y - p1.y);
   return r;
-} // stStampInterpCrossSectionImpl::PtFromT
+} // XmStampInterpCrossSectionImpl::PtFromT
 
 //------------------------------------------------------------------------------
 /// \brief Creates a XmStampInterpCrossSection class.
@@ -465,7 +465,7 @@ Pt2d stStampInterpCrossSectionImpl::PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t
 //------------------------------------------------------------------------------
 BSHP<XmStampInterpCrossSection> XmStampInterpCrossSection::New()
 {
-  BSHP<XmStampInterpCrossSection> interp(new stStampInterpCrossSectionImpl);
+  BSHP<XmStampInterpCrossSection> interp(new XmStampInterpCrossSectionImpl);
   return interp;
 } // XmStampInterpCrossSection::New
 //------------------------------------------------------------------------------
@@ -473,7 +473,7 @@ BSHP<XmStampInterpCrossSection> XmStampInterpCrossSection::New()
 //------------------------------------------------------------------------------
 XmStampInterpCrossSection::XmStampInterpCrossSection()
 {
-} // XmStampInterpCrossSection::stStamperstStampInterpCrossSection
+} // XmStampInterpCrossSection::XmStamperXmStampInterpCrossSection
 //------------------------------------------------------------------------------
 /// \brief
 //------------------------------------------------------------------------------
@@ -495,14 +495,14 @@ using namespace xms;
 //------------------------------------------------------------------------------
 /// \brief Tests symetric cross section interpolation
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionUnitTests::test0()
+void XmStampInterpCrossSectionUnitTests::test0()
 {
   XmStamperIo io;
   io.m_centerLine = {{0, 0}, {5, 0}, {10, 0}, {15, 0}, {20, 0}, {25, 0}};
   io.m_cs.assign(6, XmStampCrossSection());
 
   // should fail because there are no valid cross sections
-  stStampInterpCrossSectionImpl ip;
+  XmStampInterpCrossSectionImpl ip;
   ip.InterpMissingCrossSections(io);
   for (auto& c : io.m_cs)
   {
@@ -582,11 +582,12 @@ void stStampInterpCrossSectionUnitTests::test0()
   TS_ASSERT_DELTA_VECPT2D(baseCs1, io.m_cs[3].m_left, 1e-2);
   TS_ASSERT_DELTA(12.66, io.m_cs[3].m_leftMax, 1e-2);
 
-} // stStampInterpCrossSectionUnitTests::test0
+} // XmStampInterpCrossSectionUnitTests::test0
+//! [snip_test_Example_XmStamper_Test1]
 //------------------------------------------------------------------------------
-/// \brief Tests symetric cross section interpolation
+/// \brief Tests symmetric cross section interpolation
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionUnitTests::test1()
+void XmStampInterpCrossSectionUnitTests::test1()
 {
   XmStamperIo io;
   io.m_centerLine = {{0, 0}, {5, 0}, {10, 0}, {15, 0}, {20, 0}, {25, 0}};
@@ -604,7 +605,7 @@ void stStampInterpCrossSectionUnitTests::test1()
   cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
   io.m_cs[4] = cs;
 
-  stStampInterpCrossSectionImpl ip;
+  XmStampInterpCrossSectionImpl ip;
   ip.InterpMissingCrossSections(io);
   TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_left, io.m_cs[0].m_left);
   TS_ASSERT_EQUALS(0, io.m_cs[0].m_idxLeftShoulder);
@@ -628,11 +629,12 @@ void stStampInterpCrossSectionUnitTests::test1()
   TS_ASSERT_EQUALS(4, io.m_cs[3].m_idxLeftShoulder);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_right, 1e-2);
   TS_ASSERT_EQUALS(4, io.m_cs[3].m_idxRightShoulder);
-} // stStampInterpCrossSectionUnitTests::test0
+} // XmStampInterpCrossSectionUnitTests::test0
+//! [snip_test_Example_XmStamper_Test1]
 //------------------------------------------------------------------------------
 /// \brief Tests symetric cross section interpolation
 //------------------------------------------------------------------------------
-void stStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
+void XmStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
 {
   XmStamperCenterlineProfile p;
   XmStamperIo io;
@@ -658,7 +660,7 @@ void stStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
 
   io.m_centerLine = {{0, 0}, {10, 0}, {20, 0}, {30, 0}};
 
-  stStampInterpCrossSectionImpl ip;
+  XmStampInterpCrossSectionImpl ip;
   ip.InterpFromCenterlineProfile(io, p);
   VecPt3d basePts = {{0, 0, 100}, {10, 0, 125}, {20, 0, 175}, {30, 0, 200}};
   TS_ASSERT_EQUALS_VEC(basePts, io.m_centerLine);
@@ -761,6 +763,67 @@ void stStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
     TS_ASSERT_DELTA(c1.m_leftMax, c0.m_leftMax, 1e-2);
     TS_ASSERT_DELTA(c1.m_rightMax, c0.m_rightMax, 1e-2);
   }
-} // stStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0
+} // XmStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0
+//------------------------------------------------------------------------------
+/// \brief Test tutorial for symmetric cross section interpolation
+//------------------------------------------------------------------------------
+//! [snip_test_Example_XmStamper_testCrossSectionTutorial]
+void XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()
+{
+  XmStamperIo io;
+  io.m_centerLine = { { 0, 0 },{ 5, 0 },{ 10, 0 },{ 15, 0 },{ 20, 0 },{ 25, 0 } };
+  io.m_cs.assign(6, XmStampCrossSection());
+  XmStampCrossSection cs;
+  io.m_stampingType = 0;
+  cs.m_left = { { 0, 10 },{ 1, 11 },{ 2, 12 },{ 4, 11 },{ 5, 10 },{ 10, 5 },{ 15, 0 } };
+  cs.m_idxLeftShoulder = 2;
+  cs.m_right = cs.m_left;
+  cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
+  io.m_cs[1] = cs;
+  cs.m_left = { { 0, 20 },{ 4, 19 },{ 6, 18 },{ 8, 18 },{ 10, 20 },{ 15, 15 },{ 20, 10 } };
+  cs.m_idxLeftShoulder = 3;
+  cs.m_right = cs.m_left;
+  cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
+  io.m_cs[4] = cs;
+
+  XmStampInterpCrossSectionImpl ip;
+  ip.InterpMissingCrossSections(io);
+
+  TS_ASSERT_EQUALS(2, io.m_cs[0].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(2, io.m_cs[1].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[2].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[3].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[4].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[5].m_idxLeftShoulder);
+
+  TS_ASSERT_EQUALS(2, io.m_cs[0].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(2, io.m_cs[1].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[2].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[3].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[4].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(3, io.m_cs[5].m_idxRightShoulder);
+  
+  TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_left, io.m_cs[0].m_left);
+  TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_right, io.m_cs[0].m_right);
+  TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_left, io.m_cs[5].m_left);
+  TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
+
+  VecPt2d baseCs = { 
+    { 0.00, 13.33 },{ 2.00, 13.66 },{ 3.00, 13.66 },{ 4.00, 14.00 },
+    { 5.94, 13.94 },{ 6.11, 13.88 },{ 6.92, 13.07 },{ 11.38, 8.61 },
+    { 11.79, 8.20 },{ 16.66, 3.33 },
+  };
+  TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_left, 0.02);
+  TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_right, 0.02);
+
+  baseCs = {
+    { 0.00, 16.66 },{ 3.00, 16.33 },{ 4.50, 15.83 },{ 6.00, 16.00 },
+    { 7.89, 16.89 },{ 8.05, 16.94 },{ 8.84, 16.15 },{ 13.19, 11.80 },
+    { 13.58, 11.41 },{ 18.33, 6.66 },
+  };
+  TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_left, 0.02);
+  TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_right, 0.02);
+} // XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial
+//! [snip_test_Example_XmStamper_testCrossSectionTutorial]
 
 #endif

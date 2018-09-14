@@ -20,13 +20,14 @@
 // 6. Non-shared Headers
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \brief Tests the StStampInterpCrossSection class
-class stStampInterpCrossSectionUnitTests : public CxxTest::TestSuite
+/// \brief Tests the XmStampInterpCrossSection class
+class XmStampInterpCrossSectionUnitTests : public CxxTest::TestSuite
 {
 public:
   void test0();
   void test1();
   void testInterpFromCenterlineProfile0();
-}; // stStampInterpCrossSectionUnitTests
+  void testCrossSectionTutorial();
+}; // XmStampInterpCrossSectionUnitTests
 
 #endif

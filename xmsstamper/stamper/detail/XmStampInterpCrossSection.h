@@ -36,7 +36,7 @@ class Observer;
 ////////////////////////////////////////////////////////////////////////////////
 /// \class XmStampInterpCrossSection
 /// \brief Interpolate cross sections for stamping
-/// \see stStampInterpCrossSectionImpl
+/// \see XmStampInterpCrossSectionImpl
 class XmStampInterpCrossSection
 {
 public:

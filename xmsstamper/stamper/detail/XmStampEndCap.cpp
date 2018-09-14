@@ -45,11 +45,11 @@ namespace xms
 
 ////////////////////////////////////////////////////////////////////////////////
 /// \brief Implementaion of XmStampEndCap
-class stStampEndCapImpl : public XmStampEndCap
+class XmStampEndCapImpl : public XmStampEndCap
 {
 public:
-  stStampEndCapImpl();
-  ~stStampEndCapImpl();
+  XmStampEndCapImpl();
+  ~XmStampEndCapImpl();
 
   virtual void RotateEndCapCrossSections(XmStamperIo& a_io,
                                          VecPt3d2d& a_left,
@@ -84,21 +84,21 @@ public:
 };
 
 ////////////////////////////////////////////////////////////////////////////////
-/// \class stStampEndCapImpl
+/// \class XmStampEndCapImpl
 /// \brief end cap operations for feature stamping
 ////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------
 /// \brief
 //------------------------------------------------------------------------------
-stStampEndCapImpl::stStampEndCapImpl()
+XmStampEndCapImpl::XmStampEndCapImpl()
 {
-} // stStampEndCapImpl::stStampEndCapImpl
+} // XmStampEndCapImpl::XmStampEndCapImpl
 //------------------------------------------------------------------------------
 /// \brief
 //------------------------------------------------------------------------------
-stStampEndCapImpl::~stStampEndCapImpl()
+XmStampEndCapImpl::~XmStampEndCapImpl()
 {
-} // stStampEndCapImpl::~stStampEndCapImpl
+} // XmStampEndCapImpl::~XmStampEndCapImpl
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -106,26 +106,26 @@ stStampEndCapImpl::~stStampEndCapImpl()
 /// \param[in,out] a_left - left side of cross section at end cap
 /// \param[in,out] a_right - right side of cross section at end cap
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::RotateEndCapCrossSections(XmStamperIo& a_io,
+void XmStampEndCapImpl::RotateEndCapCrossSections(XmStamperIo& a_io,
                                                   VecPt3d2d& a_left,
                                                   VecPt3d2d& a_right)
 {
   bool firstEndCap(true), lastEndCap(false);
   AdjustCrossSection(firstEndCap, a_io, a_left, a_right);
   AdjustCrossSection(lastEndCap, a_io, a_left, a_right);
-} // stStampEndCapImpl::RotateEndCapCrossSections
+} // XmStampEndCapImpl::RotateEndCapCrossSections
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
 /// \param[in] a_io - stamper io class
 /// \param[out] a_3dpts - 3d points for the stamp operation
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::ConvertTo3dPts(XmStamperIo& a_io, XmStamper3dPts& a_3dpts)
+void XmStampEndCapImpl::ConvertTo3dPts(XmStamperIo& a_io, XmStamper3dPts& a_3dpts)
 {
   bool firstEndCap(true), lastEndCap(false);
   EndCapTo3dPts(firstEndCap, a_io, a_3dpts);
   EndCapTo3dPts(lastEndCap, a_io, a_3dpts);
-} // stStampEndCapImpl::RotateEndCapCrossSections
+} // XmStampEndCapImpl::RotateEndCapCrossSections
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -134,7 +134,7 @@ void stStampEndCapImpl::ConvertTo3dPts(XmStamperIo& a_io, XmStamper3dPts& a_3dpt
 /// \param[in,out] a_left - left side of cross section at end cap
 /// \param[in,out] a_right - right side of cross section at end cap
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::AdjustCrossSection(bool a_first,
+void XmStampEndCapImpl::AdjustCrossSection(bool a_first,
                                            XmStamperIo& a_io,
                                            VecPt3d2d& a_left,
                                            VecPt3d2d& a_right)
@@ -165,7 +165,7 @@ void stStampEndCapImpl::AdjustCrossSection(bool a_first,
   RotateCrossSection(cap->m_angle, clPt, *right);
 
   RotateCrossSectionForType(a_first, clPt, *cap, *left, *right, leftShoulderIdx, rightShoulderIdx);
-} // stStampEndCapImpl::AdjustCrossSection
+} // XmStampEndCapImpl::AdjustCrossSection
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -173,7 +173,7 @@ void stStampEndCapImpl::AdjustCrossSection(bool a_first,
 /// \param[in] a_clPt - the center line point
 /// \param[in,out] a_cs - 3d locations for cross section
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::RotateCrossSection(double a_angle, Pt3d& a_clPt, VecPt3d& a_cs)
+void XmStampEndCapImpl::RotateCrossSection(double a_angle, Pt3d& a_clPt, VecPt3d& a_cs)
 {
   if (0.0 == a_angle || a_cs.empty())
     return;
@@ -199,7 +199,7 @@ void stStampEndCapImpl::RotateCrossSection(double a_angle, Pt3d& a_clPt, VecPt3d
     a_cs[i].x = p2.x + p0.x;
     a_cs[i].y = p2.y + p0.y;
   }
-} // stStampEndCapImpl::RotateCrossSection
+} // XmStampEndCapImpl::RotateCrossSection
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -213,7 +213,7 @@ void stStampEndCapImpl::RotateCrossSection(double a_angle, Pt3d& a_clPt, VecPt3d
 /// \param[in] a_rightShoulderIdx - index in the right cross section of the
 /// shoulder
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::RotateCrossSectionForType(bool a_first,
+void XmStampEndCapImpl::RotateCrossSectionForType(bool a_first,
                                                   Pt3d& a_clPt,
                                                   XmStamperEndCap& a_cap,
                                                   VecPt3d& a_left,
@@ -240,7 +240,7 @@ void stStampEndCapImpl::RotateCrossSectionForType(bool a_first,
     WingWallRotate(!a_first, a_cap.m_angle, a_cap.m_wingWall.m_wingWallAngle, a_rightShoulderIdx,
                    a_right);
   }
-} // stStampEndCapImpl::RotateCrossSection
+} // XmStampEndCapImpl::RotateCrossSection
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -254,7 +254,7 @@ void stStampEndCapImpl::RotateCrossSectionForType(bool a_first,
 /// \param[in] a_rightShoulderIdx - index in the right cross section of the
 /// shoulder
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::GuidebankRotate(bool a_first,
+void XmStampEndCapImpl::GuidebankRotate(bool a_first,
                                         Pt3d& a_clPt,
                                         XmStamperEndCap& a_cap,
                                         VecPt3d& a_left,
@@ -374,7 +374,7 @@ void stStampEndCapImpl::GuidebankRotate(bool a_first,
     a_right[i].x = p2.x + p0.x;
     a_right[i].y = p2.y + p0.y;
   }
-} // stStampEndCapImpl::GuidebankRotate
+} // XmStampEndCapImpl::GuidebankRotate
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -382,7 +382,7 @@ void stStampEndCapImpl::GuidebankRotate(bool a_first,
 /// \param[in] a_shoulderIdx - index in the cross section of the shoulder
 /// \param[in,out] a_cs - 3d locations for cross section
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::SlopedAbutmentRotateShoulders(double a_capAngle,
+void XmStampEndCapImpl::SlopedAbutmentRotateShoulders(double a_capAngle,
                                                       int a_shoulderIdx,
                                                       VecPt3d& a_cs)
 {
@@ -407,7 +407,7 @@ void stStampEndCapImpl::SlopedAbutmentRotateShoulders(double a_capAngle,
     a_cs[i].x = p2.x + p0.x;
     a_cs[i].y = p2.y + p0.y;
   }
-} // stStampEndCapImpl::SlopedAbutmentRotateShoulders
+} // XmStampEndCapImpl::SlopedAbutmentRotateShoulders
 //------------------------------------------------------------------------------
 /// \brief Rotates cross section points based on the angle specified for an
 /// end cap
@@ -417,7 +417,7 @@ void stStampEndCapImpl::SlopedAbutmentRotateShoulders(double a_capAngle,
 /// \param[in] a_shoulderIdx - index in the cross section of the shoulder
 /// \param[in,out] a_cs - 3d locations for cross section
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::WingWallRotate(bool a_first,
+void XmStampEndCapImpl::WingWallRotate(bool a_first,
                                        double a_capAngle,
                                        double a_wwAngle,
                                        int a_shoulderIdx,
@@ -449,7 +449,7 @@ void stStampEndCapImpl::WingWallRotate(bool a_first,
     a_cs[i].x = p2.x + p0.x;
     a_cs[i].y = p2.y + p0.y;
   }
-} // stStampEndCapImpl::WingWallRotate
+} // XmStampEndCapImpl::WingWallRotate
 //------------------------------------------------------------------------------
 /// \brief Converts an end cap to 3d pts defining the geometry
 /// \param[in] a_first - flag indicating if this is the first end cap
@@ -457,7 +457,7 @@ void stStampEndCapImpl::WingWallRotate(bool a_first,
 /// \param[in] a_io - stamper io class
 /// \param[out] a_3dpts - points filled in by the method
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::EndCapTo3dPts(bool a_first, XmStamperIo& a_io, XmStamper3dPts& a_3dpts)
+void XmStampEndCapImpl::EndCapTo3dPts(bool a_first, XmStamperIo& a_io, XmStamper3dPts& a_3dpts)
 {
   stXs3dPts* pts(&a_3dpts.m_first_endcap);
   XmStamperEndCap cap(a_io.m_firstEndCap);
@@ -479,7 +479,7 @@ void stStampEndCapImpl::EndCapTo3dPts(bool a_first, XmStamperIo& a_io, XmStamper
   else
     SlopedAbutmentEndCapTo3dPts(a_first, a_io, a_3dpts);
 
-} // stStampEndCapImpl::EndCapTo3dPts
+} // XmStampEndCapImpl::EndCapTo3dPts
 //------------------------------------------------------------------------------
 /// \brief Converts an end cap to 3d pts defining the geometry
 /// \param[in] a_first - flag indicating if this is the first end cap
@@ -487,13 +487,13 @@ void stStampEndCapImpl::EndCapTo3dPts(bool a_first, XmStamperIo& a_io, XmStamper
 /// \param[in] a_io - stamper io class
 /// \param[out] a_3dpts - points filled in by the method
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::GuidebankEndCapTo3dPts(bool a_first,
+void XmStampEndCapImpl::GuidebankEndCapTo3dPts(bool a_first,
                                                XmStamperIo& a_io,
                                                XmStamper3dPts& a_3dpts)
 {
   BSHP<XmGuideBankUtil> gb = XmGuideBankUtil::New();
   gb->DoConvertTo3d(a_first, a_io, a_3dpts);
-} // stStampEndCapImpl::EndCapTo3dPts
+} // XmStampEndCapImpl::EndCapTo3dPts
 //------------------------------------------------------------------------------
 /// \brief Converts an end cap to 3d pts defining the geometry
 /// \param[in] a_first - flag indicating if this is the first end cap
@@ -501,13 +501,13 @@ void stStampEndCapImpl::GuidebankEndCapTo3dPts(bool a_first,
 /// \param[in] a_io - stamper io class
 /// \param[out] a_3dpts - points filled in by the method
 //------------------------------------------------------------------------------
-void stStampEndCapImpl::SlopedAbutmentEndCapTo3dPts(bool a_first,
+void XmStampEndCapImpl::SlopedAbutmentEndCapTo3dPts(bool a_first,
                                                     XmStamperIo& a_io,
                                                     XmStamper3dPts& a_3dpts)
 {
   BSHP<XmSlopedAbutmentUtil> sa = XmSlopedAbutmentUtil::New();
   sa->DoConvertTo3d(a_first, a_io, a_3dpts);
-} // stStampEndCapImpl::SlopedAbutmentEndCapTo3dPts
+} // XmStampEndCapImpl::SlopedAbutmentEndCapTo3dPts
 
 //------------------------------------------------------------------------------
 /// \brief Creates a XmStampInterpCrossSection class
@@ -515,7 +515,7 @@ void stStampEndCapImpl::SlopedAbutmentEndCapTo3dPts(bool a_first,
 //------------------------------------------------------------------------------
 BSHP<XmStampEndCap> XmStampEndCap::New()
 {
-  BSHP<XmStampEndCap> interp(new stStampEndCapImpl);
+  BSHP<XmStampEndCap> interp(new XmStampEndCapImpl);
   return interp;
 } // XmStampEndCap::New
 //------------------------------------------------------------------------------
