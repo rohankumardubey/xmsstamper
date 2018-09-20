@@ -204,7 +204,7 @@ void XmStamperImpl::FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
   m_interp->InterpFromCenterlineProfile(a_io, a_profile);
 } // XmStamperImpl::FillStamperIoFromCenterlineProfile
 //------------------------------------------------------------------------------
-/// \brief Writes the XmStamperIo class to a file for debuggin
+/// \brief Writes the XmStamperIo class to a file for debugging
 //------------------------------------------------------------------------------
 void XmStamperImpl::WriteInputsForDebug()
 {

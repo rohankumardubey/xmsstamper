@@ -154,7 +154,7 @@ bool XmBreaklinesImpl::CreateBreaklines(XmStamperIo& a_io, cs3dPtIdx& a_ptIdx, V
     // left side shoulder and endpts
     {
       VecInt& v(a_ptIdx.m_xsPts.m_left[i]);
-      size_t leftIdx = static_cast<size_t>(a_io.m_cs[i].m_idxLeftShoulder - 1);
+      int leftIdx = std::max(a_io.m_cs[i].m_idxLeftShoulder - 1, 0);
       if (!v.empty())
       {
         // break line for the end points of the cross sections
@@ -174,7 +174,7 @@ bool XmBreaklinesImpl::CreateBreaklines(XmStamperIo& a_io, cs3dPtIdx& a_ptIdx, V
     // right side shoulder and endpts
     {
       VecInt& v(a_ptIdx.m_xsPts.m_right[i]);
-      size_t rightIdx = static_cast<size_t>(a_io.m_cs[i].m_idxRightShoulder - 1);
+      int rightIdx = std::max(a_io.m_cs[i].m_idxRightShoulder - 1, 0);
       if (!v.empty())
       {
         // break line for the end points of the cross sections
