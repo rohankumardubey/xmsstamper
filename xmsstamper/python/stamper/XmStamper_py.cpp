@@ -9,13 +9,8 @@
 //----- Included files ---------------------------------------------------------
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
-#include <boost/shared_ptr.hpp>
-#include <xmscore/python/misc/PyUtils.h>
-#include <xmscore/misc/DynBitset.h>
-#include <xmscore/stl/vector.h>
-#include <xmsgrid/ugrid/XmUGrid.h>
-#include <xmsgridtrace/gridtrace/XmGridTrace.h>
-#include <xmsextractor/extractor/XmUGrid2dDataExtractor.h>
+#include <boost/shared_ptr.hpp> // boost::shared_ptr
+#include <xmsstamper/stamper/XmStamper.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
@@ -23,70 +18,109 @@ namespace py = pybind11;
 //----- Python Interface -------------------------------------------------------
 PYBIND11_DECLARE_HOLDER_TYPE(T, boost::shared_ptr<T>);
 
-void initXmGridTrace(py::module &m) {
-    py::class_<xms::XmGridTrace, boost::shared_ptr<xms::XmGridTrace>> gridtrace(m, "XmGridTrace");
-    gridtrace
-        .def(py::init([](boost::shared_ptr<xms::XmUGrid> a_ugrid) {
-            return boost::shared_ptr<xms::XmGridTrace>(xms::XmGridTrace::New(a_ugrid));
-        }))
-        //  virtual double GetVectorMultiplier() const = 0;
-        .def("get_vector_multiplier", &xms::XmGridTrace::GetVectorMultiplier, "Gets the vector multiplier")
-        // virtual void SetVectorMultiplier(const double a_vectorMultiplier) = 0;
-        .def("set_vector_multiplier", &xms::XmGridTrace::SetVectorMultiplier, "Sets the vector multiplier")
-        // virtual double GetMaxTracingTime() const = 0;
-        .def("get_max_tracing_time", &xms::XmGridTrace::GetMaxTracingTime, "Gets the max tracing time")
-        // virtual void SetMaxTracingTime(const double a_maxTracingTime) = 0;
-        .def("set_max_tracing_time", &xms::XmGridTrace::SetMaxTracingTime, "Sets the max tracing time")
-        // virtual double GetMaxTracingDistance() const = 0;
-        .def("get_max_tracing_distance", &xms::XmGridTrace::GetMaxTracingDistance, "Gets the max tracing distance")
-        // virtual void SetMaxTracingDistance(const double a_maxTracingDistance) = 0;
-        .def("set_max_tracing_distance", &xms::XmGridTrace::SetMaxTracingDistance, "Sets the max tracing distance")
-        // virtual double GetMinDeltaTime() const = 0;
-        .def("get_min_delta_time", &xms::XmGridTrace::GetMinDeltaTime, "Gets the minimum delta time")
-        // virtual void SetMinDeltaTime(const double a_minDeltaTime) = 0;
-        .def("set_min_delta_time", &xms::XmGridTrace::SetMinDeltaTime, "Sets the minimum delta time")
-        // virtual double GetMaxChangeDistance() const = 0;
-        .def("get_max_change_distance", &xms::XmGridTrace::GetMaxChangeDistance, "Gets the maximum change in distance")
-        // virtual void SetMaxChangeDistance(const double a_maxChangeDistance) = 0;
-        .def("set_max_change_distance", &xms::XmGridTrace::SetMaxChangeDistance, "Sets the maximum change in distance")
-        // virtual double GetMaxChangeVelocity() const = 0;
-        .def("get_max_change_velocity", &xms::XmGridTrace::GetMaxChangeVelocity, "Gets the maximum changee in velocity")
-        // virtual void SetMaxChangeVelocity(const double a_maxChangeVelocity) = 0;
-        .def("set_max_change_velocity", &xms::XmGridTrace::SetMaxChangeVelocity, "Sets the maximum changee in velocity")
-        // virtual double GetMaxChangeDirectionInRadians() const = 0;
-        .def("get_max_change_direction_in_radians", &xms::XmGridTrace::GetMaxChangeDirectionInRadians, "Gets the max change in direction in radians")
-        // virtual void SetMaxChangeDirectionInRadians(const double a_maxChangeDirection) = 0;
-        .def("set_max_change_direction_in_radians", &xms::XmGridTrace::SetMaxChangeDirectionInRadians, "Sets the max change in direction in radians")
-        // virtual void AddGridScalarsAtTime(const VecPt3d& a_scalars, DataLocationEnum a_scalarLoc, xms::DynBitset& a_activity, DataLocationEnum a_activityLoc, double a_time) = 0;
-        .def("add_grid_scalars_at_time", [](xms::XmGridTrace &self, py::iterable a_scalars,
-          xms::DataLocationEnum a_scalarLoc,
-          py::iterable a_activity,
-          xms::DataLocationEnum a_activityLoc,
-          double a_time) {
-            boost::shared_ptr<xms::VecPt3d> scalars = xms::VecPt3dFromPyIter(a_scalars);
-            xms::DynBitset activity = xms::DynamicBitsetFromPyIter(a_activity);
-            self.AddGridScalarsAtTime(*scalars, a_scalarLoc, activity, a_activityLoc, a_time);
-            return;
-          }, "adds a grid scalar with a time to the tracer", py::arg("scalars"), py::arg("scalar_loc"), py::arg("activity"), py::arg("activity_loc"), py::arg("time")
-        )
-        // virtual void TracePoint(const Pt3d& a_pt, const double& a_ptTime, VecPt3d& a_outTrace, VecDbl& a_outTimes) = 0;
-          .def("trace_point", [](xms::XmGridTrace &self, py::iterable a_pt, double a_ptTime) -> py::iterable {
-          xms::Pt3d point = xms::Pt3dFromPyIter(a_pt);
-          xms::VecPt3d outTrace;
-          xms::VecDbl outTimes;
-          self.TracePoint(point, a_ptTime, outTrace, outTimes);
-          py::iterable resultTrace = xms::PyIterFromVecPt3d(outTrace);
-          py::iterable resultTimes = xms::PyIterFromVecDbl(outTimes);
-          return py::make_tuple(resultTrace, resultTimes);
-        }, "Runs the Grid Trace for a point", py::arg("a_pt"), py::arg("a_ptTime"))
-        // virtual std::string GetExitMessage() = 0;
-        .def("get_exit_message", &xms::XmGridTrace::GetExitMessage,"returns a message describing what caused trace to exit")
-        ;
+void initXmStamper(py::module &m)
+{
+  py::class_<xms::XmStamper, boost::shared_ptr<xms::XmStamper>> stamper(m, "XmStamper");
+  stamper.def(py::init(&xms::XmStamper::New));
+  // ---------------------------------------------------------------------------
+  // function: do_stamp
+  // definition: virtual void DoStamp(XmStamperIo& a_) = 0;
+  // ---------------------------------------------------------------------------
+  const char* do_stamp_doc = R"pydoc(
+      Performs the feature stamping operation
 
-    // DataLocationEnum
-    py::enum_<xms::DataLocationEnum>(m, "data_location_enum",
-                                    "data_location_enum location mapping for dataset values")
-        .value("LOC_POINTS", xms::LOC_POINTS)
-        .value("LOC_CELLS", xms::LOC_CELLS)
-        .value("LOC_UNKNOWN", xms::LOC_UNKNOWN);
+      Args:
+          stamper_io (XmStamperIo): The stamping input/output class. When sucessful, the out_tin and
+          out_breaklines members of stamper_io and filled by this method.
+  )pydoc";
+  stamper.def("do_stamp",
+  [](xms::XmStamper &self, xms::XmStamperIo &stamper_io)
+  {
+    self.DoStamp(stamper_io);
+  },
+  do_stamp_doc,
+  py::arg("stamper_io"));
+  // ---------------------------------------------------------------------------
+  // function: fill_stamper_io_from_centerline_profile
+  // definition: virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io, XmStamperCenterlineProfile& a_profile) = 0;
+  // ---------------------------------------------------------------------------
+  const char* fill_stamper_io_from_centerline_profile_doc = R"pydoc(
+      Converts XmStamperCenterlineProfile class to XmStamperIo class inputs
+
+      Args:
+          stamper_io (XmStamperIo): The stamping input/output class
+          profile (XmStamperCenterlineProfile): The stamping centerline profile class
+  )pydoc";
+  stamper.def("fill_stamper_io_from_centerline_profile",
+  [](xms::XmStamper &self, xms::XmStamperIo &stamper_io, xms::XmStamperCenterlineProfile& profile)
+  {
+    self.m_interp->InterpFromCenterlineProfile(stamper_io);
+  },
+  fill_stamper_io_from_centerline_profile_doc,
+  py::arg("stamper_io"),
+  py::arg("profile"));
+  // ---------------------------------------------------------------------------
+  // function: get_points
+  // definition: virtual const VecPt3d& GetPoints() = 0;
+  // ---------------------------------------------------------------------------
+  const char* get_points_doc = R"pydoc(
+      Returns the point locations created by the stamp operation
+
+      Returns:
+          py::iterable (VecPt3d): point locations
+  )pydoc";
+  stamper.def("get_points",
+  [](xms::XmStamper &self) -> py::iterable
+  {
+    return xms::PyIterFromVecPt3d(self.GetPoints());
+  },
+  get_points_doc);
+  // ---------------------------------------------------------------------------
+  // function: get_segments
+  // definition:  virtual const VecInt2d& GetSegments() = 0;
+  // ---------------------------------------------------------------------------
+  const char* get_segments_doc = R"pydoc(
+      Returns breaklines created by the stamp operation
+
+      Returns:
+          py::iterable (VecInt2d): breakline segments
+  )pydoc";
+  stamper.def("get_segments",
+  [](xms::XmStamper &self) -> py::iterable
+  {
+    return xms::PyIterFromVecInt2d(self.GetSegments());
+  },
+  get_segments_doc);
+  // ---------------------------------------------------------------------------
+  // function: get_breakline_types
+  // definition:  virtual const VecInt& GetBreaklineTypes() = 0;
+  // ---------------------------------------------------------------------------
+  const char* get_breakline_types_doc = R"pydoc(
+      Returns the type of breaklines
+
+      Returns:
+          py::iterable (VecInt): breakline types
+  )pydoc";
+  stamper.def("get_breakline_types",
+  [](xms::XmStamper &self) -> py::iterable
+  {
+    return xms::PyIterFromVecInt(self.GetBreaklineTypes());
+  },
+  get_breakline_types_doc);
+  // ---------------------------------------------------------------------------
+  // function: set_observer
+  // definition:  virtual const VecInt& GetBreaklineTypes() = 0;
+  // ---------------------------------------------------------------------------
+  const char* set_observer_doc = R"pydoc(
+      Sets the observer class to get feedback on the meshing process
+
+      Args:
+          observer (Observer): Observer class to provide feedback.
+  )pydoc";
+  stamper.def("set_observer",
+  [](xms::XmStamper &self boost::shared_ptr<xms::PublicObserver> observer)
+  {
+    self.SetObserver(observer);
+  },
+  set_observer_doc);
 }
