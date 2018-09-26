@@ -26,3 +26,4 @@ class TestXmStamper(unittest.TestCase):
 		
     def test_tutorial(self):
         """A test to serve as a tutorial"""
+		pass
