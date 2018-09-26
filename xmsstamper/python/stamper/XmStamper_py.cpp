@@ -10,7 +10,10 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <boost/shared_ptr.hpp> // boost::shared_ptr
+#include <xmscore/python/misc/PyUtils.h> // PyIterFromVecPt3d, etc.
+#include <xmscore/python/misc/PublicObserver.h>
 #include <xmsstamper/stamper/XmStamper.h>
+#include <xmsstamper/stamper/XmSTamperIo.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
@@ -54,7 +57,7 @@ void initXmStamper(py::module &m)
   stamper.def("fill_stamper_io_from_centerline_profile",
   [](xms::XmStamper &self, xms::XmStamperIo &stamper_io, xms::XmStamperCenterlineProfile& profile)
   {
-    self.m_interp->InterpFromCenterlineProfile(stamper_io);
+    self.FillStamperIoFromCenterlineProfile(stamper_io, profile);
   },
   fill_stamper_io_from_centerline_profile_doc,
   py::arg("stamper_io"),
@@ -118,7 +121,7 @@ void initXmStamper(py::module &m)
           observer (Observer): Observer class to provide feedback.
   )pydoc";
   stamper.def("set_observer",
-  [](xms::XmStamper &self boost::shared_ptr<xms::PublicObserver> observer)
+  [](xms::XmStamper &self, boost::shared_ptr<xms::PublicObserver> observer)
   {
     self.SetObserver(observer);
   },

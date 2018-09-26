@@ -11,6 +11,8 @@
 #include <pybind11/numpy.h>
 #include <boost/shared_ptr.hpp> // boost::shared_ptr
 #include <xmsstamper/stamper/XmStamperIo.h>
+#include <xmscore/python/misc/PyUtils.h> // PyIterFromVecPt3d, etc.
+#include <xmsinterp/triangulate/TrTin.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
@@ -30,15 +32,15 @@ void initXmStamperIo(py::module &m)
   )pydoc";
   stamper_centerline_profile.def_property("distance",
             [](xms::XmStamperCenterlineProfile &self) -> py::iterable
-			{
-                return PyIterFromVecDbl(self.m_distance);
+            {
+                return xms::PyIterFromVecDbl(self.m_distance);
             },
             [](xms::XmStamperCenterlineProfile &self, py::iterable distance)
-			{
-                self.m_distance = VecDblFromPyIter(distance);
+            {
+                self.m_distance = *xms::VecDblFromPyIter(distance);
             },
             distance_doc
-        )
+        );
   // ---------------------------------------------------------------------------
   // function: elevation
   // ---------------------------------------------------------------------------
@@ -47,34 +49,34 @@ void initXmStamperIo(py::module &m)
   )pydoc";
   stamper_centerline_profile.def_property("elevation",
             [](xms::XmStamperCenterlineProfile &self) -> py::iterable
-			{
-                return PyIterFromVecDbl(self.m_elevation);
+            {
+                return xms::PyIterFromVecDbl(self.m_elevation);
             },
             [](xms::XmStamperCenterlineProfile &self, py::iterable elevation)
-			{
-                self.m_elevation = VecDblFromPyIter(elevation);
+            {
+                self.m_elevation = *xms::VecDblFromPyIter(elevation);
             },
             elevation_doc
-        )
+        );
 
   py::class_<xms::XmStamperIo, boost::shared_ptr<xms::XmStamperIo>> stamper_io(m, "XmStamperIo");
   stamper_io.def(py::init<>());
   // ---------------------------------------------------------------------------
-  // function: set_centerline
+  // property: centerline
   // ---------------------------------------------------------------------------
-  const char* set_centerline_doc = R"pydoc(
+  const char* centerline_doc = R"pydoc(
       Center line for the feature stamp (Required)
-
-      Args:
-          centerline (VecPt3d): The centerline points.
   )pydoc";
-  stamper_io.def("set_centerline",
-  [](xms::XmStamper &self, py::iterable centerline)
+  stamper_io.def_property("centerline",
+  [](xms::XmStamperIo &self) -> py::iterable
   {
-    self.m_centerLine = xms::VecPt3dFromPyIter(centerline);
+	return xms::PyIterFromVecPt3d(self.m_centerLine);
   },
-  set_centerline_doc,
-  py::arg("centerline"));
+  [](xms::XmStamperIo &self, py::iterable centerline)
+  {
+    self.m_centerLine = *xms::VecPt3dFromPyIter(centerline);
+  },
+  centerline_doc);
   // ---------------------------------------------------------------------------
   // function: set_stamping_type
   // ---------------------------------------------------------------------------
@@ -85,7 +87,7 @@ void initXmStamperIo(py::module &m)
           stamping_type (int): The stamping type
   )pydoc";
   stamper_io.def("set_stamping_type",
-  [](xms::XmStamper &self, int stamping_type)
+  [](xms::XmStamperIo &self, int stamping_type)
   {
     self.m_stampingType = stamping_type;
   },
@@ -101,21 +103,21 @@ void initXmStamperIo(py::module &m)
   // function: set_last_end_cap TO DO
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
-  // function: set_bathymetry
+  // property: bathymetry
   // ---------------------------------------------------------------------------
-  const char* set_bathymetry_doc = R"pydoc(
-      Sets underlying bathymetry
-
-      Args:
-          bathymetry (TrTin): The bathymetry data
+  const char* bathymetry_doc = R"pydoc(
+      Underlying bathymetry
   )pydoc";
-  stamper_io.def("set_bathymetry",
-  [](xms::XmStamper &self, xms::TrTin &bathymetry)
+  stamper_io.def_property("bathymetry",
+  [](xms::XmStamperIo &self) -> boost::shared_ptr<xms::TrTin>
+  {
+	  return self.m_bathemetry;
+  }, 
+  [](xms::XmStamperIo &self, boost::shared_ptr<xms::TrTin> &bathymetry)
   {
     self.m_bathemetry = bathymetry;
   },
-  set_bathymetry_doc,
-  py::arg("bathymetry"));
+  bathymetry_doc);
   // ---------------------------------------------------------------------------
   // function: get_out_tin
   // ---------------------------------------------------------------------------
@@ -126,7 +128,7 @@ void initXmStamperIo(py::module &m)
           The output TIN
   )pydoc";
   stamper_io.def("get_out_tin",
-  [](xms::XmStamper &self) -> xms::TrTin
+  [](xms::XmStamperIo &self) -> boost::shared_ptr<xms::TrTin>
   {
     return self.m_outTin;
   },
@@ -141,7 +143,7 @@ void initXmStamperIo(py::module &m)
           py::iterable (VecInt2d): indices of breaklines that are honored in the TIN
   )pydoc";
   stamper_io.def("get_breaklines",
-  [](xms::XmStamper &self) -> py::iterable
+  [](xms::XmStamperIo &self) -> py::iterable
   {
     return xms::PyIterFromVecInt2d(self.m_outBreakLines);
   },

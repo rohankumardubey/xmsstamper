@@ -15,6 +15,7 @@
 
 // 3. Standard library headers
 #include <fstream>
+#include <iostream>
 
 // 4. External library headers
 
@@ -150,21 +151,26 @@ XmStamperImpl::~XmStamperImpl()
 //------------------------------------------------------------------------------
 void XmStamperImpl::DoStamp(XmStamperIo& a_)
 {
+  std::cout << "In Function: Do Stamp" << std::endl;
   m_io = a_;
   m_io.m_outTin.reset();
   m_io.m_outBreakLines.clear();
 
   WriteInputsForDebug();
 
+  std::cout << "Location 1" << std::endl;
   if (InputErrorsFound())
     return;
 
+  std::cout << "Location 2" << std::endl;
   CreateBathemetryIntersector();
 
+  std::cout << "Location 3" << std::endl;
   IntersectCenterLineWithBathemetry();
   InterpolateMissingCrossSections();
   DecomposeCenterLine();
 
+  std::cout << "Location 4" << std::endl;
   for (auto& io : m_vIo)
   {
     m_io = io;
@@ -177,17 +183,20 @@ void XmStamperImpl::DoStamp(XmStamperIo& a_)
     AppendTinAndBreakLines(!rval);
   }
 
+  std::cout << "Location 5" << std::endl;
   if (!m_error && m_breaklineCreator && m_outPts)
   {
     m_error = m_breaklineCreator->BreaklinesIntersect(m_breaklines, *m_outPts);
     if (m_error)
     {
+	  std::cout << "Location 6" << std::endl;
       XM_LOG(xmlog::warning, "Intersection found in stamp outputs. Stamping operation aborted.");
     }
   }
 
   if (!m_error)
   {
+	std::cout << "Location 7" << std::endl;
     a_.m_outBreakLines = m_breaklines;
     a_.m_outTin = m_tin;
   }

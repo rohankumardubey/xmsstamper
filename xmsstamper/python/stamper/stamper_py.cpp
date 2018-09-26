@@ -17,4 +17,5 @@ namespace py = pybind11;
 
 void initStamper(py::module &m) {
   initXmStamper(m);
+  initXmStamperIo(m);
 }

@@ -27,9 +27,6 @@ PYBIND11_MODULE(xmsstamper_py, m) {
 
     // Stamper module
     py::module modStamper = m.def_submodule("stamper");
-    initXmStamper(modStamper);
-    // StamperIo module
-    py::module modStamperIo = m.def_submodule("stamperio");
-    initXmStamperIo(modStamperIo);
+    initStamper(modStamper);
 }
 

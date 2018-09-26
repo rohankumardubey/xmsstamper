@@ -5,10 +5,10 @@ arch=x86_64
 arch_build=x86_64
 compiler=Visual Studio
 compiler.version=14
-build_type=Debug
+build_type=Release
 [options]
-xmscore:xms=True
-xmsinterp:xms=True
+xmsstamper:xms=False
+xmsstamper:pybind=False
 xmsstamper:testing=True
 [build_requires]
 [env]

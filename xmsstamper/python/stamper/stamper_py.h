@@ -13,6 +13,8 @@
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
 
+void initStamper(py::module &);
+
 //----- Function declarations --------------------------------------------------
 void initXmStamper(py::module &);
 void initXmStamperIo(py::module &);
