@@ -122,16 +122,15 @@ void initXmStamperIo(py::module &m)
   const char* get_out_tin_doc = R"pydoc(
       Gets the TIN created by the stamp operation
 
-      Args:
-          out_tin[out] (TrTin): The output TIN
+      Return:
+          The output TIN
   )pydoc";
   stamper_io.def("get_out_tin",
-  [](xms::XmStamper &self, xms::TrTin &out_tin)
+  [](xms::XmStamper &self) -> xms::TrTin
   {
-    out_tin = self.m_outTin;
+    return self.m_outTin;
   },
-  get_out_tin_doc,
-  py::arg("out_tin"));
+  get_out_tin_doc);
   // ---------------------------------------------------------------------------
   // function: get_breaklines
   // ---------------------------------------------------------------------------

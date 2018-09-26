@@ -14,6 +14,5 @@
 namespace py = pybind11;
 
 //----- Function declarations --------------------------------------------------
-void initStamper(py::module &);
-
 void initXmStamper(py::module &);
+void initXmStamperIo(py::module &);
