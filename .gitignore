@@ -52,3 +52,4 @@ test_package/build/
 Doxygen/doxy_warn.log
 Doxygen/html/
 Doxygen/xmsextractor.tag
+build_py/*
