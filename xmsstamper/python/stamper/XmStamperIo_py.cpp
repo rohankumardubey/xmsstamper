@@ -22,10 +22,79 @@ PYBIND11_DECLARE_HOLDER_TYPE(T, boost::shared_ptr<T>);
 
 void initXmStamperIo(py::module &m)
 {
+  py::class_<xms::XmStampCrossSection, boost::shared_ptr<xms::XmStampCrossSection>> stamper_cross_section(m, "XmStampCrossSection");
+  stamper_cross_section.def(py::init<>());
+  // ---------------------------------------------------------------------------
+  // perpoerty: left
+  // ---------------------------------------------------------------------------
+  const char* left_doc = R"pydoc(
+      Points defining the cross section
+  )pydoc";
+  stamper_cross_section.def_property("left",
+            [](xms::XmStamperCenterlineProfile &self) -> py::iterable
+            {
+                return xms::PyIterFromVecPt2d(self.m_left);
+            },
+            [](xms::XmStamperCenterlineProfile &self, py::iterable left)
+            {
+                self.m_left = *xms::VecPt2dFromPyIter(left);
+            },
+            left_doc
+        );
+  // ---------------------------------------------------------------------------
+  // perpoerty: left_max
+  // ---------------------------------------------------------------------------
+  const char* left_max_doc = R"pydoc(
+      Max x value for left side
+  )pydoc";
+  stamper_cross_section.def_readwrite("left_max", &xms::XmStamperCenterlineProfile::m_leftMax,
+    left_max_doc);
+  // ---------------------------------------------------------------------------
+  // perpoerty: index_left_shoulder
+  // ---------------------------------------------------------------------------
+  const char* index_left_shoulder_doc = R"pydoc(
+      index to the shoulder point in the left point list
+  )pydoc";
+  stamper_cross_section.def_readwrite("index_left_shoulder", &xms::XmStamperCenterlineProfile::
+    m_idxLeftShoulder, index_left_shoulder_doc);
+  // ---------------------------------------------------------------------------
+  // perpoerty: right
+  // ---------------------------------------------------------------------------
+  const char* right_doc = R"pydoc(
+      Points defining the cross section
+  )pydoc";
+  stamper_cross_section.def_property("right",
+            [](xms::XmStamperCenterlineProfile &self) -> py::iterable
+            {
+                return xms::PyIterFromVecPt2d(self.m_right);
+            },
+            [](xms::XmStamperCenterlineProfile &self, py::iterable right)
+            {
+                self.m_right = *xms::VecPt2dFromPyIter(right);
+            },
+            right_doc
+        );
+  // ---------------------------------------------------------------------------
+  // perpoerty: right_max
+  // ---------------------------------------------------------------------------
+  const char* right_max_doc = R"pydoc(
+      Max x value for right side
+  )pydoc";
+  stamper_cross_section.def_readwrite("right_max", &xms::XmStamperCenterlineProfile::m_rightMax,
+    right_max_doc);
+  // ---------------------------------------------------------------------------
+  // perpoerty: index_right_shoulder
+  // ---------------------------------------------------------------------------
+  const char* index_right_shoulder_doc = R"pydoc(
+      index to the shoulder point in the right point list
+  )pydoc";
+  stamper_cross_section.def_readwrite("index_right_shoulder", &xms::XmStamperCenterlineProfile::
+    m_idxRightShoulder, index_right_shoulder_doc);
+
   py::class_<xms::XmStamperCenterlineProfile, boost::shared_ptr<xms::XmStamperCenterlineProfile>> stamper_centerline_profile(m, "XmStamperCenterlineProfile");
   stamper_centerline_profile.def(py::init<>());
   // ---------------------------------------------------------------------------
-  // function: distance
+  // property: distance
   // ---------------------------------------------------------------------------
   const char* distance_doc = R"pydoc(
       Distance from start of polyline for cross section
@@ -42,7 +111,7 @@ void initXmStamperIo(py::module &m)
             distance_doc
         );
   // ---------------------------------------------------------------------------
-  // function: elevation
+  // property: elevation
   // ---------------------------------------------------------------------------
   const char* elevation_doc = R"pydoc(
       Elevation at the cross section location
