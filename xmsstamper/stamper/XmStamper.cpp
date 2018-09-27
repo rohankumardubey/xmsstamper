@@ -200,7 +200,7 @@ void XmStamperImpl::DoStamp(XmStamperIo& a_)
     a_.m_outBreakLines = m_breaklines;
     a_.m_outTin = m_tin;
   }
-
+  
 } // XmStamperImpl::DoStamp
 //------------------------------------------------------------------------------
 /// \brief Converts XmStamperCenterlineProfile class to XmStamperIo class inputs
@@ -232,11 +232,15 @@ void XmStamperImpl::WriteInputsForDebug()
 //------------------------------------------------------------------------------
 bool XmStamperImpl::InputErrorsFound()
 {
+  std::cout << "Location 1.1" << std::endl;
   XM_ENSURE_TRUE(m_io.m_centerLine.size() > 1, true);
+  std::cout << "Location 1.2" << std::endl;
   XM_ENSURE_TRUE(m_io.m_centerLine.size() == m_io.m_cs.size(), true);
   // make sure that at least one cross section has data
+  std::cout << "Location 1.3" << std::endl;
   if (!m_interp->ValidCrossSectionsExist(m_io))
   {
+	std::cout << "Location 1.4" << std::endl;
     XM_LOG(xmlog::warning, "No valid cross sections defined. Aborting stamp operation.");
     return true;
   }
@@ -248,9 +252,11 @@ bool XmStamperImpl::InputErrorsFound()
 //------------------------------------------------------------------------------
 void XmStamperImpl::CreateBathemetryIntersector()
 {
+  std::cout << "Location 2.1" << std::endl;
   m_intersect.reset();
   if (m_io.m_bathemetry)
   {
+	std::cout << "Location 2.2" << std::endl;
     XmStamperIo tmp(m_io);
 
     InterpolateMissingCrossSections();
@@ -259,12 +265,15 @@ void XmStamperImpl::CreateBathemetryIntersector()
     Convert3dPtsToVec();
     CreateOutputs();
 
+	std::cout << "Location 2.3" << std::endl;
     // get the boundary of the stamp
     GetStampBounds();
 
+	std::cout << "Location 2.4" << std::endl;
     m_intersect = XmBathymetryIntersector::New(m_io.m_bathemetry, m_io.m_outTin);
     m_intersect->IntersectCenterLine(m_io);
 
+	std::cout << "Location 2.5" << std::endl;
     m_io = tmp;
   }
 } // XmStamperImpl::IntersectCenterLineWithBathemetry
