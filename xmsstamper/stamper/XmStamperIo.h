@@ -36,6 +36,37 @@ namespace xms
 class TrTin;
 
 ////////////////////////////////////////////////////////////////////////////////
+/// \class XmStampRaster
+/// \brief Raster defined using a non-rotated cartesian axis for use in XmStamper
+class XmStampRaster
+{
+  XmStampRaster() = delete;
+  /// \cond
+  friend class boost::serialization::access;
+  /// \endcond
+public:
+  XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
+    const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals)
+    : m_numPixelsX(a_numPixelsX)
+    , m_numPixelsY(a_numPixelsY)
+    , m_pixelSizeX(a_pixelSizeX)
+    , m_pixelSizeY(a_pixelSizeY)
+    , m_min(a_min)
+    , m_vals(a_vals)
+  {
+  }
+  int m_numPixelsX; ///< Number of pixels in the X-direction
+  int m_numPixelsY; ///< Number of pixels in the X-direction
+  double m_pixelSizeX; ///< Pixel size in the X-direction
+  double m_pixelSizeY; ///< Pixel size in the Y-direction
+  Pt2d m_min; ///< Minimum (lower left) X, Y coordinate of the raster
+  std::vector<double> m_vals; ///< Raster values defined from the top left corner to the bottom right corner
+  int GetCellIndexFromColRow(const int a_col, const int a_row) const;
+  template <typename Archive>
+  void serialize(Archive& archive, const unsigned int version);
+};
+
+////////////////////////////////////////////////////////////////////////////////
 /// \class XmWingWall
 /// \brief Wing wall definition for feature stamp end cap
 class XmWingWall

@@ -87,6 +87,7 @@ link_directories(${EXT_LIB_DIRS})
 set(xmsstamper_sources
 	xmsstamper/stamper/XmStamper.cpp
 	xmsstamper/stamper/XmStamperIo.cpp
+	xmsstamper/stamper/TutStamping.cpp
 	xmsstamper/stamper/detail/XmBathymetryIntersector.cpp
 	xmsstamper/stamper/detail/XmBreaklines.cpp
 	xmsstamper/stamper/detail/XmGuideBankUtil.cpp
@@ -100,6 +101,7 @@ set(xmsstamper_sources
 set(xmsstamper_headers
   xmsstamper/stamper/XmStamper.h
   xmsstamper/stamper/XmStamperIo.h
+  xmsstamper/stamper/TutStamping.t.h
   xmsstamper/stamper/detail/XmBathymetryIntersector.h
   xmsstamper/stamper/detail/XmBathymetryIntersector.t.h
   xmsstamper/stamper/detail/XmBreaklines.h

@@ -318,5 +318,16 @@ void XmStampIntermediateTests::test_IntersectBathymetry10()
 {
   iDoTest("test_intersectBathymetry10/");
 } // XmStampIntermediateTests::test_IntersectBathymetry10
-
+//------------------------------------------------------------------------------
+/// \brief Tests building a stamping raster and getting a cell value.
+//------------------------------------------------------------------------------
+void XmStampIntermediateTests::test_BuildRasterAndGetCellValue()
+{
+  vector<double> rasterVals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
+  XmStampRaster raster(2, 3, 2.0, 1.0, Pt2d(0.0, 0.0), rasterVals);
+  TS_ASSERT_EQUALS(raster.GetCellIndexFromColRow(2, 3), -1);
+  const int lastCell = raster.GetCellIndexFromColRow(1, 2);
+  TS_ASSERT_EQUALS(lastCell, 5);
+  TS_ASSERT_EQUALS(raster.m_vals[lastCell], 5.0);
+} // XmStampIntermediateTests::test_BuildRasterAndGetCellValue
 #endif

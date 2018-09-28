@@ -43,6 +43,36 @@ namespace xms
 //----- Class / Function definitions -------------------------------------------
 
 //------------------------------------------------------------------------------
+/// \brief Gets the zero-based cell index from the given column and row.
+/// \param[in] a_col: The zero-based column index for the raster.
+/// \param[in] a_row: The zero-based row index for the raster.
+/// \return The zero-based cell index from the given a_col, a_row.
+//------------------------------------------------------------------------------
+int XmStampRaster::GetCellIndexFromColRow(const int a_col, const int a_row) const
+{
+  if (a_col >= 0 && a_col < m_numPixelsX && a_row >= 0 && a_row < m_numPixelsY)
+  {
+    return a_row * m_numPixelsX + a_col;
+  }
+  return -1;
+} // XmStampRaster::GetCellIndexFromColRow
+//------------------------------------------------------------------------------
+/// \brief Boost serialize function.
+/// \param[in,out] archive: An archive.
+/// \param[in] version: The version number.
+//------------------------------------------------------------------------------
+template <typename Archive>
+void XmStampRaster::serialize(Archive& archive, const unsigned int version)
+{
+  (void)version; // Because Doxygen complained when commented out above.
+  archive &m_numPixelsX;
+  archive &m_numPixelsY;
+  archive &m_pixelSizeX;
+  archive &m_pixelSizeY;
+  archive &m_min;
+  archive &m_vals;
+} // XmStampRaster::serialize
+//------------------------------------------------------------------------------
 /// \brief Boost serialize function.
 /// \param[in,out] archive: An archive.
 /// \param[in] version: The version number.
