@@ -13,7 +13,7 @@
 #include <xmscore/python/misc/PyUtils.h> // PyIterFromVecPt3d, etc.
 #include <xmscore/python/misc/PublicObserver.h>
 #include <xmsstamper/stamper/XmStamper.h>
-#include <xmsstamper/stamper/XmSTamperIo.h>
+#include <xmsstamper/stamper/XmStamperIo.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
