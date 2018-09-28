@@ -53,3 +53,6 @@ Doxygen/doxy_warn.log
 Doxygen/html/
 Doxygen/xmsextractor.tag
 build_py/*
+
+# Test Files
+test_files/**/*_out*
