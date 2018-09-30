@@ -22,7 +22,9 @@
 // 5. Shared code headers
 #include <xmscore/math/math.h>
 #include <xmscore/misc/XmError.h>
+#include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmsinterp/geometry/geoms.h>
+#include <xmsinterp/interpolate/InterpLinear.h>
 #include <xmscore/misc/Observer.h>
 #include <xmsstamper/stamper/detail/XmBathymetryIntersector.h>
 #include <xmsstamper/stamper/detail/XmBreaklines.h>
@@ -57,7 +59,7 @@ public:
   XmStamperImpl();
   ~XmStamperImpl();
 
-  virtual void DoStamp(XmStamperIo& a_) override;
+  virtual void DoStamp(XmStamperIo& a_io) override;
   virtual void FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
                                                   XmStamperCenterlineProfile& a_profile) override;
 
@@ -85,7 +87,7 @@ public:
 
   BSHP<Observer> m_observer; ///< progress observer
   XmStamperIo m_io;          ///< inputs to the stamp operation
-  /// vector of stampers to break up center line where intersection occur
+  /// vector of stampers to break up center line where intersections occur
   std::vector<XmStamperIo> m_vIo;
   /// cross section interpolator. Interpolates cross sections to points along
   /// the polyline in the XmStamperIo class.
@@ -107,7 +109,7 @@ public:
 
   void WriteInputsForDebug();
   bool InputErrorsFound();
-  void CreateBathemetryIntersector();
+  void CreateBathymetryIntersector();
   void GetStampBounds();
   void IntersectCenterLineWithBathemetry();
   void InterpolateMissingCrossSections();
@@ -121,7 +123,39 @@ public:
   void AppendTinAndBreakLines(bool a_errors);
   void Convert3dPtsToVec();
 };
-
+namespace
+{
+//------------------------------------------------------------------------------
+/// \brief Stamps a TrTin to an XmStampRaster object.  If a raster cell is
+///        out of bounds of a_tin, nothing is interpolated to a_raster.
+///        If the raster cell has XM_NODATA values, the a_tin values are still
+///        interpolated to the raster at any location where a_tin overlaps
+///        a_raster.
+/// \param[in] a_tin: The TIN to interpolate from.
+/// \param[in, out] a_raster: The raster to interpolate to.
+//------------------------------------------------------------------------------
+bool iInterpTinToRaster(const boost::shared_ptr<const TrTin> &a_tin, XmStampRaster &a_raster)
+{
+  XM_ENSURE_TRUE(a_tin != nullptr, false);
+  BSHP<InterpLinear> interp = InterpLinear::New();
+  BSHP<VecPt3d> pts(new VecPt3d());
+  *pts = a_tin->Points();
+  BSHP<VecInt> tris(new VecInt());
+  *tris = a_tin->Triangles();
+  interp->SetPtsTris(pts, tris);
+  interp->SetExtrapVal(XM_NODATA);
+  int rasterSize = static_cast<int>(a_raster.m_vals.size());
+  for (int i = 0; i < rasterSize; ++i)
+  {
+    float val = interp->InterpToPt(Pt3d(a_raster.GetLocationFromCellIndex(i)));
+    if (!EQ_TOL(val, XM_NODATA, XM_ZERO_TOL))
+    {
+      a_raster.m_vals[i] = val;
+    }
+  }
+  return true;
+} // iInterpTinToRaster
+}
 ////////////////////////////////////////////////////////////////////////////////
 /// \class XmStamperImpl
 /// \brief Performs a feature stamp operation
@@ -146,12 +180,12 @@ XmStamperImpl::~XmStamperImpl()
 } // XmStamperImpl::~XmStamperImpl
 //------------------------------------------------------------------------------
 /// \brief Performs the feature stamping operation
-/// \param a_ The stamping input/output class. When sucessful, the m_outTin and
-/// m_outBreakLines members of a_ and filled by this method.
+/// \param a_io The stamping input/output class. When sucessful, the m_outTin and
+/// m_outBreakLines members of a_io are filled by this method.
 //------------------------------------------------------------------------------
-void XmStamperImpl::DoStamp(XmStamperIo& a_)
+void XmStamperImpl::DoStamp(XmStamperIo& a_io)
 {
-  m_io = a_;
+  m_io = a_io;
   m_io.m_outTin.reset();
   m_io.m_outBreakLines.clear();
 
@@ -160,7 +194,7 @@ void XmStamperImpl::DoStamp(XmStamperIo& a_)
   if (InputErrorsFound())
     return;
 
-  CreateBathemetryIntersector();
+  CreateBathymetryIntersector();
 
   IntersectCenterLineWithBathemetry();
   InterpolateMissingCrossSections();
@@ -189,8 +223,12 @@ void XmStamperImpl::DoStamp(XmStamperIo& a_)
 
   if (!m_error)
   {
-    a_.m_outBreakLines = m_breaklines;
-    a_.m_outTin = m_tin;
+    a_io.m_outBreakLines = m_breaklines;
+    a_io.m_outTin = m_tin;
+    if (!a_io.m_raster.m_vals.empty())
+    {
+      iInterpTinToRaster(a_io.m_outTin, a_io.m_raster);
+    }
   }
   
 } // XmStamperImpl::DoStamp
@@ -218,8 +256,7 @@ void XmStamperImpl::WriteInputsForDebug()
   }
 } // WriteInputsForDebug
 //------------------------------------------------------------------------------
-/// \brief Interpolates cross sections for any points that do not have a
-///        cross section specified.
+/// \brief Checks for input errors.
 /// \return true or false.
 //------------------------------------------------------------------------------
 bool XmStamperImpl::InputErrorsFound()
@@ -238,10 +275,10 @@ bool XmStamperImpl::InputErrorsFound()
 //------------------------------------------------------------------------------
 /// \brief Creates the intersector for the bathymetry
 //------------------------------------------------------------------------------
-void XmStamperImpl::CreateBathemetryIntersector()
+void XmStamperImpl::CreateBathymetryIntersector()
 {
   m_intersect.reset();
-  if (m_io.m_bathemetry)
+  if (m_io.m_bathymetry)
   {
     XmStamperIo tmp(m_io);
 
@@ -254,7 +291,7 @@ void XmStamperImpl::CreateBathemetryIntersector()
     // get the boundary of the stamp
     GetStampBounds();
 
-    m_intersect = XmBathymetryIntersector::New(m_io.m_bathemetry, m_io.m_outTin);
+    m_intersect = XmBathymetryIntersector::New(m_io.m_bathymetry, m_io.m_outTin);
     m_intersect->IntersectCenterLine(m_io);
 
     m_io = tmp;
@@ -306,8 +343,7 @@ void XmStamperImpl::InterpolateMissingCrossSections()
   m_interp->InterpMissingCrossSections(m_io);
 } // XmStamperImpl::InterpolateMissingCrossSections
 //------------------------------------------------------------------------------
-/// \brief Interpolates cross sections for any points that do not have a
-/// cross section specified.
+/// \brief Decomposes the centerline (more help needed)
 //------------------------------------------------------------------------------
 void XmStamperImpl::DecomposeCenterLine()
 {
@@ -348,7 +384,7 @@ void XmStamperImpl::ConvertEndCapsTo3d()
 //------------------------------------------------------------------------------
 void XmStamperImpl::IntersectWithTin()
 {
-  if (!m_io.m_bathemetry)
+  if (!m_io.m_bathymetry)
     return;
 
   // intersect the left and right side xsects

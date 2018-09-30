@@ -57,6 +57,39 @@ int XmStampRaster::GetCellIndexFromColRow(const int a_col, const int a_row) cons
   return -1;
 } // XmStampRaster::GetCellIndexFromColRow
 //------------------------------------------------------------------------------
+/// \brief Gets the zero-based column and row from the cell index.
+/// \param[in] a_index: The zero-based raster cell index.
+/// \param[out] a_col: The zero-based column index for the raster.
+/// \param[out] a_row: The zero-based row index for the raster.
+//------------------------------------------------------------------------------
+void XmStampRaster::GetColRowFromCellIndex(const int a_index, int &a_col, int &a_row) const
+{
+  a_row = a_col = -1;
+  if (a_index > 0 && a_index < m_numPixelsX * m_numPixelsY)
+  {
+    a_col = a_index % m_numPixelsX;
+    a_row = a_index / m_numPixelsX;
+  }
+} // XmStampRaster::GetColRowFromCellIndex
+  //------------------------------------------------------------------------------
+/// \brief Gets the location of the cell from the zero-based cell index.
+/// \param[in] a_index: The zero-based raster cell index.
+/// \return The location of the cell with the given index.
+//------------------------------------------------------------------------------
+Pt2d XmStampRaster::GetLocationFromCellIndex(const int a_index) const
+{
+  int col, row;
+  GetColRowFromCellIndex(a_index, col, row);
+  if (col >= 0 && row >= 0)
+  {
+    Pt2d loc;
+    loc.x = m_min.x + col * m_pixelSizeX;
+    loc.y = m_min.y + (m_numPixelsY - 1 - row) * m_pixelSizeY;
+    return loc;
+  }
+  return m_min;
+}
+//------------------------------------------------------------------------------
 /// \brief Boost serialize function.
 /// \param[in,out] archive: An archive.
 /// \param[in] version: The version number.
@@ -155,7 +188,7 @@ void XmStamperIo::serialize(Archive& archive, const unsigned int version)
   archive& m_cs;
   archive& m_firstEndCap;
   archive& m_lastEndCap;
-  archive& m_bathemetry;
+  archive& m_bathymetry;
   archive& m_outTin;
   archive& m_outBreakLines;
 } // XmStamperIo::serialize

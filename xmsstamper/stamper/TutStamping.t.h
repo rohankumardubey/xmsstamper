@@ -29,6 +29,7 @@ public:
   void test_StampSlopedAbutment();
   void test_StampGuidebank();
   void test_StampIntersectBathymetry();
+  void test_StampIntersectRaster();
 };
 
 #endif

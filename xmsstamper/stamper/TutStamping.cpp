@@ -69,8 +69,8 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   // define the center line
   io.m_centerLine = {{0, 0, 15}, {0, 10, 15}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 15}, {5, 15}, {6, 14}};
@@ -124,8 +124,8 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   // define the center line
   io.m_centerLine = {{0, 0, 0}, {0, 10, 0}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 0}, {5, 0}, {6, 1}};
@@ -179,8 +179,8 @@ void TutStampingUnitTests::test_StampWingWall()
   // define the center line
   io.m_centerLine = {{0, 0, 15}, {20, 20, 15}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 15}, {5, 15}, {6, 14}};
@@ -246,8 +246,8 @@ void TutStampingUnitTests::test_StampSlopedAbutment()
   // define the center line
   io.m_centerLine = {{0, 0, 15}, {20, 20, 15}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 15}, {5, 15}, {6, 14}};
@@ -307,8 +307,8 @@ void TutStampingUnitTests::test_StampGuidebank()
   // define the center line
   io.m_centerLine = {{0, 0, 15}, {50, 50, 15}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 15}, {5, 15}, {6, 14}};
@@ -358,8 +358,8 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   // define the center line
   io.m_centerLine = {{0, 0, 15}, {10, 10, 15}};
 
-  // define a cross sections at each point on the center line. This will
-  // be a symetric cross section. The top width will be 10 and the side
+  // define a cross section at each point on the center line. This will
+  // be a symmetric cross section. The top width will be 10 and the side
   // slope will be 1. The cross section will have a total width of 40.
   xms::XmStampCrossSection cs;
   cs.m_left = {{0, 15}, {5, 15}, {6, 14}};
@@ -380,7 +380,13 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   tin->SetPoints(tPts);
   tin->SetTriangles(tTris);
   // set the bathymetry member of the io class
-  io.m_bathemetry = tin;
+  io.m_bathymetry = tin;
+
+  // create a Raster to stamp to
+  const std::vector<double> rasterVals(1050, 0.0);
+  xms::XmStampRaster raster(35, 30, 1.0, 1.0, xms::Pt2d(-15.0, -10.0), rasterVals);
+  // set the raster member of the raster class
+  io.m_raster = raster;
 
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
@@ -393,7 +399,8 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
                           {3.54, -3.54, 15},  {7.37, -7.37, 9.58}, {13.54, 6.46, 15},
                           {17.37, 2.63, 9.58}};
   TS_ASSERT_DELTA_VECPT3D(basePts, io.m_outTin->Points(), 1e-2);
+  // Check the raster values here
+  ///////////////////////////////
 } // TutStampingTests::test_StampIntersectBathymetry
   //! [snip_testStampIntersectBathymetry]
-
 #endif

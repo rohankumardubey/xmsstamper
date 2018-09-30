@@ -423,11 +423,11 @@ void initXmStamperIo(py::module &m)
   stamper_io.def_property("bathymetry",
   [](xms::XmStamperIo &self) -> boost::shared_ptr<xms::TrTin>
   {
-    return self.m_bathemetry;
+    return self.m_bathymetry;
   }, 
   [](xms::XmStamperIo &self, boost::shared_ptr<xms::TrTin> &bathymetry)
   {
-    self.m_bathemetry = bathymetry;
+    self.m_bathymetry = bathymetry;
   },
   bathymetry_doc);
   // ---------------------------------------------------------------------------

@@ -64,12 +64,15 @@ public:
   {
   }
   int m_numPixelsX; ///< Number of pixels in the X-direction (Required)
-  int m_numPixelsY; ///< Number of pixels in the X-direction (Required)
+  int m_numPixelsY; ///< Number of pixels in the Y-direction (Required)
   double m_pixelSizeX; ///< Pixel size in the X-direction (Required)
   double m_pixelSizeY; ///< Pixel size in the Y-direction (Required)
   Pt2d m_min; ///< Minimum (lower left) X, Y coordinate of the raster (Required)
   std::vector<double> m_vals; ///< Raster values defined from the top left corner to the bottom right corner (Required)
+                              ///< Use XM_NODATA to specify a cell value with no data.
   int GetCellIndexFromColRow(const int a_col, const int a_row) const;
+  void GetColRowFromCellIndex(const int a_index, int & a_col, int & a_row) const;
+  Pt2d GetLocationFromCellIndex(const int a_index) const;
   template <typename Archive>
   void serialize(Archive& archive, const unsigned int version);
 };
@@ -190,11 +193,11 @@ public:
   /// left side of the cross section
   VecPt2d m_left;        ///< points defining the cross section
   double m_leftMax;      ///< max x value for left side
-  int m_idxLeftShoulder; ///< index to the should point in the m_left vector
+  int m_idxLeftShoulder; ///< index to the shoulder point in the m_left vector
   /// right side of the cross section
   VecPt2d m_right;        ///< points defining the cross section
   double m_rightMax;      ///< max x value for right side
-  int m_idxRightShoulder; ///< index to the should point in the m_right vector
+  int m_idxRightShoulder; ///< index to the shoulder point in the m_right vector
 
   template <typename Archive>
   void serialize(Archive& archive, const unsigned int version);
@@ -227,7 +230,7 @@ public:
   , m_cs()
   , m_firstEndCap()
   , m_lastEndCap()
-  , m_bathemetry()
+  , m_bathymetry()
   , m_outTin()
   , m_outBreakLines()
   {
@@ -244,14 +247,16 @@ public:
   XmStamperEndCap m_firstEndCap;
   /// end cap at end of polyline
   XmStamperEndCap m_lastEndCap;
-  /// underlying bathemetry
-  BSHP<TrTin> m_bathemetry;
+  /// underlying bathymetry
+  BSHP<TrTin> m_bathymetry;
 
   /// Output
   /// TIN created by the stamp operation
   BSHP<TrTin> m_outTin;
   /// break lines that are honored in the TIN
   VecInt2d m_outBreakLines;
+  /// Input/output raster to stamp the resulting elevations onto this raster
+  XmStampRaster m_raster;
 
   std::string ToString() const;
   void FromString(const std::string&);
