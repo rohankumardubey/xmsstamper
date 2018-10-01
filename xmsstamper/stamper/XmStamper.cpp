@@ -21,7 +21,7 @@
 
 // 5. Shared code headers
 #include <xmscore/math/math.h>
-#include <xmscore/misc/XmError.h>
+#include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
 #include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmsinterp/geometry/geoms.h>
 #include <xmsinterp/interpolate/InterpLinear.h>

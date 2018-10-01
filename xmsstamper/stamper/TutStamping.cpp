@@ -43,6 +43,9 @@ namespace xms
 ////////////////////////////////////////////////////////////////////////////////
 #include <xmsstamper/stamper/TutStamping.t.h>
 
+#include <fstream> // std::ofstream
+
+#include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmscore/testing/TestTools.h> // TS_ASSERT_EQUALS
 
 #include <xmsinterp/geometry/geoms.h>
@@ -82,9 +85,24 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   io.m_cs.push_back(cs);
   io.m_cs.push_back(cs);
 
+  // create a Raster to stamp to
+  const int numPixelsX = 41, numPixelsY = 11;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-20.0, 0.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
+  io.m_raster = raster;
+
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
+
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
@@ -107,6 +125,10 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[5]);
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankmentTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampFillEmbankment
 //! [snip_testStampFillEmbankment]
 //! [snip_testStampCutEmbankment]
@@ -137,9 +159,24 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   io.m_cs.push_back(cs);
   io.m_cs.push_back(cs);
 
+  // create a Raster to stamp to
+  const int numPixelsX = 41, numPixelsY = 11;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-20.0, 0.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
+  io.m_raster = raster;
+
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
+
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
@@ -162,6 +199,10 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[5]);
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankmentTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampCutEmbankment
 //! [snip_testStampCutEmbankment]
 //! [snip_testStampWingWall]
@@ -202,9 +243,24 @@ void TutStampingUnitTests::test_StampWingWall()
   io.m_lastEndCap.m_angle = -15;
   io.m_lastEndCap.m_wingWall.m_wingWallAngle = 10;
 
+  // create a Raster to stamp to
+  const int numPixelsX = 46, numPixelsY = 45;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-16.0, -8.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
+  io.m_raster = raster;
+
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
+
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
@@ -228,6 +284,10 @@ void TutStampingUnitTests::test_StampWingWall()
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[5]);
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWallTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampWingWall
 //! [snip_testStampWingWall]
 //! [snip_testStampSlopedAbutment]
@@ -271,9 +331,24 @@ void TutStampingUnitTests::test_StampSlopedAbutment()
   // change the angle on the last end cap
   io.m_lastEndCap.m_angle = 20;
 
+  // create a Raster to stamp to
+  const int numPixelsX = 56, numPixelsY = 53;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-17.0, -17.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
+  io.m_raster = raster;
+
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
+
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
@@ -288,7 +363,10 @@ void TutStampingUnitTests::test_StampSlopedAbutment()
     {34.3, 24.1, 3.6},  {36.4, 21.5, 2.9},  {37.7, 18.2, 2.1}, {38, 14.6, 1.4},
     {37.3, 10.8, 0.7}};
   TS_ASSERT_DELTA_VECPT3D(basePts, io.m_outTin->Points(), 1e-1);
-
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutmentTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampSlopedAbutment
 //! [snip_testStampSlopedAbutment]
 //! [snip_testStampGuidebank]
@@ -334,13 +412,32 @@ void TutStampingUnitTests::test_StampGuidebank()
   // change the angle on the last end cap
   io.m_lastEndCap.m_angle = 10;
 
+  // create a Raster to stamp to
+  const int numPixelsX = 90, numPixelsY = 81;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-21.0, -12.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
+  io.m_raster = raster;
+
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
+
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
   TS_ASSERT_EQUALS(144, io.m_outTin->Points().size());
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebankTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampGuidebank
 //! [snip_testStampGuidebank]
 //! [snip_testStampIntersectBathymetry]
@@ -374,7 +471,7 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   // create a TIN to represent Bathymetry
   BSHP<xms::TrTin> tin = xms::TrTin::New();
   BSHP<xms::VecPt3d> tPts(new xms::VecPt3d());
-  *tPts = {{-1, 25, 6}, {15, 11, 6}, {5, -11, 10}, {20, 4, 10}};
+  *tPts = {{-1, 25, 6}, {-15, 11, 6}, {5, -11, 10}, {20, 4, 10}};
   BSHP<xms::VecInt> tTris(new xms::VecInt());
   *tTris = {0, 1, 2, 1, 3, 2};
   tin->SetPoints(tPts);
@@ -383,24 +480,35 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   io.m_bathymetry = tin;
 
   // create a Raster to stamp to
-  const std::vector<double> rasterVals(1050, 0.0);
-  xms::XmStampRaster raster(35, 30, 1.0, 1.0, xms::Pt2d(-15.0, -10.0), rasterVals);
-  // set the raster member of the raster class
+  const int numPixelsX = 29, numPixelsY = 34;
+  const double pixelSize = 1.0;
+  const xms::Pt2d minPt(-10.0, -8.0);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
+  // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+  // the XmStamper::DoStamp function.
   io.m_raster = raster;
 
   // create a XmStamper class. This class performs the stamp operation.
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
+  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_out.asc"));
+  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_base.asc"));
+  io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+  TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
+
   // verify the outputs
   TS_ASSERT(io.m_outTin); // the output TIN should exist
-  xms::VecPt3d basePts = {{0, 0, 15},         {10, 10, 15},        {-3.54, 3.54, 15},
-                          {-14.14, 14.14, 0}, {6.46, 13.54, 15},   {0.49, 19.51, 6.54},
-                          {3.54, -3.54, 15},  {7.37, -7.37, 9.58}, {13.54, 6.46, 15},
-                          {17.37, 2.63, 9.58}};
+  xms::VecPt3d basePts = {{0, 0, 15},          {10, 10, 15},        {-3.54, 3.54, 15},
+                          {-9.42, 9.42, 6.68}, {6.46, 13.54, 15},   {-4.14, 24.14, 0},
+                          {3.54, -3.54, 15},   {7.18, -7.18, 9.84}, {13.54, 6.46, 15},
+                          {17.18, 2.82, 9.84}};
   TS_ASSERT_DELTA_VECPT3D(basePts, io.m_outTin->Points(), 1e-2);
-  // Check the raster values here
-  ///////////////////////////////
-} // TutStampingTests::test_StampIntersectBathymetry
+  // Write output TIN for viewing in XMS
+  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetryTin_out.tin"));
+  std::ofstream ofs(tinFileName, std::ofstream::trunc);
+  io.m_outTin->ExportTinFile(ofs);
+} // TutStampingUnitTests::test_StampIntersectBathymetry
   //! [snip_testStampIntersectBathymetry]
 #endif

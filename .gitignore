@@ -56,3 +56,4 @@ build_py/*
 
 # Test Files
 test_files/**/*_out*
+test_files/stamping/rasterTestFiles/*.tif

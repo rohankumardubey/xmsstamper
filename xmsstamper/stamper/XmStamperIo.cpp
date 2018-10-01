@@ -14,7 +14,8 @@
 #include <xmsstamper/stamper/XmStamperIo.h>
 
 // 3. Standard library headers
-#include <sstream>
+#include <fstream> // std::ofstream
+#include <sstream> // std::stringstream
 
 // 4. External library headers
 #include <boost/archive/text_iarchive.hpp>
@@ -23,6 +24,8 @@
 #include <boost/serialization/vector.hpp>
 
 // 5. Shared code headers
+#include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
+#include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmsinterp/triangulate/TrTin.h>
 
 // 6. Non-shared code headers
@@ -42,6 +45,33 @@ namespace xms
 
 //----- Class / Function definitions -------------------------------------------
 
+//------------------------------------------------------------------------------
+/// \brief Constructor that sets all the raster values
+//------------------------------------------------------------------------------
+XmStampRaster::XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
+  const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData)
+  : m_numPixelsX(a_numPixelsX)
+  , m_numPixelsY(a_numPixelsY)
+  , m_pixelSizeX(a_pixelSizeX)
+  , m_pixelSizeY(a_pixelSizeY)
+  , m_min(a_min)
+  , m_vals(a_vals)
+  , m_noData(a_noData)
+{
+} // XmStampRaster::XmStampRaster
+//------------------------------------------------------------------------------
+/// \brief Default Constructor
+//------------------------------------------------------------------------------
+XmStampRaster::XmStampRaster()
+  : m_numPixelsX(0)
+  , m_numPixelsY(0)
+  , m_pixelSizeX(0.0)
+  , m_pixelSizeY(0.0)
+  , m_min()
+  , m_vals()
+  , m_noData(XM_NODATA)
+{
+} // XmStampRaster::XmStampRaster
 //------------------------------------------------------------------------------
 /// \brief Gets the zero-based cell index from the given column and row.
 /// \param[in] a_col: The zero-based column index for the raster.
@@ -72,7 +102,7 @@ void XmStampRaster::GetColRowFromCellIndex(const int a_index, int &a_col, int &a
   }
 } // XmStampRaster::GetColRowFromCellIndex
   //------------------------------------------------------------------------------
-/// \brief Gets the location of the cell from the zero-based cell index.
+/// \brief Gets the location of the cell center from the zero-based cell index.
 /// \param[in] a_index: The zero-based raster cell index.
 /// \return The location of the cell with the given index.
 //------------------------------------------------------------------------------
@@ -88,7 +118,38 @@ Pt2d XmStampRaster::GetLocationFromCellIndex(const int a_index) const
     return loc;
   }
   return m_min;
-}
+} // XmStampRaster::GetLocationFromCellIndex
+//------------------------------------------------------------------------------
+/// \brief Writes the raster in the given format to the given filename.
+/// \param[in] a_fileName: The output raster filename.
+/// \param[in] a_format: The output raster format.
+//------------------------------------------------------------------------------
+void XmStampRaster::WriteGridFile(const std::string &a_fileName,
+  const XmRasterFormatEnum a_format)
+{
+  std::ofstream outGrid(a_fileName, std::ofstream::trunc);
+  XM_ENSURE_TRUE(outGrid.is_open());
+  switch (a_format)
+  {
+    case RS_ARCINFO_ASCII:
+      outGrid << "ncols " << m_numPixelsX << std::endl;
+      outGrid << "nrows " << m_numPixelsY << std::endl;
+      outGrid << "xllcorner " << std::fixed << std::setprecision(13) << m_min.x - m_pixelSizeX / 2.0 << std::endl;
+      outGrid << "yllcorner " << m_min.y - m_pixelSizeY / 2.0 << std::endl;
+      outGrid << "cellsize " << m_pixelSizeX << std::endl;
+      outGrid << "NODATA_value " << m_noData << std::endl;
+      outGrid << std::setprecision(2);
+      int count = 0;
+      for (const double v : m_vals)
+      {
+        outGrid << v << " ";
+        ++count;
+        if (count % m_numPixelsX == 0)
+          outGrid << std::endl;
+      }
+      break;
+  }
+} // XmStampRaster::WriteGridFile
 //------------------------------------------------------------------------------
 /// \brief Boost serialize function.
 /// \param[in,out] archive: An archive.

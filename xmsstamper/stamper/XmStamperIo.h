@@ -45,34 +45,21 @@ class XmStampRaster
   /// \endcond
 public:
   XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
-    const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals)
-    : m_numPixelsX(a_numPixelsX)
-    , m_numPixelsY(a_numPixelsY)
-    , m_pixelSizeX(a_pixelSizeX)
-    , m_pixelSizeY(a_pixelSizeY)
-    , m_min(a_min)
-    , m_vals(a_vals)
-  {
-  }
-  XmStampRaster()
-    : m_numPixelsX(0)
-    , m_numPixelsY(0)
-    , m_pixelSizeX(0.0)
-    , m_pixelSizeY(0.0)
-    , m_min()
-    , m_vals()
-  {
-  }
+    const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData);
+  XmStampRaster();
+  enum XmRasterFormatEnum {RS_ARCINFO_ASCII};
   int m_numPixelsX; ///< Number of pixels in the X-direction (Required)
   int m_numPixelsY; ///< Number of pixels in the Y-direction (Required)
   double m_pixelSizeX; ///< Pixel size in the X-direction (Required)
   double m_pixelSizeY; ///< Pixel size in the Y-direction (Required)
-  Pt2d m_min; ///< Minimum (lower left) X, Y coordinate of the raster (Required)
+  Pt2d m_min; ///< Minimum (lower left) X, Y coordinate of the raster at the center of the raster cell (Required)
   std::vector<double> m_vals; ///< Raster values defined from the top left corner to the bottom right corner (Required)
-                              ///< Use XM_NODATA to specify a cell value with no data.
+                              ///< Use the m_noData value to specify a cell value with no data.
+  int m_noData; ///< NO DATA value for the raster (typically XM_NODATA)
   int GetCellIndexFromColRow(const int a_col, const int a_row) const;
   void GetColRowFromCellIndex(const int a_index, int & a_col, int & a_row) const;
   Pt2d GetLocationFromCellIndex(const int a_index) const;
+  void WriteGridFile(const std::string &a_fileName, const XmRasterFormatEnum a_format);
   template <typename Archive>
   void serialize(Archive& archive, const unsigned int version);
 };
