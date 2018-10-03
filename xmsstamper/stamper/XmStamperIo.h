@@ -18,13 +18,6 @@
 // 5. Shared code headers
 
 //----- Forward declarations ---------------------------------------------------
-namespace boost
-{
-namespace serialization
-{
-class access;
-}
-}
 
 //----- Namespace declaration --------------------------------------------------
 
@@ -40,9 +33,6 @@ class TrTin;
 /// \brief Raster defined using a non-rotated cartesian axis for use in XmStamper
 class XmStampRaster
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
     const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData);
@@ -60,8 +50,8 @@ public:
   void GetColRowFromCellIndex(const int a_index, int & a_col, int & a_row) const;
   Pt2d GetLocationFromCellIndex(const int a_index) const;
   void WriteGridFile(const std::string &a_fileName, const XmRasterFormatEnum a_format);
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -69,9 +59,6 @@ public:
 /// \brief Wing wall definition for feature stamp end cap
 class XmWingWall
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmWingWall()
   : m_wingWallAngle(0)
@@ -80,8 +67,8 @@ public:
 
   double m_wingWallAngle; ///< degrees from 0 to 60
 
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -89,9 +76,6 @@ public:
 /// \brief Abutment definition for feature stamp end cap
 class XmSlopedAbutment
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmSlopedAbutment()
   : m_maxX(0)
@@ -102,8 +86,8 @@ public:
   double m_maxX;   ///< max distance from center line
   VecPt2d m_slope; ///< x,y pairs defining slope from center line
 
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -111,9 +95,6 @@ public:
 /// \brief Guidebank definition for feature stamp end cap
 class XmGuidebank
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmGuidebank()
   : m_side(0)
@@ -130,17 +111,14 @@ public:
   double m_width;   ///< width of guidebank about the center line
   int m_nPts;       ///< number of points created along the center line to create the guidebank
 
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 ////////////////////////////////////////////////////////////////////////////////
 /// \class XmStamperEndCap
 /// \brief End cap definition for feature stamp
 class XmStamperEndCap
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmStamperEndCap()
   : m_type(2)
@@ -154,8 +132,8 @@ public:
   XmSlopedAbutment m_slopedAbutment; ///< sloped abutment definition
   XmWingWall m_wingWall;             ///< wing wall definition
 
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -163,9 +141,6 @@ public:
 /// \brief Cross section definition for stamping
 class XmStampCrossSection
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   XmStampCrossSection()
   : m_left()
@@ -186,8 +161,8 @@ public:
   double m_rightMax;      ///< max x value for right side
   int m_idxRightShoulder; ///< index to the shoulder point in the m_right vector
 
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  bool ReadFromFile(std::ifstream & a_file);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -206,9 +181,6 @@ public:
 /// \brief Stamping inputs/outputs class
 class XmStamperIo
 {
-  /// \cond
-  friend class boost::serialization::access;
-  /// \endcond
 public:
   /// \brief Constructor
   XmStamperIo()
@@ -245,10 +217,8 @@ public:
   /// Input/output raster to stamp the resulting elevations onto this raster
   XmStampRaster m_raster;
 
-  std::string ToString() const;
-  void FromString(const std::string&);
-  template <typename Archive>
-  void serialize(Archive& archive, const unsigned int version);
+  bool ReadFromFile(std::ifstream &a_file);
+  void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
 }; // XmStamperIo
 
 //----- Function prototypes ----------------------------------------------------

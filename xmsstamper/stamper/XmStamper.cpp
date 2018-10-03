@@ -251,8 +251,8 @@ void XmStamperImpl::WriteInputsForDebug()
   if (fp)
   {
     fclose(fp);
-    std::fstream os("c:\\temp\\xmsng_StamperIo.txt", std::ios_base::out);
-    os << m_io.ToString();
+    std::ofstream os("c:\\temp\\xmsng_StamperIo.txt");
+    m_io.WriteToFile(os, "STAMPER_IO_VERSION_1");
   }
 } // WriteInputsForDebug
 //------------------------------------------------------------------------------

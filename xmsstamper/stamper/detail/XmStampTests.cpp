@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 /// \file
 /// \ingroup stamping
-/// \brief Implements serialization of the data classes in XmStamperIo.h
+/// \brief Tests for XmStamper.h
 //
 /// \copyright (C) Copyright Aquaveo 2018.
 //------------------------------------------------------------------------------
@@ -42,6 +42,8 @@
 
 #include <fstream>
 
+#include <xmscore/misc/StringUtil.h> // stEqualNoCase
+#include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
 #include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmscore/testing/TestTools.h>
 
@@ -54,32 +56,30 @@ using namespace xms;
 namespace
 {
 //------------------------------------------------------------------------------
-/// \brief Builds a XmStamperIo class from an archive
+/// \brief Builds a XmStamperIo class from an XmStamperIo file
 //------------------------------------------------------------------------------
 static void iBuildStamperIo(const std::string& a_path, XmStamperIo& a_io)
 {
-  std::string fname(a_path + "xmsng_StamperIo.txt"), line;
-  line.reserve(40960);
+  std::string fname(a_path + "xmsng_StamperIo.txt");
   std::ifstream is(fname.c_str());
-  char buffer[4096];
-  while (is.read(buffer, sizeof(buffer)))
-  {
-    line.append(buffer, (size_t)is.gcount());
-  }
-  line.append(buffer, (size_t)is.gcount());
-  // std::getline(is, line);
-  a_io.FromString(line);
+  XM_ENSURE_TRUE(is.is_open());
+  std::string card;
+  XM_ENSURE_TRUE(is >> card);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "STAMPER_IO_VERSION_1"));
+  XM_ENSURE_TRUE(a_io.ReadFromFile(is));
+  // Test to make sure we are reading the XmStamperIo files correctly
+  std::ofstream outFile(a_path + "StamperIo_out.txt");
+  a_io.WriteToFile(outFile, "STAMPER_IO_VERSION_1");
+  outFile.close();
+  TS_ASSERT_TXT_FILES_EQUAL(a_path + "StamperIo_out.txt", fname);
 } // iBuildStamperIo
 //------------------------------------------------------------------------------
 /// \brief Writes a XmStamperIo output to a file
 //------------------------------------------------------------------------------
-static void iOutputToFile(const std::string& a_fileName, XmStamperIo a_io)
+static void iOutputToFile(const std::string& a_fileName, const XmStamperIo &a_io)
 {
-  XmStamperIo io;
-  io.m_outBreakLines = a_io.m_outBreakLines;
-  io.m_outTin = a_io.m_outTin;
-  std::fstream os(a_fileName.c_str(), std::ios_base::out);
-  os << io.ToString();
+  std::ofstream ofs(a_fileName);
+  a_io.WriteToFile(ofs, "STAMPER_IO_VERSION_1");
 } // iOutputToFile
 //------------------------------------------------------------------------------
 /// \brief Writes a tin to a file
@@ -93,19 +93,6 @@ static void iDoTest(const std::string& a_relPath)
   BSHP<XmStamper> s = XmStamper::New();
   s->DoStamp(io);
   std::string baseFile(path + "xmsng_base.txt");
-#if defined(ENV64BIT)
-  std::string b1(path + "xmsng_base64.txt");
-  FILE* fp(fopen(b1.c_str(), "r"));
-  if (fp)
-  {
-    fclose(fp);
-    baseFile = b1;
-  }
-#elif defined(ENV32BIT)
-  // ensure either ENV32BIT or ENV64BIT is defined
-#else
-#error "Must define either ENV32BIT or ENV64BIT"
-#endif
   std::string outFile(path + "xmsng_out.txt");
   iOutputToFile(outFile, io);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, outFile);

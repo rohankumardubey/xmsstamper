@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 /// \file
 /// \ingroup stamping
-/// \brief Implements serialization of the data classes in XmStamperIo.h
+/// \brief Implements data classes in XmStamperIo.h
 //
 /// \copyright (C) Copyright Aquaveo 2018.
 //------------------------------------------------------------------------------
@@ -20,10 +20,9 @@
 // 4. External library headers
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/archive/text_oarchive.hpp>
-#include <boost/serialization/shared_ptr.hpp>
-#include <boost/serialization/vector.hpp>
 
 // 5. Shared code headers
+#include <xmscore/misc/StringUtil.h> // stEqualNoCase
 #include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
 #include <xmscore/misc/XmsType.h> // XM_NODATA
 #include <xmsinterp/triangulate/TrTin.h>
@@ -42,9 +41,186 @@ namespace xms
 //----- Classes / Structs ------------------------------------------------------
 
 //----- Internal functions -----------------------------------------------------
+namespace
+{
+void iWriteVecIntToFile(std::ofstream &a_file, const std::string &a_cardName, const VecInt &a_vals);
+bool iReadVecIntFromFile(std::ifstream &a_file, VecInt &a_vals);
+}
 
 //----- Class / Function definitions -------------------------------------------
-
+namespace
+{
+//------------------------------------------------------------------------------
+/// \brief Writes a VecDbl to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteVecDblToFile(std::ofstream &a_file, const std::string &a_cardName, const VecDbl &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + " " << a_vals.size() << " " << std::fixed << std::setprecision(2);
+  for (const auto &val : a_vals)
+  {
+    a_file << val << " ";
+  }
+  a_file << "\n";
+} // iWriteVecDblToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a VecDbl from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadVecDblFromFile(std::ifstream &a_file, VecDbl &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  int num(0);
+  XM_ENSURE_TRUE(a_file >> num, false);
+  a_vals.assign(num, 0);
+  for (auto &val : a_vals)
+  {
+    XM_ENSURE_TRUE(a_file >> val, false);
+  }
+  return true;
+} // iReadVecDblFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes a VecPt2d to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteVecPt2dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt2d &a_pts)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + " " << a_pts.size() << "\n" << std::fixed << std::setprecision(13);
+  for (const auto &pt : a_pts)
+  {
+    a_file << pt.x << " " << pt.y << "\n";
+  }
+} // iWriteVecPt2dToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a VecPt2d from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadVecPt2dFromFile(std::ifstream &a_file, VecPt2d &a_pts)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  int numPts(0);
+  XM_ENSURE_TRUE(a_file >> numPts, false);
+  a_pts.assign(numPts, xms::Pt2d());
+  for (auto &pt : a_pts)
+  {
+    XM_ENSURE_TRUE(a_file >> pt.x >> pt.y, false);
+  }
+  return true;
+} // iReadVecPt2dFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes a VecPt3d to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteVecPt3dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt3d &a_pts)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + " " << a_pts.size() << "\n" << std::fixed << std::setprecision(13);
+  for (const auto &pt : a_pts)
+  {
+    a_file << pt.x << " " << pt.y << " " << pt.z << "\n";
+  }
+} // iWriteVecPt3dToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a VecPt3d from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadVecPt3dFromFile(std::ifstream &a_file, VecPt3d &a_pts)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  int numPts(0);
+  XM_ENSURE_TRUE(a_file >> numPts, false);
+  a_pts.assign(numPts, xms::Pt3d());
+  for (auto &pt : a_pts)
+  {
+    XM_ENSURE_TRUE(a_file >> pt.x >> pt.y >> pt.z, false);
+  }
+  return true;
+} // iReadVecPt3dFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes a VecInt2d to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteVecInt2dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecInt2d &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + " " << a_vals.size() << "\n";
+  for (const auto &valArray : a_vals)
+  {
+    iWriteVecIntToFile(a_file, "", valArray);
+  }
+} // iWriteVecInt2dToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a VecInt from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadVecInt2dFromFile(std::ifstream &a_file, VecInt2d &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  int num(0);
+  XM_ENSURE_TRUE(a_file >> num, false);
+  a_vals.assign(num, VecInt());
+  for (auto &valArray : a_vals)
+  {
+    XM_ENSURE_TRUE(iReadVecIntFromFile(a_file, valArray), false);
+  }
+  return true;
+} // iReadVecInt2dFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes a VecInt to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteVecIntToFile(std::ofstream &a_file, const std::string &a_cardName, const VecInt &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  const std::string card(a_cardName.empty() ? "" : a_cardName + " ");
+  a_file << card << a_vals.size() << " ";
+  for (const auto &val : a_vals)
+  {
+    a_file << val << " ";
+  }
+  a_file << "\n";
+} // iWriteVecIntToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a VecInt from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadVecIntFromFile(std::ifstream &a_file, VecInt &a_vals)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  int num(0);
+  XM_ENSURE_TRUE(a_file >> num, false);
+  a_vals.assign(num, 0);
+  for (auto &val : a_vals)
+  {
+    XM_ENSURE_TRUE(a_file >> val, false);
+  }
+  return true;
+} // iReadVecIntFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes a Tin to an ASCII file
+//------------------------------------------------------------------------------
+void iWriteTinToFile(std::ofstream &a_file, const std::string &a_cardName, const BSHP<const TrTin> &a_tin)
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  const VecPt3d& points = a_tin->Points();
+  iWriteVecPt3dToFile(a_file, "POINTS", points);
+  const VecInt& triangles = a_tin->Triangles();
+  iWriteVecIntToFile(a_file, "TRIANGLES", triangles);
+  const VecInt2d& trisAdjToPts = a_tin->TrisAdjToPts();
+  iWriteVecInt2dToFile(a_file, "TRIS_ADJ_TO_PTS", trisAdjToPts);
+} // iWriteTinToFile
+//------------------------------------------------------------------------------
+/// \brief Reads a Tin from an ASCII file
+//------------------------------------------------------------------------------
+bool iReadTinFromFile(std::ifstream &a_file, const BSHP<TrTin> &a_tin)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "POINTS"), false);
+  XM_ENSURE_TRUE(iReadVecPt3dFromFile(a_file, a_tin->Points()), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "TRIANGLES"), false);
+  XM_ENSURE_TRUE(iReadVecIntFromFile(a_file, a_tin->Triangles()), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "TRIS_ADJ_TO_PTS"), false);
+  XM_ENSURE_TRUE(iReadVecInt2dFromFile(a_file, a_tin->TrisAdjToPts()), false);
+  return true;
+} // iReadTinFromFile
+}
 //------------------------------------------------------------------------------
 /// \brief Constructor that sets all the raster values
 //------------------------------------------------------------------------------
@@ -151,135 +327,323 @@ void XmStampRaster::WriteGridFile(const std::string &a_fileName,
   }
 } // XmStampRaster::WriteGridFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Writes the XmStampRaster class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmStampRaster::serialize(Archive& archive, const unsigned int version)
+void XmStampRaster::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive &m_numPixelsX;
-  archive &m_numPixelsY;
-  archive &m_pixelSizeX;
-  archive &m_pixelSizeY;
-  archive &m_min;
-  archive &m_vals;
-} // XmStampRaster::serialize
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  a_file << "NUM_PIXELS_X " << m_numPixelsX << "\n";
+  a_file << "NUM_PIXELS_Y " << m_numPixelsY << "\n";
+  a_file << "PIXEL_SIZE_X " << std::fixed << std::setprecision(13) << m_pixelSizeX << "\n";
+  a_file << "PIXEL_SIZE_Y " << m_pixelSizeY << "\n";
+  a_file << "MIN_X " << m_min.x << "\n";
+  a_file << "MIN_Y " << m_min.y << "\n";
+  iWriteVecDblToFile(a_file, "VALS", m_vals);
+  a_file << "NODATA " << m_noData;
+} // XmStampRaster::WriteToFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Reads the XmStampRaster class information to a file.
+/// \param[in] a_fileName: The input file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmWingWall::serialize(Archive& archive, const unsigned int version)
+bool XmStampRaster::ReadFromFile(std::ifstream &a_file)
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_wingWallAngle;
-} // XmWingWall::serialize
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "NUM_PIXELS_X"), false);
+  XM_ENSURE_TRUE(a_file >> m_numPixelsX, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "NUM_PIXELS_Y"), false);
+  XM_ENSURE_TRUE(a_file >> m_numPixelsY, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "PIXEL_SIZE_X"), false);
+  XM_ENSURE_TRUE(a_file >> m_pixelSizeX, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "PIXEL_SIZE_Y"), false);
+  XM_ENSURE_TRUE(a_file >> m_pixelSizeY, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "MIN_X"), false);
+  XM_ENSURE_TRUE(a_file >> m_min.x, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "MIN_Y"), false);
+  XM_ENSURE_TRUE(a_file >> m_min.y, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "VALS"), false);
+  XM_ENSURE_TRUE(iReadVecDblFromFile(a_file, m_vals), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "NODATA"), false);
+  XM_ENSURE_TRUE(a_file >> m_noData, false);
+  return true;
+} // XmStampRaster::ReadFromFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Writes the XmWingWall class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmSlopedAbutment::serialize(Archive& archive, const unsigned int version)
+void XmWingWall::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_maxX;
-  archive& m_slope;
-} // XmSlopedAbutment::serialize
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  a_file << "WING_WALL_ANGLE " << std::fixed << std::setprecision(13) << m_wingWallAngle << "\n";
+} // XmWingWall::WriteToFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Reads the XmWingWall class information to a file.
+/// \param[in] a_fileName: The input file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmGuidebank::serialize(Archive& archive, const unsigned int version)
+bool XmWingWall::ReadFromFile(std::ifstream &a_file)
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_side;
-  archive& m_radius1;
-  archive& m_radius2;
-  archive& m_width;
-  archive& m_nPts;
-} // XmGuidebank::serialize
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "WING_WALL_ANGLE"), false);
+  XM_ENSURE_TRUE(a_file >> m_wingWallAngle, false);
+  return true;
+} // XmWingWall::ReadFromFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Writes the XmSlopedAbutment class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmStamperEndCap::serialize(Archive& archive, const unsigned int version)
+void XmSlopedAbutment::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_type;
-  archive& m_angle;
-  archive& m_guidebank;
-  archive& m_slopedAbutment;
-  archive& m_wingWall;
-} // XmStamperEndCap::serialize
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  a_file << "MAX_X " << std::fixed << std::setprecision(13) << m_maxX << "\n";
+  iWriteVecPt2dToFile(a_file, "SLOPE", m_slope);
+} // XmSlopedAbutment::WriteToFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Reads the XmSlopedAbutment class information to a file.
+/// \param[in] a_fileName: The input file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmStampCrossSection::serialize(Archive& archive, const unsigned int version)
+bool XmSlopedAbutment::ReadFromFile(std::ifstream &a_file)
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_left;
-  archive& m_leftMax;
-  archive& m_idxLeftShoulder;
-  archive& m_right;
-  archive& m_rightMax;
-  archive& m_idxRightShoulder;
-} // XmStampCrossSection::serialize
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "MAX_X"), false);
+  XM_ENSURE_TRUE(a_file >> m_maxX, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "SLOPE"), false);
+  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_slope), false);
+  return true;
+} // XmSlopedAbutment::ReadFromFile
 //------------------------------------------------------------------------------
-/// \brief Boost serialize function.
-/// \param[in,out] archive: An archive.
-/// \param[in] version: The version number.
+/// \brief Writes the XmGuidebank class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
-template <typename Archive>
-void XmStamperIo::serialize(Archive& archive, const unsigned int version)
+void XmGuidebank::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
 {
-  (void)version; // Because Doxygen complained when commented out above.
-  archive& m_centerLine;
-  archive& m_stampingType;
-  archive& m_cs;
-  archive& m_firstEndCap;
-  archive& m_lastEndCap;
-  archive& m_bathymetry;
-  archive& m_outTin;
-  archive& m_outBreakLines;
-} // XmStamperIo::serialize
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  a_file << "SIDE " << m_side << "\n";
+  a_file << "RADIUS_1 " << std::fixed << std::setprecision(13) << m_radius1 << "\n";
+  a_file << "RADIUS_2 " << m_radius2 << "\n";
+  a_file << "WIDTH " << m_width << "\n";
+  a_file << "N_PTS " << m_nPts << "\n";
+} // XmGuidebank::WriteToFile
 //------------------------------------------------------------------------------
-/// \brief Use boost archive to get the sampling grid as text.
-///
-/// This function is in this file so it has access to XmStamperIo.
-/// \return A string representation of the class.
+/// \brief Reads the XmGuidebank class information to a file.
+/// \param[in] a_fileName: The input file.
 //------------------------------------------------------------------------------
-std::string XmStamperIo::ToString() const
+bool XmGuidebank::ReadFromFile(std::ifstream &a_file)
 {
-  std::stringstream ss;
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "SIDE"), false);
+  XM_ENSURE_TRUE(a_file >> m_side, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "RADIUS_1"), false);
+  XM_ENSURE_TRUE(a_file >> m_radius1, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "RADIUS_2"), false);
+  XM_ENSURE_TRUE(a_file >> m_radius2, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "WIDTH"), false);
+  XM_ENSURE_TRUE(a_file >> m_width, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "N_PTS"), false);
+  XM_ENSURE_TRUE(a_file >> m_nPts, false);
+  return true;
+} // XmGuidebank::ReadFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes the XmStamperEndCap class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
+//------------------------------------------------------------------------------
+void XmStamperEndCap::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  a_file << "TYPE " << m_type << "\n";
+  a_file << "ANGLE " << std::fixed << std::setprecision(13) << m_angle << "\n";
+  m_guidebank.WriteToFile(a_file, "GUIDEBANK");
+  m_slopedAbutment.WriteToFile(a_file, "SLOPED_ABUTMENT");
+  m_wingWall.WriteToFile(a_file, "WING_WALL");
+} // XmStamperEndCap::WriteToFile
+//------------------------------------------------------------------------------
+/// \brief Reads the XmStamperEndCap class information to a file.
+/// \param[in] a_fileName: The input file.
+//------------------------------------------------------------------------------
+bool XmStamperEndCap::ReadFromFile(std::ifstream &a_file)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "TYPE"), false);
+  XM_ENSURE_TRUE(a_file >> m_type, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "ANGLE"), false);
+  XM_ENSURE_TRUE(a_file >> m_angle, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "GUIDEBANK"), false);
+  XM_ENSURE_TRUE(m_guidebank.ReadFromFile(a_file), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "SLOPED_ABUTMENT"), false);
+  XM_ENSURE_TRUE(m_slopedAbutment.ReadFromFile(a_file), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "WING_WALL"), false);
+  XM_ENSURE_TRUE(m_wingWall.ReadFromFile(a_file), false);
+  return true;
+} // XmStamperEndCap::ReadFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes the XmStampCrossSection class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
+//------------------------------------------------------------------------------
+void XmStampCrossSection::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  iWriteVecPt2dToFile(a_file, "LEFT", m_left);
+  a_file << "LEFT_MAX " << std::fixed << std::setprecision(13) << m_leftMax << "\n";
+  a_file << "IDX_LEFT_SHOULDER " << m_idxLeftShoulder << "\n";
+  iWriteVecPt2dToFile(a_file, "RIGHT", m_right);
+  a_file << "RIGHT_MAX " << std::fixed << std::setprecision(13) << m_rightMax << "\n";
+  a_file << "IDX_RIGHT_SHOULDER " << m_idxRightShoulder << "\n";
+} // XmStampCrossSection::WriteToFile
+//------------------------------------------------------------------------------
+/// \brief Reads the XmStampCrossSection class information to a file.
+/// \param[in] a_fileName: The input file.
+//------------------------------------------------------------------------------
+bool XmStampCrossSection::ReadFromFile(std::ifstream &a_file)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "CS"), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "LEFT"), false);
+  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_left), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "LEFT_MAX"), false);
+  XM_ENSURE_TRUE(a_file >> m_leftMax, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "IDX_LEFT_SHOULDER"), false);
+  XM_ENSURE_TRUE(a_file >> m_idxLeftShoulder, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "RIGHT"), false);
+  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_right), false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "RIGHT_MAX"), false);
+  XM_ENSURE_TRUE(a_file >> m_rightMax, false);
+  XM_ENSURE_TRUE(a_file >> card, false);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "IDX_RIGHT_SHOULDER"), false);
+  XM_ENSURE_TRUE(a_file >> m_idxRightShoulder, false);
+  return true;
+} // XmStampCrossSection::ReadFromFile
+//------------------------------------------------------------------------------
+/// \brief Writes the XmStamperIo class information to a file.
+/// \param[in] a_fileName: The output file.
+/// \param[in] a_cardName: The card name to be written to the output file.
+//------------------------------------------------------------------------------
+void XmStamperIo::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
+{
+  XM_ENSURE_TRUE(a_file.is_open());
+  a_file << a_cardName + "\n";
+  iWriteVecPt3dToFile(a_file, "CENTER_LINE", m_centerLine);
+  a_file << "STAMPING_TYPE " << m_stampingType << "\n";
+  a_file << "CROSS_SECTIONS " << m_cs.size() << "\n";
+  for (const auto &cs : m_cs)
   {
-    boost::archive::text_oarchive oa(ss);
-    oa << *this;
+    cs.WriteToFile(a_file, "CS");
   }
-  return ss.str();
-} // XmStamperIo::ToString
-//------------------------------------------------------------------------------
-/// \brief Use boost archive to turn the text into a sampling grid.
-///
-/// This function is in this file so it has access to XmStamperIo.
-//------------------------------------------------------------------------------
-void XmStamperIo::FromString(const std::string& a_text)
-{
-  std::stringstream ss(a_text);
+  m_firstEndCap.WriteToFile(a_file, "FIRST_END_CAP");
+  m_lastEndCap.WriteToFile(a_file, "LAST_END_CAP");
+  if (m_bathymetry)
   {
-    boost::archive::text_iarchive ia(ss);
-    ia >> *this;
+    iWriteTinToFile(a_file, "BATHYMETRY", m_bathymetry);
   }
-} // XmStamperIo::FromString
-
+  if (m_outTin)
+  {
+    iWriteTinToFile(a_file, "OUT_TIN", m_outTin);
+  }
+  iWriteVecInt2dToFile(a_file, "OUT_BREAK_LINES", m_outBreakLines);
+  m_raster.WriteToFile(a_file, "RASTER");
+} // XmStamperIo::WriteToFile
+//------------------------------------------------------------------------------
+/// \brief Reads the XmStamperIo class information from a file.
+/// \param[in] a_fileName: The input file.
+//------------------------------------------------------------------------------
+bool XmStamperIo::ReadFromFile(std::ifstream &a_file)
+{
+  XM_ENSURE_TRUE(a_file.is_open(), false);
+  std::string card;
+  while (a_file >> card)
+  {
+    if (stEqualNoCase(card, "CENTER_LINE"))
+    {
+      XM_ENSURE_TRUE(iReadVecPt3dFromFile(a_file, m_centerLine), false);
+    }
+    else if (stEqualNoCase(card, "STAMPING_TYPE"))
+    {
+      XM_ENSURE_TRUE(a_file >> m_stampingType, false);
+    }
+    else if (stEqualNoCase(card, "CROSS_SECTIONS"))
+    {
+      int numCs(0);
+      XM_ENSURE_TRUE(a_file >> numCs, false);
+      m_cs.assign(numCs, XmStampCrossSection());
+      for (auto &cs : m_cs)
+      {
+        XM_ENSURE_TRUE(cs.ReadFromFile(a_file), false);
+      }
+    }
+    else if (stEqualNoCase(card, "FIRST_END_CAP"))
+    {
+      XM_ENSURE_TRUE(m_firstEndCap.ReadFromFile(a_file), false);
+    }
+    else if (stEqualNoCase(card, "LAST_END_CAP"))
+    {
+      XM_ENSURE_TRUE(m_lastEndCap.ReadFromFile(a_file), false);
+    }
+    else if (stEqualNoCase(card, "BATHYMETRY"))
+    {
+      m_bathymetry = TrTin::New();
+      XM_ENSURE_TRUE(iReadTinFromFile(a_file, m_bathymetry), false);
+    }
+    else if (stEqualNoCase(card, "OUT_TIN"))
+    {
+      m_outTin = TrTin::New();
+      XM_ENSURE_TRUE(iReadTinFromFile(a_file, m_outTin), false);
+    }
+    else if (stEqualNoCase(card, "OUT_BREAK_LINES"))
+    {
+      XM_ENSURE_TRUE(iReadVecInt2dFromFile(a_file, m_outBreakLines), false);
+    }
+    else if (stEqualNoCase(card, "RASTER"))
+    {
+      XM_ENSURE_TRUE(m_raster.ReadFromFile(a_file), false);
+    }
+    else
+    {
+      XM_ASSERT(0);
+    }
+  }
+  return true;
+} // XmStamperIo::ReadFromFile
 } // namespace xms
