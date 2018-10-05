@@ -37,6 +37,7 @@ public:
   XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
     const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData);
   XmStampRaster();
+  /// /breif enum the identify the format of the raster
   enum XmRasterFormatEnum {RS_ARCINFO_ASCII};
   int m_numPixelsX; ///< Number of pixels in the X-direction (Required)
   int m_numPixelsY; ///< Number of pixels in the Y-direction (Required)

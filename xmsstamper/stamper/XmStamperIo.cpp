@@ -223,6 +223,14 @@ bool iReadTinFromFile(std::ifstream &a_file, const BSHP<TrTin> &a_tin)
 }
 //------------------------------------------------------------------------------
 /// \brief Constructor that sets all the raster values
+/// \param[in] a_numPixelsX: number of pixels in x direction
+/// \param[in] a_numPixelsY: number of pixels in y direction
+/// \param[in] a_pixelSizeX: size of the pixels in the x direction
+/// \param[in] a_pixelSizeY: size of the pixels in the y direction
+/// \param[in] a_min: The bottom left corner (x,y) of the raster
+/// \param[in] a_vals: The raster values
+/// \param[in] a_noData: The "no data" (or inactive) value to identify raster
+/// pixels where no value exists.
 //------------------------------------------------------------------------------
 XmStampRaster::XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
   const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData)
@@ -328,7 +336,7 @@ void XmStampRaster::WriteGridFile(const std::string &a_fileName,
 } // XmStampRaster::WriteGridFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmStampRaster class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmStampRaster::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -346,7 +354,8 @@ void XmStampRaster::WriteToFile(std::ofstream &a_file, const std::string &a_card
 } // XmStampRaster::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmStampRaster class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmStampRaster::ReadFromFile(std::ifstream &a_file)
 {
@@ -380,7 +389,7 @@ bool XmStampRaster::ReadFromFile(std::ifstream &a_file)
 } // XmStampRaster::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmWingWall class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmWingWall::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -391,7 +400,8 @@ void XmWingWall::WriteToFile(std::ofstream &a_file, const std::string &a_cardNam
 } // XmWingWall::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmWingWall class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmWingWall::ReadFromFile(std::ifstream &a_file)
 {
@@ -404,7 +414,7 @@ bool XmWingWall::ReadFromFile(std::ifstream &a_file)
 } // XmWingWall::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmSlopedAbutment class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmSlopedAbutment::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -416,7 +426,8 @@ void XmSlopedAbutment::WriteToFile(std::ofstream &a_file, const std::string &a_c
 } // XmSlopedAbutment::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmSlopedAbutment class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmSlopedAbutment::ReadFromFile(std::ifstream &a_file)
 {
@@ -432,7 +443,7 @@ bool XmSlopedAbutment::ReadFromFile(std::ifstream &a_file)
 } // XmSlopedAbutment::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmGuidebank class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmGuidebank::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -447,7 +458,8 @@ void XmGuidebank::WriteToFile(std::ofstream &a_file, const std::string &a_cardNa
 } // XmGuidebank::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmGuidebank class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmGuidebank::ReadFromFile(std::ifstream &a_file)
 {
@@ -472,7 +484,7 @@ bool XmGuidebank::ReadFromFile(std::ifstream &a_file)
 } // XmGuidebank::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmStamperEndCap class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmStamperEndCap::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -487,7 +499,8 @@ void XmStamperEndCap::WriteToFile(std::ofstream &a_file, const std::string &a_ca
 } // XmStamperEndCap::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmStamperEndCap class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmStamperEndCap::ReadFromFile(std::ifstream &a_file)
 {
@@ -512,7 +525,7 @@ bool XmStamperEndCap::ReadFromFile(std::ifstream &a_file)
 } // XmStamperEndCap::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmStampCrossSection class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmStampCrossSection::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -528,7 +541,8 @@ void XmStampCrossSection::WriteToFile(std::ofstream &a_file, const std::string &
 } // XmStampCrossSection::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmStampCrossSection class information to a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmStampCrossSection::ReadFromFile(std::ifstream &a_file)
 {
@@ -558,7 +572,7 @@ bool XmStampCrossSection::ReadFromFile(std::ifstream &a_file)
 } // XmStampCrossSection::ReadFromFile
 //------------------------------------------------------------------------------
 /// \brief Writes the XmStamperIo class information to a file.
-/// \param[in] a_fileName: The output file.
+/// \param[in] a_file: The output file.
 /// \param[in] a_cardName: The card name to be written to the output file.
 //------------------------------------------------------------------------------
 void XmStamperIo::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
@@ -587,7 +601,8 @@ void XmStamperIo::WriteToFile(std::ofstream &a_file, const std::string &a_cardNa
 } // XmStamperIo::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmStamperIo class information from a file.
-/// \param[in] a_fileName: The input file.
+/// \param[in] a_file: The input file.
+/// \return true if file read is successful. false if errors encountered.
 //------------------------------------------------------------------------------
 bool XmStamperIo::ReadFromFile(std::ifstream &a_file)
 {
