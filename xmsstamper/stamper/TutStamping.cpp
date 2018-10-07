@@ -45,7 +45,7 @@ namespace xms
 
 #include <fstream> // std::ofstream
 
-#include <xmscore/misc/XmsType.h> // XM_NODATA
+#include <xmscore/misc/xmstype.h> // XM_NODATA
 #include <xmscore/testing/TestTools.h> // TS_ASSERT_EQUALS
 
 #include <xmsinterp/geometry/geoms.h>

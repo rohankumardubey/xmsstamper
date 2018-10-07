@@ -44,7 +44,7 @@
 
 #include <xmscore/misc/StringUtil.h> // stEqualNoCase
 #include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
-#include <xmscore/misc/XmsType.h> // XM_NODATA
+#include <xmscore/misc/xmstype.h> // XM_NODATA
 #include <xmscore/testing/TestTools.h>
 
 #include <xmsstamper/stamper/XmStamper.h>
