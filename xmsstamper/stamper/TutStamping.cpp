@@ -99,8 +99,8 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankment_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -126,7 +126,7 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankmentTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testFillEmbankmentTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampFillEmbankment
@@ -173,8 +173,8 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankment_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -200,7 +200,7 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankmentTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testCutEmbankmentTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampCutEmbankment
@@ -257,8 +257,8 @@ void TutStampingUnitTests::test_StampWingWall()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWall_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -285,7 +285,7 @@ void TutStampingUnitTests::test_StampWingWall()
   baseLines = {6, 8}; // right shoulder
   TS_ASSERT_EQUALS_VEC(baseLines, io.m_outBreakLines[6]);
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWallTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testWingWallTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampWingWall
@@ -345,8 +345,8 @@ void TutStampingUnitTests::test_StampSlopedAbutment()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutment_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -364,7 +364,7 @@ void TutStampingUnitTests::test_StampSlopedAbutment()
     {37.3, 10.8, 0.7}};
   TS_ASSERT_DELTA_VECPT3D(basePts, io.m_outTin->Points(), 1e-1);
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutmentTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testSlopedAbutmentTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampSlopedAbutment
@@ -426,8 +426,8 @@ void TutStampingUnitTests::test_StampGuidebank()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebank_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -435,7 +435,7 @@ void TutStampingUnitTests::test_StampGuidebank()
   TS_ASSERT(io.m_outTin); // the output TIN should exist
   TS_ASSERT_EQUALS(144, io.m_outTin->Points().size());
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebankTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testGuidebankTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampGuidebank
@@ -493,8 +493,8 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   BSHP<xms::XmStamper> st = xms::XmStamper::New();
   st->DoStamp(io);
 
-  std::string rasterFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_out.asc"));
-  std::string baseFile(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_base.asc"));
+  std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_out.asc"));
+  std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetry_base.asc"));
   io.m_raster.WriteGridFile(rasterFileName, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, rasterFileName);
 
@@ -506,7 +506,7 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
                           {17.18, 2.82, 9.84}};
   TS_ASSERT_DELTA_VECPT3D(basePts, io.m_outTin->Points(), 1e-2);
   // Write output TIN for viewing in XMS
-  std::string tinFileName(XMSSTAMPER_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetryTin_out.tin"));
+  std::string tinFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/testIntersectBathymetryTin_out.tin"));
   std::ofstream ofs(tinFileName, std::ofstream::trunc);
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampIntersectBathymetry

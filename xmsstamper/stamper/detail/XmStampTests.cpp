@@ -86,7 +86,7 @@ static void iOutputToFile(const std::string& a_fileName, const XmStamperIo &a_io
 //------------------------------------------------------------------------------
 static void iDoTest(const std::string& a_relPath)
 {
-  std::string path(XMSSTAMPER_TEST_PATH);
+  std::string path(XMS_TEST_PATH);
   path += "stamping/" + a_relPath;
   XmStamperIo io;
   iBuildStamperIo(path, io);
@@ -161,7 +161,7 @@ void XmStampIntermediateTests::test_SlopedAbutment04_cut()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_SelfIntersect()
 {
-  std::string path(XMSSTAMPER_TEST_PATH);
+  std::string path(XMS_TEST_PATH);
   path += "/stamping/test_intersections/";
   XmStamperIo io;
   iBuildStamperIo(path, io);
