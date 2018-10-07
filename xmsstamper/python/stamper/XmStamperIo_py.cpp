@@ -10,6 +10,7 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 #include <boost/shared_ptr.hpp> // boost::shared_ptr
 #include <xmsstamper/stamper/XmStamperIo.h>
@@ -24,6 +25,203 @@ PYBIND11_DECLARE_HOLDER_TYPE(T, boost::shared_ptr<T>);
 
 void initXmStamperIo(py::module &m)
 {
+// -----------------------------------------------------------------------------
+// XMSTAMPRASTER
+// -----------------------------------------------------------------------------
+  py::class_<xms::XmStampRaster, boost::shared_ptr<xms::XmStampRaster>>
+    stamp_raster(m, "XmStampRaster");
+  stamp_raster.def(py::init<>());
+  // ---------------------------------------------------------------------------
+  // property: num_pixels_x
+  // ---------------------------------------------------------------------------
+  const char* num_pixels_x_doc = R"pydoc(
+       Number of pixels in the X-direction (Required)
+  )pydoc";
+  stamp_raster.def_readwrite("num_pixels_x",
+    &xms::XmStampRaster::m_numPixelsX, num_pixels_x_doc);
+  // ---------------------------------------------------------------------------
+  // property: num_pixels_y
+  // ---------------------------------------------------------------------------
+  const char* num_pixels_y_doc = R"pydoc(
+       Number of pixels in the Y-direction (Required)
+  )pydoc";
+  stamp_raster.def_readwrite("num_pixels_y",
+    &xms::XmStampRaster::m_numPixelsY, num_pixels_y_doc);
+  // ---------------------------------------------------------------------------
+  // property: pixel_size_x
+  // ---------------------------------------------------------------------------
+  const char* pixel_size_x_doc = R"pydoc(
+       Pixel size in the X-direction (Required)
+  )pydoc";
+  stamp_raster.def_readwrite("pixel_size_x",
+    &xms::XmStampRaster::m_pixelSizeX, pixel_size_x_doc);
+  // ---------------------------------------------------------------------------
+  // property: pixel_size_y
+  // ---------------------------------------------------------------------------
+  const char* pixel_size_y_doc = R"pydoc(
+       Pixel size in the Y-direction (Required)
+  )pydoc";
+  stamp_raster.def_readwrite("pixel_size_y",
+    &xms::XmStampRaster::m_pixelSizeY, pixel_size_y_doc);
+  // ---------------------------------------------------------------------------
+  // property: no_data
+  // ---------------------------------------------------------------------------
+  const char* no_data_doc = R"pydoc(
+       NO DATA value for the raster
+  )pydoc";
+  stamp_raster.def_readwrite("no_data",
+    &xms::XmStampRaster::m_noData, no_data_doc);
+  // ---------------------------------------------------------------------------
+  // property: min
+  // ---------------------------------------------------------------------------
+  const char* min_doc = R"pydoc(
+       Minimum (lower left) X, Y coordinate of the raster at the center of the 
+       raster cell (Required)
+  )pydoc";
+  stamp_raster.def_property("min",
+  [](xms::XmStampRaster &self) -> py::tuple 
+  {
+    return xms::PyIterFromPt2d(self.m_min);
+  },
+  [](xms::XmStampRaster &self, py::tuple _min)
+  {
+    self.m_min = xms::Pt2dFromPyIter(_min);
+  }
+  , min_doc);
+  // ---------------------------------------------------------------------------
+  // property: min
+  // ---------------------------------------------------------------------------
+  const char* vals_doc = R"pydoc(
+        Raster values defined from the top left corner to the bottom right 
+        corner (Required). Use the m_noData value to specify a cell value with 
+        no data.
+  )pydoc";
+  stamp_raster.def_property("vals",
+    [](xms::XmStampRaster &self) -> py::iterable
+  {
+    return xms::PyIterFromVecDbl(self.m_vals);
+  },
+    [](xms::XmStampRaster &self, py::iterable _vals)
+  {
+    self.m_vals = *xms::VecDblFromPyIter(_vals);
+  }
+  , vals_doc);
+  // ---------------------------------------------------------------------------
+  // function: get_cell_index_from_col_row
+  // ---------------------------------------------------------------------------
+  const char* get_cell_index_from_col_row_raster_doc = R"pydoc(
+      Gets the zero-based cell index from the given column and row.
+      
+      Args:
+          col (int): The zero-based column index for the raster.
+          row (int): The zero-based row index for the raster.
+
+      Returns:
+          The zero-based cell index from the given a_col, a_row.
+  )pydoc";
+  stamp_raster.def("get_cell_index_from_col_row",
+    &xms::XmStampRaster::GetCellIndexFromColRow,
+    get_cell_index_from_col_row_raster_doc, py::arg("col"), py::arg("row"));
+  // ---------------------------------------------------------------------------
+  // function: get_col_row_from_cell_index
+  // ---------------------------------------------------------------------------
+  const char* get_col_row_from_cell_index_doc = R"pydoc(
+      Gets the zero-based column and row from the cell index.
+      
+      Args:
+          index (int): The zero-based raster cell index.
+
+      Returns:
+          Tuple of (col, row) of the cell by index
+  )pydoc";
+  stamp_raster.def("get_col_row_from_cell_index",
+  [](xms::XmStampRaster &self, int index)
+  {
+    int c, r;
+    self.GetColRowFromCellIndex(index, c, r);
+    return py::make_tuple(c, r);
+  },
+  get_col_row_from_cell_index_doc, py::arg("int"));
+  // ---------------------------------------------------------------------------
+  // function: get_location_from_cell_index
+  // ---------------------------------------------------------------------------
+  const char* get_location_from_cell_index_doc = R"pydoc(
+      Gets the location of the cell center from the zero-based cell index.
+      
+      Args:
+          index (int): The zero-based raster cell index.
+
+      Returns:
+          The location of the cell with the given index.
+  )pydoc";
+  stamp_raster.def("get_location_from_cell_index",
+  [](xms::XmStampRaster &self, int index)
+  {
+    return xms::PyIterFromPt2d(self.GetLocationFromCellIndex(index));
+  },
+  get_location_from_cell_index_doc, py::arg("index"));
+  // ---------------------------------------------------------------------------
+  // function: write_grid_file
+  // ---------------------------------------------------------------------------
+  const char* write_grid_file_doc = R"pydoc(
+      Writes the raster in the given format to the given filename.
+      
+      Args:
+         file_name (str): The output raster filename.
+         format (): The output raster format
+  )pydoc";
+  stamp_raster.def("write_grid_file",
+    &xms::XmStampRaster::WriteGridFile,
+    write_grid_file_doc, py::arg("file_name"), py::arg("format"));
+  // ---------------------------------------------------------------------------
+  // function: read_from_file
+  // ---------------------------------------------------------------------------
+  const char* read_from_file_raster_doc = R"pydoc(
+      Reads the XmStampRaster class information from a file.
+      
+      Args:
+         file_name (str): The input file.
+  )pydoc";
+  stamp_raster.def("read_from_file",
+    [](xms::XmStampRaster &self, std::string file_name)
+  {
+    std::ifstream is;
+    is.open(file_name, std::ios::in);
+    self.ReadFromFile(is);
+    is.close();
+  }
+    ,
+    read_from_file_raster_doc, py::arg("file_name"));
+  // ---------------------------------------------------------------------------
+  // function: write_to_file
+  // ---------------------------------------------------------------------------
+  const char* write_to_file_raster_doc = R"pydoc(
+      Writes the XmStampRaster class information to a file.
+      
+      Args:
+         file_name (str): The input file.
+         card_name (str): The card name to be written to the output file.
+  )pydoc";
+  stamp_raster.def("write_to_file",
+    [](xms::XmStampRaster &self, std::string file_name, std::string card_name)
+  {
+    // TODO: This needs some error checking
+    std::ofstream os;
+    os.open(file_name, std::ios::out);
+    self.WriteToFile(os, card_name);
+    os.close();
+  }
+    ,
+    write_to_file_raster_doc, py::arg("file_name"), py::arg("card_name"));
+// -----------------------------------------------------------------------------
+// XMSTAMPRASTERENUM
+// -----------------------------------------------------------------------------
+  py::enum_<xms::XmStampRaster::XmRasterFormatEnum>(stamp_raster, 
+         "raster_format_enum", "weight_enum for InterpIdw class")
+    .value("RS_ARCINFO_ASCII", 
+                 xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII)
+    .export_values();
+
 // -----------------------------------------------------------------------------
 // XMWINGWALL
 // -----------------------------------------------------------------------------
@@ -328,7 +526,6 @@ void initXmStamperIo(py::module &m)
     int i = 0;
     for (auto item : py_cs)
     {
-      std::cout << "cs: " << i << std::endl;
       auto cs = item;
       vec_cs.at(i) = item.cast<xms::XmStampCrossSection>();
       i++;
@@ -390,7 +587,6 @@ void initXmStamperIo(py::module &m)
     int i = 0;
     for (auto item : py_cs)
     {
-      std::cout << "cs: " << i << std::endl;
       auto cs = item;
       vec_cs.at(i) = item.cast<xms::XmStampCrossSection>();
       i++;
@@ -414,6 +610,14 @@ void initXmStamperIo(py::module &m)
   )pydoc";
   stamper_io.def_readwrite("last_end_cap", &xms::XmStamperIo::m_lastEndCap,
     last_end_cap_doc);
+  // ---------------------------------------------------------------------------
+  // property: last_end_cap
+  // ---------------------------------------------------------------------------
+  const char* raster_doc = R"pydoc(
+      Input/output raster to stamp the resulting elevations onto this raster
+  )pydoc";
+  stamper_io.def_readwrite("raster", &xms::XmStamperIo::m_raster,
+    raster_doc);
   // ---------------------------------------------------------------------------
   // property: bathymetry
   // ---------------------------------------------------------------------------
@@ -461,12 +665,44 @@ void initXmStamperIo(py::module &m)
     self.m_outBreakLines = *xms::VecInt2dFromPyIter(breaklines);
   },
   breaklines_doc);
-
-  // TODO: Get rid of this.
-  stamper_io.def("from_string",
-  &xms::XmStamperIo::FromString, 
-  "from string docs");
-  stamper_io.def("__str__",
-  &xms::XmStamperIo::ToString,
-  "to string docs");
+  // ---------------------------------------------------------------------------
+  // function: read_from_file
+  // ---------------------------------------------------------------------------
+  const char* read_from_file_doc = R"pydoc(
+      Reads the XmStamperIo class information from a file.
+      
+      Args:
+         file_name (str): The input file.
+  )pydoc";
+  stamper_io.def("read_from_file",
+  [](xms::XmStamperIo &self, std::string file_name)
+  {
+    std::ifstream is;
+    is.open(file_name, std::ios::in);
+    self.ReadFromFile(is);
+    is.close();
+  }
+  ,
+  read_from_file_doc, py::arg("file_name"));
+  // ---------------------------------------------------------------------------
+  // function: write_to_file
+  // ---------------------------------------------------------------------------
+  const char* write_to_file_doc = R"pydoc(
+      Writes the XmStamperIo class information to a file.
+      
+      Args:
+         file_name (str): The input file.
+         card_name (str): The card name to be written to the output file.
+  )pydoc";
+  stamper_io.def("write_to_file",
+  [](xms::XmStamperIo &self, std::string file_name, std::string card_name)
+  {
+    // TODO: This needs some error checking
+    std::ofstream os;
+    os.open(file_name, std::ios::out);
+    self.WriteToFile(os, card_name);
+    os.close();
+  }
+  ,
+  write_to_file_doc, py::arg("file_name"), py::arg("card_name"));
 }
