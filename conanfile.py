@@ -106,7 +106,7 @@ class XmsstamperConan(ConanFile):
                 else:
                     self.run('pip install numpy')
                 self.run('python -m unittest discover -v -p' \
-                         '*_pyt.py -s ../xmsmesh/python', cwd="./lib")
+                         '*_pyt.py -s ../xmsstamper/python', cwd="./lib")
 
     def package(self):
         self.copy("*.h", dst="include/xmsstamper", src="xmsstamper")
