@@ -1,0 +1,15 @@
+﻿  Building Custom Rule D:/code/xmsstamper/CMakeLists.txt
+  CMake does not need to re-run because D:\code\xmsstamper\build_py\CMakeFiles\generate.stamp is up-to-date.
+  XmStamper.cpp
+  XmStamperIo.cpp
+  TutStamping.cpp
+  XmBathymetryIntersector.cpp
+  XmBreaklines.cpp
+  XmGuideBankUtil.cpp
+  XmSlopedAbutmentUtil.cpp
+  XmStampEndCap.cpp
+  XmStampInterpCrossSection.cpp
+  XmStampTests.cpp
+  XmUtil.cpp
+  Generating Code...
+  xmsstamper.vcxproj -> D:\code\xmsstamper\build_py\lib\xmsstamper.lib

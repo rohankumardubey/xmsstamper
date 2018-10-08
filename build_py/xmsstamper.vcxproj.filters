@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\XmStamper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\XmStamperIo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\TutStamping.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmBathymetryIntersector.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmBreaklines.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmGuideBankUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmSlopedAbutmentUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampEndCap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampInterpCrossSection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\XmStamper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\XmStamperIo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\TutStamping.t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmBathymetryIntersector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmBathymetryIntersector.t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmBreaklines.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmGuideBankUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmSlopedAbutmentUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampEndCap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStamper3dPts.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampInterpCrossSection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampInterpCrossSection.t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmStampTests.t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\code\xmsstamper\xmsstamper\stamper\detail\XmUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="D:\code\xmsstamper\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{B3BB4D35-30C5-3037-B766-29A3B6711025}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{6D68ED55-C7E2-35A8-8085-2C5EE26F65DF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

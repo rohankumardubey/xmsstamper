@@ -1,0 +1,4 @@
+D:/code/xmsstamper/build_py/CMakeFiles/xmsstamper.dir
+D:/code/xmsstamper/build_py/CMakeFiles/xmsstamper_py.dir
+D:/code/xmsstamper/build_py/CMakeFiles/ALL_BUILD.dir
+D:/code/xmsstamper/build_py/CMakeFiles/ZERO_CHECK.dir
