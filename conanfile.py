@@ -27,7 +27,7 @@ class XmsstamperConan(ConanFile):
 
     def configure(self):
         # Set version dynamically using XMS_VERSION env variable.
-        self.version = self.env.get('XMS_VERSION', 'master')
+        self.version = self.env.get('XMS_VERSION', '99.99.99')
 
         # Raise ConanExceptions for Unsupported Versions
         s_os = self.settings.os
