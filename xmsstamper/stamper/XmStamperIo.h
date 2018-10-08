@@ -220,6 +220,7 @@ public:
 
   bool ReadFromFile(std::ifstream &a_file);
   void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
+  void SetPrecisionForOutput(int a_precision);
 }; // XmStamperIo
 
 //----- Function prototypes ----------------------------------------------------

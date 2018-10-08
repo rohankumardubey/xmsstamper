@@ -247,10 +247,10 @@ void XmStamperImpl::FillStamperIoFromCenterlineProfile(XmStamperIo& a_io,
 //------------------------------------------------------------------------------
 void XmStamperImpl::WriteInputsForDebug()
 {
-  FILE* fp(fopen("c:\\temp\\xmsng_DoStamp_SaveInputs.dbg", "r"));
-  if (fp)
+  std::fstream os;
+  os.open("c:\\temp\\xmsstamper_DoStamp_SaveInputs.dbg", std::fstream::in);
+  if (os.good())
   {
-    fclose(fp);
     std::ofstream os("c:\\temp\\xmsng_StamperIo.txt");
     m_io.WriteToFile(os, "STAMPER_IO_VERSION_1");
   }

@@ -95,6 +95,13 @@ static void iDoTest(const std::string& a_relPath)
   std::string baseFile(path + "xmsng_base.txt");
   std::string outFile(path + "xmsng_out.txt");
   iOutputToFile(outFile, io);
+  std::string outTin(path + "tin_out.tin");
+  if (io.m_outTin->NumPoints() > 0)
+  {
+    std::fstream os;
+    os.open(outTin.c_str(), std::fstream::out);
+    io.m_outTin->ExportTinFile(os);
+  }
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, outFile);
 } // iDoTest
 

@@ -51,15 +51,34 @@ bool iReadVecIntFromFile(std::ifstream &a_file, VecInt &a_vals);
 namespace
 {
 //------------------------------------------------------------------------------
+/// \brief Holds the value of precision for writing floating point numbers
+/// to output
+//------------------------------------------------------------------------------
+int& iPrecision()
+{
+  static int m_precision(10);
+  return m_precision;
+} // iPrecision
+//------------------------------------------------------------------------------
+/// \brief Uses the defined precision to convert a double to a string using the
+/// STRstd function.
+/// \param[in] a_: the double that is converted to a string
+/// \return the string representation of the double
+//------------------------------------------------------------------------------
+std::string iDblToStr(double a_)
+{
+  return STRstd(a_, -1, iPrecision(), STR_FULLWIDTH);
+} // iDblToStr
+//------------------------------------------------------------------------------
 /// \brief Writes a VecDbl to an ASCII file
 //------------------------------------------------------------------------------
 void iWriteVecDblToFile(std::ofstream &a_file, const std::string &a_cardName, const VecDbl &a_vals)
 {
   XM_ENSURE_TRUE(a_file.is_open());
-  a_file << a_cardName + " " << a_vals.size() << " " << std::fixed << std::setprecision(2);
+  a_file << a_cardName + " " << a_vals.size() << " ";
   for (const auto &val : a_vals)
   {
-    a_file << val << " ";
+    a_file << iDblToStr(val) << " ";
   }
   a_file << "\n";
 } // iWriteVecDblToFile
@@ -84,10 +103,10 @@ bool iReadVecDblFromFile(std::ifstream &a_file, VecDbl &a_vals)
 void iWriteVecPt2dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt2d &a_pts)
 {
   XM_ENSURE_TRUE(a_file.is_open());
-  a_file << a_cardName + " " << a_pts.size() << "\n" << std::fixed << std::setprecision(13);
+  a_file << a_cardName + " " << a_pts.size() << "\n";
   for (const auto &pt : a_pts)
   {
-    a_file << pt.x << " " << pt.y << "\n";
+    a_file << iDblToStr(pt.x) << " " << iDblToStr(pt.y) << "\n";
   }
 } // iWriteVecPt2dToFile
 //------------------------------------------------------------------------------
@@ -111,10 +130,10 @@ bool iReadVecPt2dFromFile(std::ifstream &a_file, VecPt2d &a_pts)
 void iWriteVecPt3dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt3d &a_pts)
 {
   XM_ENSURE_TRUE(a_file.is_open());
-  a_file << a_cardName + " " << a_pts.size() << "\n" << std::fixed << std::setprecision(13);
+  a_file << a_cardName + " " << a_pts.size() << "\n";
   for (const auto &pt : a_pts)
   {
-    a_file << pt.x << " " << pt.y << " " << pt.z << "\n";
+    a_file << iDblToStr(pt.x) << " " << iDblToStr(pt.y) << " " << iDblToStr(pt.z) << "\n";
   }
 } // iWriteVecPt3dToFile
 //------------------------------------------------------------------------------
@@ -661,4 +680,13 @@ bool XmStamperIo::ReadFromFile(std::ifstream &a_file)
   }
   return true;
 } // XmStamperIo::ReadFromFile
+//------------------------------------------------------------------------------
+/// \brief Sets the precision for stamper output
+/// \param[in] a_precision: The number of digits of precision for stamper output
+//------------------------------------------------------------------------------
+void XmStamperIo::SetPrecisionForOutput(int a_precision)
+{
+  iPrecision() = a_precision;
+} // XmStamperIo::SetPrecisionForOutput
+
 } // namespace xms
