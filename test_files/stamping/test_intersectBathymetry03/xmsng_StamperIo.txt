@@ -91,7 +91,8 @@ POINTS 3
        0.0       35.0        0.0
       20.0        4.0       72.0
       33.0       20.0       72.0
-TRIANGLES 3 2 0 1 
+TRIANGLES 3
+         0          1          2
 TRIS_ADJ_TO_PTS 0
 OUT_BREAK_LINES 0
 RASTER

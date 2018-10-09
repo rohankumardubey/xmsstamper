@@ -14,6 +14,7 @@
 #include <xmsstamper/stamper/XmStamperIo.h>
 
 // 3. Standard library headers
+#include <array>
 #include <fstream> // std::ofstream
 #include <sstream> // std::stringstream
 
@@ -216,10 +217,43 @@ void iWriteTinToFile(std::ofstream &a_file, const std::string &a_cardName, const
   a_file << a_cardName + "\n";
   const VecPt3d& points = a_tin->Points();
   iWriteVecPt3dToFile(a_file, "POINTS", points);
-  const VecInt& triangles = a_tin->Triangles();
-  iWriteVecIntToFile(a_file, "TRIANGLES", triangles);
-  const VecInt2d& trisAdjToPts = a_tin->TrisAdjToPts();
-  iWriteVecInt2dToFile(a_file, "TRIS_ADJ_TO_PTS", trisAdjToPts);
+
+  VecInt vTri = a_tin->Triangles();
+  std::vector<std::array<int, 3>> sortableTris;
+  // sort the triangles so that the point with the lowest index is first and then sort all
+  // triangles
+  for (size_t i = 0; i < vTri.size(); i += 3)
+  {
+    std::array<int, 3> tri = { -1, -1, -1 };
+    tri[0] = vTri[i + 0];
+    tri[1] = vTri[i + 1];
+    tri[2] = vTri[i + 2];
+    auto minIter = tri.begin();
+    if (tri[1] < tri[0] && tri[1] < tri[2])
+      minIter += 1;
+    else if (tri[2] < tri[0] && tri[2] < tri[1])
+      minIter += 2;
+    std::rotate(tri.begin(), minIter, tri.begin() + 3);
+    sortableTris.push_back(tri);
+  }
+  std::sort(sortableTris.begin(), sortableTris.end());
+  auto it = sortableTris.begin();
+  for (size_t i = 0; i < vTri.size(); i += 3, ++it)
+  {
+    vTri[i + 0] = (*it)[0];
+    vTri[i + 1] = (*it)[1];
+    vTri[i + 2] = (*it)[2];
+  }
+  a_file << "TRIANGLES " << vTri.size() << "\n";
+  for (size_t i = 0; i < vTri.size(); i += 3)
+  {
+    a_file << std::setw(10) << vTri[i + 0] << " "
+           << std::setw(10) << vTri[i + 1] << " "
+           << std::setw(10) << vTri[i + 2] << "\n";
+  }
+  //const VecInt2d& trisAdjToPts = a_tin->TrisAdjToPts();
+  a_file << "TRIS_ADJ_TO_PTS 0\n";
+  //iWriteVecInt2dToFile(a_file, "TRIS_ADJ_TO_PTS", trisAdjToPts);
 } // iWriteTinToFile
 //------------------------------------------------------------------------------
 /// \brief Reads a Tin from an ASCII file
@@ -237,6 +271,8 @@ bool iReadTinFromFile(std::ifstream &a_file, const BSHP<TrTin> &a_tin)
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "TRIS_ADJ_TO_PTS"), false);
   XM_ENSURE_TRUE(iReadVecInt2dFromFile(a_file, a_tin->TrisAdjToPts()), false);
+  // always just build this. The default behavior is to not write this array to the file 
+  a_tin->BuildTrisAdjToPts();
   return true;
 } // iReadTinFromFile
 }
