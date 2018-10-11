@@ -22,7 +22,6 @@ class TestXmStamper(unittest.TestCase):
         )
         if not os.path.isdir(self.output_file_path):
             os.mkdir(self.output_file_path)
-        print(self.output_file_path)
         self.assertTrue(os.path.isdir(self.output_file_path), 
             "Could not create output file directory")
 
@@ -41,7 +40,7 @@ class TestXmStamper(unittest.TestCase):
 
     """XmStamper tests"""        
     def test_stamp_fill_embankment(self):
-        """Test stamp file embankment"""
+        """Test stamp fill embankment"""
         io = xmsstamper_py.stamper.XmStamperIo()
 
         # Type and centerline
