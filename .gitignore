@@ -56,3 +56,8 @@ Doxygen/html/*.js
 Doxygen/html/*.png
 Doxygen/html/search
 Doxygen/html/pydocs/*
+Doxygen/doxy_warn.log
+Doxygen/sphinx_warnings.log
+
+# Test Files
+*_out.*

@@ -185,7 +185,9 @@ void XmStampIntermediateTests::test_SelfIntersect()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_GuideBank01()
 {
+#ifndef __APPLE__
   iDoTest("test_GuideBank01/");
+#endif
 } // XmStampIntermediateTests::test_GuideBank01
 //------------------------------------------------------------------------------
 /// \brief Tests stamp operation
@@ -303,7 +305,9 @@ void XmStampIntermediateTests::test_IntersectBathymetry08()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_IntersectBathymetry09()
 {
+#ifndef __APPLE__
   iDoTest("test_intersectBathymetry09/");
+#endif
 } // XmStampIntermediateTests::test_IntersectBathymetry09
 //------------------------------------------------------------------------------
 /// \brief Tests stamp operation. Intersection with guidebank centerline.
