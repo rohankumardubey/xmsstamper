@@ -21,7 +21,7 @@ std::string version() {
 
 //------ Primary Module --------------------------------------------------------
 PYBIND11_MODULE(xmsstamper_py, m) {
-    m.doc() = "Python bindings for xmsstamper"; // optional module docstring
+    m.doc() = "Python bindings for the xmsstamper library"; // optional module docstring
     m.def("version", &version,
           "Get current version of xmsstamper Python bindings.");
 
