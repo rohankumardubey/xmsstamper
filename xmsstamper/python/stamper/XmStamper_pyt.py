@@ -30,8 +30,8 @@ class TestXmStamper(unittest.TestCase):
 
     def assertFilesEqual(self, base, out):
         """check files are equal"""
-        self.assertTrue(os.path.isfile(base), "Base file does not exist")
-        self.assertTrue(os.path.isfile(out), "Out file does not exist")
+        self.assertTrue(os.path.isfile(base), "Base file '{}' does not exist".format(base))
+        self.assertTrue(os.path.isfile(out), "Out file '{}' does not exist".format(out))
 
         with open(base, 'r') as b:
             base_file = ''.join(b.readlines())
