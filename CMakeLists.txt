@@ -80,10 +80,6 @@ if(IS_PYTHON_BUILD)
       ${PYTHON_INCLUDE_DIRS}
     )
 
-    list(APPEND EXT_LIBS
-      ${PYTHON_LIBRARIES}
-    )
-
 endif()
 
 message("External Include Dirs: ${EXT_INCLUDE_DIRS}")
@@ -191,7 +187,7 @@ if(IS_PYTHON_BUILD)
     target_include_directories(xmsstamper_py
       PRIVATE
           ${EXT_LIBS}
-          PYTHON_INCLUDE_DIRS
+          ${PYTHON_INCLUDE_DIRS}
     )
     target_link_libraries(xmsstamper_py
     PRIVATE
@@ -202,13 +198,11 @@ if(IS_PYTHON_BUILD)
     LINKER_LANGUAGE CXX
   )
 
-  execute_process(COMMAND python -c "import os; print('${PYTHON_SITE_PACKAGES}'.replace('${CONDA_PREFIX}' + os.sep, ''))" OUTPUT_VARIABLE PYTHON_SITE_PACKAGES_TRIMMED OUTPUT_STRIP_TRAILING_WHITESPACE)
-
   # Install recipe
   install(
-      TARGETS xmsstamper_py
-      ARCHIVE DESTINATION ${PYTHON_SITE_PACKAGES_TRIMMED}
-      LIBRARY DESTINATION ${PYTHON_SITE_PACKAGES_TRIMMED}
+    TARGETS xmsmesh_py
+    ARCHIVE DESTINATION "site-packages"
+    LIBRARY DESTINATION "site-packages"
   )
 
 endif()
@@ -217,8 +211,8 @@ endif()
 # Install recipe
 install(
   TARGETS ${PROJECT_NAME}
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION "lib"
+  LIBRARY DESTINATION "lib"
 )
 foreach (header IN LISTS xmsstamper_headers xmsstamper_py_headers)
   get_filename_component(subdir "${header}" DIRECTORY)
