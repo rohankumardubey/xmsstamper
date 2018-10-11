@@ -200,13 +200,12 @@ if(IS_PYTHON_BUILD)
 
   # Install recipe
   install(
-    TARGETS xmsmesh_py
+    TARGETS xmsstamper_py
     ARCHIVE DESTINATION "site-packages"
     LIBRARY DESTINATION "site-packages"
   )
 
 endif()
-
 
 # Install recipe
 install(
