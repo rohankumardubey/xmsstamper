@@ -10,9 +10,9 @@ class XmsstamperConan(ConanFile):
     """XMSStamper Conanfile"""
     name = "xmsstamper"
     version = None
-    license = "XMSNG Software License"
+    license = "FreeBSD Software License"
     url = "https://github.com/Aquaveo/xmsstamper"
-    description = "Grid library for XMS products"
+    description = "Stamping library for XMS products"
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "xms": [True, False],
@@ -65,7 +65,7 @@ class XmsstamperConan(ConanFile):
 
         # Use the dev version of XMSCore, XMSInterp, XMSGrid, XMSExtractor
         self.requires("xmscore/[>=1.0.40]@aquaveo/stable")
-        self.requires("xmsinterp/1.0.19@aquaveo/stable")
+        self.requires("xmsinterp/[>=1.0.19]@aquaveo/stable")
 
     def build(self):
         cmake = CMake(self)
@@ -118,7 +118,7 @@ class XmsstamperConan(ConanFile):
         self.copy("license", dst="licenses", ignore_case=True, keep_path=False)
 
     def package_info(self):
-        self.env_info.PYTHONPATH.append(os.path.join(self.package_folder, 
+        self.env_info.PYTHONPATH.append(os.path.join(self.package_folder,
                                                      "site-packages"))
         if self.settings.build_type == 'Debug':
             self.cpp_info.libs = ["xmsstamper_d"]
