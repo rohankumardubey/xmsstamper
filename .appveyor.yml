@@ -55,6 +55,3 @@ build_script:
       echo 'XMS_VERSION: '+$env:XMS_VERSION
       echo 'CONAN_REFERENCE: '+$env:CONAN_REFERENCE
   - python build.py
-
-test_script:
-  - python test.py
