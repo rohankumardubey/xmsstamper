@@ -13,7 +13,8 @@
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
 
-//----- Function declarations --------------------------------------------------
-void initGridtrace(py::module &);
+void initStamper(py::module &);
 
-void initXmGridTrace(py::module &);
+//----- Function declarations --------------------------------------------------
+void initXmStamper(py::module &);
+void initXmStamperIo(py::module &);

@@ -2,7 +2,7 @@
 XMSStamper Conanfile and Support
 """
 import os
-from conans import ConanFile, CMake
+from conans import ConanFile, CMake, tools
 from conans.errors import ConanException
 
 
@@ -10,9 +10,9 @@ class XmsstamperConan(ConanFile):
     """XMSStamper Conanfile"""
     name = "xmsstamper"
     version = None
-    license = "XMSNG Software License"
+    license = "FreeBSD Software License"
     url = "https://github.com/Aquaveo/xmsstamper"
-    description = "Grid library for XMS products"
+    description = "Stamping library for XMS products"
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "xms": [True, False],
@@ -27,7 +27,7 @@ class XmsstamperConan(ConanFile):
 
     def configure(self):
         # Set version dynamically using XMS_VERSION env variable.
-        self.version = self.env.get('XMS_VERSION', 'master')
+        self.version = self.env.get('XMS_VERSION', '99.99.99')
 
         # Raise ConanExceptions for Unsupported Versions
         s_os = self.settings.os
@@ -64,8 +64,8 @@ class XmsstamperConan(ConanFile):
             self.requires("pybind11/2.2.2@aquaveo/stable")
 
         # Use the dev version of XMSCore, XMSInterp, XMSGrid, XMSExtractor
-        self.requires("xmscore/[>=1.0.37]@aquaveo/stable")
-        self.requires("xmsinterp/[>=1.0.16]@aquaveo/stable")
+        self.requires("xmscore/[>=1.0.40]@aquaveo/stable")
+        self.requires("xmsinterp/[>=1.0.19]@aquaveo/stable")
 
     def build(self):
         cmake = CMake(self)
@@ -78,9 +78,9 @@ class XmsstamperConan(ConanFile):
         # have tests in release code. Thus, if we want to run tests, we will
         # build a test version (without python), run the tests, and then (on
         # sucess) rebuild the library without tests.
+        cmake.definitions["XMS_VERSION"] = '{}'.format(self.version)
         cmake.definitions["IS_PYTHON_BUILD"] = self.options.pybind
         cmake.definitions["BUILD_TESTING"] = self.options.testing
-        cmake.definitions["XMSSTAMPER_TEST_PATH"] = "test_files"
         cmake.definitions["PYTHON_TARGET_VERSION"] = self.env.get("PYTHON_TARGET_VERSION", "3.6")
         cmake.configure(source_folder=".")
         cmake.build()
@@ -98,6 +98,14 @@ class XmsstamperConan(ConanFile):
                             no_newline = line.strip('\n')
                             print(no_newline)
                 print("***********(0.0)*************")
+        elif self.options.pybind:
+            with tools.pythonpath(self):
+                if not self.settings.os == "Macos":
+                    self.run('pip install --user numpy')
+                else:
+                    self.run('pip install numpy')
+                self.run('python -m unittest discover -v -p' \
+                         '*_pyt.py -s ../xmsstamper/python', cwd="./lib")
 
     def package(self):
         self.copy("*.h", dst="include/xmsstamper", src="xmsstamper")
@@ -110,6 +118,8 @@ class XmsstamperConan(ConanFile):
         self.copy("license", dst="licenses", ignore_case=True, keep_path=False)
 
     def package_info(self):
+        self.env_info.PYTHONPATH.append(os.path.join(self.package_folder,
+                                                     "site-packages"))
         if self.settings.build_type == 'Debug':
             self.cpp_info.libs = ["xmsstamper_d"]
         else:

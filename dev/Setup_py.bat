@@ -8,7 +8,7 @@ echo on
 mkdir ..\build_py
 pushd .
 cd ..\build_py
-conan install -pr ..\dev\xmsprofile_py .. --build missing
+conan install -pr ..\dev\xmsprofile_py ..
 popd
 echo off
 

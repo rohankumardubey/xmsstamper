@@ -8,7 +8,7 @@
 
 //----- Included files ---------------------------------------------------------
 #include <pybind11/pybind11.h>
-#include <xmsgridtrace/python/gridtrace/gridtrace_py.h>
+#include <xmsstamper/python/stamper/stamper_py.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
@@ -20,13 +20,13 @@ std::string version() {
 
 
 //------ Primary Module --------------------------------------------------------
-PYBIND11_MODULE(xmsgridtrace_py, m) {
-    m.doc() = "Python bindings for xmsgridtrace"; // optional module docstring
+PYBIND11_MODULE(xmsstamper_py, m) {
+    m.doc() = "Python bindings for the xmsstamper library"; // optional module docstring
     m.def("version", &version,
-          "Get current version of xmsgridtrace Python bindings.");
+          "Get current version of xmsstamper Python bindings.");
 
-    // Extractor module
-    py::module modGridtrace = m.def_submodule("gridtrace");
-    initGridtrace(modGridtrace);
+    // Stamper module
+    py::module modStamper = m.def_submodule("stamper");
+    initStamper(modStamper);
 }
 

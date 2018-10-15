@@ -48,7 +48,21 @@ test_package/build/
 *.out
 *.app
 
-# Doxygen files
+# Doxygen
+Doxygen/*.tag
+Doxygen/html/*.css
+Doxygen/html/*.html
+Doxygen/html/*.js
+Doxygen/html/*.png
+Doxygen/html/search
+Doxygen/html/pydocs/*
 Doxygen/doxy_warn.log
-Doxygen/html/
-Doxygen/xmsextractor.tag
+Doxygen/sphinx_warnings.log
+
+# Test Files
+test_files/*_out.*
+
+# Build directories
+build/*
+build_py/*
+output_files/*
