@@ -60,7 +60,7 @@ Doxygen/doxy_warn.log
 Doxygen/sphinx_warnings.log
 
 # Test Files
-*_out.*
+test_files/*_out.*
 
 # Build directories
 build/*

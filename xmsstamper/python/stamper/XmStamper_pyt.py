@@ -317,7 +317,7 @@ class TestXmStamper(unittest.TestCase):
 
         base_file = os.path.join(
             self.base_file_path, "stamping", "rasterTestFiles", 
-            "testSlopedAbutment_out.asc"
+            "testSlopedAbutment_base.asc"
         )
         output_file = os.path.join(
             self.output_file_path, "test_sloped_abutment_out.asc"
@@ -408,7 +408,7 @@ class TestXmStamper(unittest.TestCase):
 
         base_file = os.path.join(
             self.base_file_path, "stamping", "rasterTestFiles", 
-            "testGuidebank_out.asc"
+            "testGuidebank_base.asc"
         )
         output_file = os.path.join(
             self.output_file_path, "test_guidebank_out.asc"
@@ -475,7 +475,7 @@ class TestXmStamper(unittest.TestCase):
 
         base_file = os.path.join(
             self.base_file_path, "stamping", "rasterTestFiles", 
-            "testIntersectBathymetry_out.asc"
+            "testIntersectBathymetry_base.asc"
         )
         output_file = os.path.join(
             self.output_file_path, "test_intersect_bathymetry_base.asc"
