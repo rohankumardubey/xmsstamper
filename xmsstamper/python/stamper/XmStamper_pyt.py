@@ -72,7 +72,7 @@ class TestXmStamper(unittest.TestCase):
         num_pixels_y = 11
         pixel_size = 1
         min_pt = (-20.0, 0.0)
-        raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
+        raster_vals = [5] * (num_pixels_x * num_pixels_y)
         raster = xmsstamper_py.stamper.XmStampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
@@ -116,7 +116,7 @@ class TestXmStamper(unittest.TestCase):
         io = xmsstamper_py.stamper.XmStamperIo()
 
         # Type and centerline
-        io.stamping_type = 1
+        io.stamping_type = 0
         io.centerline = ((0, 0, 0), (0, 10, 0))
 
         # Cross sections
@@ -142,7 +142,7 @@ class TestXmStamper(unittest.TestCase):
         num_pixels_y = 11
         pixel_size = 1
         min_pt = (-20.0, 0.0)
-        raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
+        raster_vals = [5] * (num_pixels_x * num_pixels_y)
         raster = xmsstamper_py.stamper.XmStampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
@@ -478,7 +478,7 @@ class TestXmStamper(unittest.TestCase):
             "testIntersectBathymetry_base.asc"
         )
         output_file = os.path.join(
-            self.output_file_path, "test_intersect_bathymetry_base.asc"
+            self.output_file_path, "test_intersect_bathymetry_out.asc"
         )
 
         raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
