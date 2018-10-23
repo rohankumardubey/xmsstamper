@@ -89,7 +89,7 @@ void TutStampingUnitTests::test_StampFillEmbankment()
   const int numPixelsX = 41, numPixelsY = 11;
   const double pixelSize = 1.0;
   const xms::Pt2d minPt(-20.0, 0.0);
-  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, 5);
   xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
   // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
   // the XmStamper::DoStamp function.
@@ -163,7 +163,7 @@ void TutStampingUnitTests::test_StampCutEmbankment()
   const int numPixelsX = 41, numPixelsY = 11;
   const double pixelSize = 1.0;
   const xms::Pt2d minPt(-20.0, 0.0);
-  const std::vector<double> rasterVals(numPixelsX * numPixelsY, XM_NODATA);
+  const std::vector<double> rasterVals(numPixelsX * numPixelsY, 5);
   xms::XmStampRaster raster(numPixelsX, numPixelsY, pixelSize, pixelSize, minPt, rasterVals, XM_NODATA);
   // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
   // the XmStamper::DoStamp function.
