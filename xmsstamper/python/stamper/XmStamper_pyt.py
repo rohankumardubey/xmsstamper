@@ -541,10 +541,10 @@ class TestXmStamper(unittest.TestCase):
         cs1.right = ((0.0, 332.0), (12.5, 332.0), (13.5, 331.0))
         cs1.right_max = 35.0
         cs1.index_right_shoulder = 1
-        # io.cs = [cs1 for _ in io.centerline]
-        cs = [None for _ in io.centerline]
-        cs[0] = cs1
-        io.cs = cs
+        io.cs = [cs1 for _ in io.centerline]
+        # cs = [None for _ in io.centerline]
+        # cs[0] = cs1
+        # io.cs = cs
         
         print("End Caps")
         # Endcaps and Sloped Abutments
