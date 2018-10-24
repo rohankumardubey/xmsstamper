@@ -587,9 +587,11 @@ void initXmStamperIo(py::module &m)
     int i = 0;
     for (auto item : py_cs)
     {
-      auto cs = item;
-      vec_cs.at(i) = item.cast<xms::XmStampCrossSection>();
-      i++;
+        if (!item.is_none())
+        {
+            vec_cs.at(i) = item.cast<xms::XmStampCrossSection>();
+        }
+        i++;
     }
     self.m_cs = vec_cs;
   },

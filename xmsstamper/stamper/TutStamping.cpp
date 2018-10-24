@@ -511,4 +511,89 @@ void TutStampingUnitTests::test_StampIntersectBathymetry()
   io.m_outTin->ExportTinFile(ofs);
 } // TutStampingUnitTests::test_StampIntersectBathymetry
   //! [snip_testStampIntersectBathymetry]
+//------------------------------------------------------------------------------
+/// \brief    Tests stamping with real data from double pipe creek
+//------------------------------------------------------------------------------
+void TutStampingUnitTests::test_RealDataStamping()
+{
+    // declare a XmStamperIo class to create the inputs
+    xms::XmStamperIo io;
+
+    // set as a "fill" stamp
+    io.m_stampingType = 1;
+
+    // define the center line
+    io.m_centerLine = { 
+        {1001673.2,               14390623.5,               336.0              },
+        {1001629.780754384200000, 14390618.277580569000000, 336.000000000000000},
+        {1001589.675662567800000, 14390613.453783935000000, 336.000000000000000},
+        {1001552.631758032300000, 14390608.998183563000000, 336.000000000000000},
+        {1001518.415382976300000, 14390604.882675350000000, 336.000000000000000},
+        {1001486.810714498500000, 14390601.081300350000000, 336.000000000000000},
+        {1001457.618403274400000, 14390597.570081044000000, 336.000000000000000},
+        {1001430.654316142900000, 14390594.326870101000000, 336.000000000000000},
+        {1001405.748374668900000, 14390591.331210665000000, 336.000000000000000},
+        {1001382.743482358400000, 14390588.564207349000000, 336.000000000000000},
+        {1001361.494533758600000, 14390586.008407025000000, 336.000000000000000},
+        {1001341.867499191000000, 14390583.647688746000000, 336.000000000000000},
+        {1001323.738579348000000, 14390581.467162071000000, 336.000000000000000},
+        {1001306.993424416500000, 14390579.453073129000000, 336.000000000000000},
+        {1001291.526412807400000, 14390577.592717867000000, 336.000000000000000},
+        {1001277.239984936200000, 14390575.874361930000000, 336.000000000000000},
+        {1001264.044027858300000, 14390574.287166627000000, 336.000000000000000},
+        {1001251.855306872700000, 14390572.821120583000000, 336.000000000000000},
+        {1001240.596940512100000, 14390571.466976576000000, 336.000000000000000},
+        {1001230.197915605000000, 14390570.216193220000000, 336.000000000000000},
+        {1001220.592639355300000, 14390569.060881084000000, 336.000000000000000},
+        {1001211.720525608300000, 14390567.993752934000000, 336.000000000000000},
+        {1001203.525612698400000, 14390567.008077763000000, 336.000000000000000},
+        {1001195.956210466300000, 14390566.097638329000000, 336.000000000000000},
+        {1001188.964574218400000, 14390565.256691961000000, 336.000000000000000},
+        {1001182.506603571900000, 14390564.479934305000000, 336.000000000000000},
+        {1001176.541564289400000, 14390563.762465896000000, 336.000000000000000},
+        {1001171.031831342000000, 14390563.099761236000000, 336.000000000000000},
+        {1001165.942651587700000, 14390562.487640254000000, 336.000000000000000},
+        {1001161.241924561600000, 14390561.922241943000000, 336.000000000000000},
+        {1001156.9,               14390561.4,               336.0              }
+    };
+
+    // define a cross section at each point on the center line. This will
+    // be a symmetric cross section. The top width will be 10 and the side
+    // slope will be 1. The cross section will have a total width of 40.
+    xms::XmStampCrossSection cs;
+    cs.m_left = { { 0, 332 },{ 12.5, 332},{ 13.5, 331 } };
+    cs.m_leftMax = 35;
+    cs.m_idxLeftShoulder = 1;
+    cs.m_right = cs.m_left;
+    cs.m_rightMax = cs.m_leftMax;
+    cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
+    io.m_cs.assign(io.m_centerLine.size(), cs);
+
+    // Endcaps and Sloped Abutments
+    io.m_firstEndCap.m_type = 2;  // wing wall
+    io.m_firstEndCap.m_wingWall.m_wingWallAngle = 0;
+
+    io.m_lastEndCap.m_type = 1;  // sloped abutment
+    io.m_lastEndCap.m_slopedAbutment.m_slope = { {0.0, 332.0}, {1.0, 331.0} };
+    io.m_lastEndCap.m_slopedAbutment.m_maxX = 25;
+    io.m_lastEndCap.m_angle = 0;
+
+    // create a Raster to stamp to
+    xms::XmStampRaster raster;
+
+    std::string rasterFileName(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/dpipe_base.asc"));
+    std::ifstream ifs(rasterFileName.c_str(), std::ifstream::in);
+    raster.ReadFromFile(ifs);
+    
+    // set the raster member of the raster class.  The values are interpolated from io.m_outTin in
+    // the XmStamper::DoStamp function.
+    io.m_raster = raster;
+
+    // create a XmStamper class. This class performs the stamp operation.
+    BSHP<xms::XmStamper> st = xms::XmStamper::New();
+    st->DoStamp(io);
+
+    std::string baseFile(XMS_TEST_PATH + std::string("stamping/rasterTestFiles/garbageOutput.asc"));
+    io.m_raster.WriteGridFile(baseFile, xms::XmStampRaster::XmRasterFormatEnum::RS_ARCINFO_ASCII);
+} // TutStampingUnitTests::test_RealDataStamping
 #endif
