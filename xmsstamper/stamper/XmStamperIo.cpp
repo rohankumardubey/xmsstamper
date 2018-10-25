@@ -397,7 +397,7 @@ void XmStampRaster::WriteGridFile(const std::string &a_fileName,
 void XmStampRaster::WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const
 {
   XM_ENSURE_TRUE(a_file.is_open());
-  a_file << a_cardName + "\n";
+  a_file << a_cardName + "\n"; // Not sure we should be writing this since we don't read it.
   a_file << "NUM_PIXELS_X " << m_numPixelsX << "\n";
   a_file << "NUM_PIXELS_Y " << m_numPixelsY << "\n";
   a_file << "PIXEL_SIZE_X " << std::fixed << std::setprecision(13) << m_pixelSizeX << "\n";

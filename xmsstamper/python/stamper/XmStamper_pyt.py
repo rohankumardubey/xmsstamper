@@ -72,7 +72,7 @@ class TestXmStamper(unittest.TestCase):
         num_pixels_y = 11
         pixel_size = 1
         min_pt = (-20.0, 0.0)
-        raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
+        raster_vals = [5] * (num_pixels_x * num_pixels_y)
         raster = xmsstamper_py.stamper.XmStampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
@@ -116,7 +116,7 @@ class TestXmStamper(unittest.TestCase):
         io = xmsstamper_py.stamper.XmStamperIo()
 
         # Type and centerline
-        io.stamping_type = 1
+        io.stamping_type = 0
         io.centerline = ((0, 0, 0), (0, 10, 0))
 
         # Cross sections
@@ -142,7 +142,7 @@ class TestXmStamper(unittest.TestCase):
         num_pixels_y = 11
         pixel_size = 1
         min_pt = (-20.0, 0.0)
-        raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
+        raster_vals = [5] * (num_pixels_x * num_pixels_y)
         raster = xmsstamper_py.stamper.XmStampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
@@ -478,7 +478,7 @@ class TestXmStamper(unittest.TestCase):
             "testIntersectBathymetry_base.asc"
         )
         output_file = os.path.join(
-            self.output_file_path, "test_intersect_bathymetry_base.asc"
+            self.output_file_path, "test_intersect_bathymetry_out.asc"
         )
 
         raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
@@ -494,3 +494,90 @@ class TestXmStamper(unittest.TestCase):
 
         np.testing.assert_array_almost_equal(base_pts, io.get_out_tin().pts,
                                              decimal=2)
+
+#     def test_real_data_stamping(self):
+#         """Test real data stamping"""
+#         io = xmsstamper_py.stamper.XmStamperIo()
+#         io.stamping_type = 1
+#         io.centerline = (
+#             (1001673.2, 14390623.5, 336.0),
+#             (1001629.780754384200000, 14390618.277580569000000, 336.000000000000000),
+#             (1001589.675662567800000, 14390613.453783935000000, 336.000000000000000),
+#             (1001552.631758032300000, 14390608.998183563000000, 336.000000000000000),
+#             (1001518.415382976300000, 14390604.882675350000000, 336.000000000000000),
+#             (1001486.810714498500000, 14390601.081300350000000, 336.000000000000000),
+#             (1001457.618403274400000, 14390597.570081044000000, 336.000000000000000),
+#             (1001430.654316142900000, 14390594.326870101000000, 336.000000000000000),
+#             (1001405.748374668900000, 14390591.331210665000000, 336.000000000000000),
+#             (1001382.743482358400000, 14390588.564207349000000, 336.000000000000000),
+#             (1001361.494533758600000, 14390586.008407025000000, 336.000000000000000),
+#             (1001341.867499191000000, 14390583.647688746000000, 336.000000000000000),
+#             (1001323.738579348000000, 14390581.467162071000000, 336.000000000000000),
+#             (1001306.993424416500000, 14390579.453073129000000, 336.000000000000000),
+#             (1001291.526412807400000, 14390577.592717867000000, 336.000000000000000),
+#             (1001277.239984936200000, 14390575.874361930000000, 336.000000000000000),
+#             (1001264.044027858300000, 14390574.287166627000000, 336.000000000000000),
+#             (1001251.855306872700000, 14390572.821120583000000, 336.000000000000000),
+#             (1001240.596940512100000, 14390571.466976576000000, 336.000000000000000),
+#             (1001230.197915605000000, 14390570.216193220000000, 336.000000000000000),
+#             (1001220.592639355300000, 14390569.060881084000000, 336.000000000000000),
+#             (1001211.720525608300000, 14390567.993752934000000, 336.000000000000000),
+#             (1001203.525612698400000, 14390567.008077763000000, 336.000000000000000),
+#             (1001195.956210466300000, 14390566.097638329000000, 336.000000000000000),
+#             (1001188.964574218400000, 14390565.256691961000000, 336.000000000000000),
+#             (1001182.506603571900000, 14390564.479934305000000, 336.000000000000000),
+#             (1001176.541564289400000, 14390563.762465896000000, 336.000000000000000),
+#             (1001171.031831342000000, 14390563.099761236000000, 336.000000000000000),
+#             (1001165.942651587700000, 14390562.487640254000000, 336.000000000000000),
+#             (1001161.241924561600000, 14390561.922241943000000, 336.000000000000000),
+#             (1001156.9, 14390561.4, 336.0),
+#         )
+        
+#         cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+#         cs1.left = ((0.0, 332.0), (12.5, 332.0), (13.5, 331.0))
+#         cs1.left_max = 35.0
+#         cs1.index_left_shoulder = 1
+#         cs1.right = ((0.0, 332.0), (12.5, 332.0), (13.5, 331.0))
+#         cs1.right_max = 35.0
+#         cs1.index_right_shoulder = 1
+#         io.cs = [cs1 for _ in io.centerline]
+#         # cs = [None for _ in io.centerline]
+#         # cs[0] = cs1
+#         # io.cs = cs
+        
+#         # Endcaps and Sloped Abutments
+#         io.first_end_cap.type = 2  # square abutment
+#         io.first_end_cap.wing_wall.wing_wall_angle = 0.0
+#         io.first_end_cap.angle = 0
+
+#         io.last_end_cap.type = 1  # sloped abutment
+#         io.last_end_cap.sloped_abutment.slope = ((0.0, 332.0),(1.0, 331.0))
+#         io.last_end_cap.sloped_abutment.max_x = 25
+#         io.last_end_cap.angle = 0
+
+#         # Raster to stamp
+#         raster = xmsstamper_py.stamper.XmStampRaster()
+#         raster.read_from_file(os.path.join(
+#             self.base_file_path, "stamping", "rasterTestFiles", 
+#             "dpipe_base.asc"
+#         ))
+
+#         io.raster = raster
+
+#         st = xmsstamper_py.stamper.XmStamper()
+#         st.do_stamp(io)
+
+#         base_file = os.path.join(
+#             self.base_file_path, "stamping", "rasterTestFiles", 
+#             "testRealDataStamping_base.asc"
+#         )
+            
+#         output_file = os.path.join(
+#             self.output_file_path, "real_data_out.asc"
+#         )
+
+#         raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+#         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
+
+#         # Verify grid file
+#         self.assertFilesEqual(base_file, output_file)

@@ -14,6 +14,7 @@
 #include <xmsstamper/stamper/XmStamper.h>
 
 // 3. Standard library headers
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 
@@ -133,8 +134,11 @@ namespace
 ///        a_raster.
 /// \param[in] a_tin: The TIN to interpolate from.
 /// \param[in, out] a_raster: The raster to interpolate to.
+/// \param[in] a_stampingType: The type of stamping to perform. 0=cut, 1=fill,
+///        2=both
 //------------------------------------------------------------------------------
-bool iInterpTinToRaster(const boost::shared_ptr<const TrTin> &a_tin, XmStampRaster &a_raster)
+bool iInterpTinToRaster(const boost::shared_ptr<const TrTin> &a_tin, XmStampRaster &a_raster,
+                        int a_stampingType = 2)
 {
   XM_ENSURE_TRUE(a_tin != nullptr, false);
   BSHP<InterpLinear> interp = InterpLinear::New();
@@ -150,7 +154,23 @@ bool iInterpTinToRaster(const boost::shared_ptr<const TrTin> &a_tin, XmStampRast
     float val = interp->InterpToPt(Pt3d(a_raster.GetLocationFromCellIndex(i)));
     if (!EQ_TOL(val, XM_NODATA, XM_ZERO_TOL))
     {
-      a_raster.m_vals[i] = val;
+      // Take the stamp value if the raster has none, regardless of stamping type.
+      if (EQ_TOL(a_raster.m_vals[i], a_raster.m_noData, XM_ZERO_TOL))
+      {
+        a_raster.m_vals[i] = val;
+      }
+      else if (a_stampingType == 0) // Cut stamp, take the minimum
+      {
+        a_raster.m_vals[i] = std::min(double(val), a_raster.m_vals[i]);
+      }
+      else if (a_stampingType == 1) // Fill stamp, take the maximum
+      {
+        a_raster.m_vals[i] = std::max(double(val), a_raster.m_vals[i]);
+      }
+      else // Both, always stamp the feature object
+      {
+        a_raster.m_vals[i] = val;
+      }
     }
   }
   return true;
@@ -227,7 +247,7 @@ void XmStamperImpl::DoStamp(XmStamperIo& a_io)
     a_io.m_outTin = m_tin;
     if (!a_io.m_raster.m_vals.empty())
     {
-      iInterpTinToRaster(a_io.m_outTin, a_io.m_raster);
+      iInterpTinToRaster(a_io.m_outTin, a_io.m_raster, a_io.m_stampingType);
     }
   }
   

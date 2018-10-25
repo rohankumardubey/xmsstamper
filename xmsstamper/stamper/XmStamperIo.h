@@ -199,7 +199,7 @@ public:
   /// Input
   /// Required. Center line for the feature stamp
   VecPt3d m_centerLine;
-  /// Stamping type 0 - Cut, 1 - Fill
+  /// Stamping type 0 - Cut, 1 - Fill, 2 - Both
   int m_stampingType;
   /// cross sections along the polyLine
   std::vector<XmStampCrossSection> m_cs;
