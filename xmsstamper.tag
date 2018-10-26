@@ -370,6 +370,13 @@
       <anchor>ae8001d45387b24405b6d7277f827b883</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>test_RealDataStamping</name>
+      <anchorfile>class_tut_stamping_unit_tests.html</anchorfile>
+      <anchor>aa7fd4cb3188627cfe944edc709eb4117</anchor>
+      <arglist>()</arglist>
+    </member>
   </compound>
   <compound kind="class">
     <name>xms::XmBathymetryIntersector</name>

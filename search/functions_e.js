@@ -7,6 +7,7 @@ var searchData=
   ['redistribute',['Redistribute',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_poly_line_pt_redistributer_impl.html#a0fc65a7270b63dd43103de7051d82f44',1,'xms::GmPolyLinePtRedistributerImpl']]],
   ['removecornertouches',['RemoveCornerTouches',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_multi_poly_intersection_sorter_terse.html#ac86036c81726449c8121c1a05fd73db3',1,'xms::GmMultiPolyIntersectionSorterTerse']]],
   ['removeduplicateedges',['RemoveDuplicateEdges',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_multi_poly_intersection_sorter_terse.html#a1ef5deaea8e21cd99a88376758bc6c64',1,'xms::GmMultiPolyIntersectionSorterTerse']]],
+  ['removelongthintrianglesonperimeter',['RemoveLongThinTrianglesOnPerimeter',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#a6539e41ceec60374722e504d8e38dfb2',1,'xms::TrTinImpl']]],
   ['removepts',['RemovePts',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_auto_fix_four_triangle_pts_impl.html#a8c1abb56f3123fc5a41e7ac155e4a886',1,'xms::TrAutoFixFourTrianglePtsImpl']]],
   ['removetris',['RemoveTris',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_auto_fix_four_triangle_pts_impl.html#a94350c394e0cab1a5491210257567dff',1,'xms::TrAutoFixFourTrianglePtsImpl']]],
   ['renumberpts',['RenumberPts',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_auto_fix_four_triangle_pts_impl.html#aae03f8c6f46aea41f01595b0e83d565a',1,'xms::TrAutoFixFourTrianglePtsImpl']]],

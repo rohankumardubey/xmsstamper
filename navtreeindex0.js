@@ -56,12 +56,13 @@ var NAVTREEINDEX0 =
 "_xm_util_8t_8h_source.html":[4,0,0,0,0,19],
 "annotated.html":[3,0],
 "class_tut_stamping_unit_tests.html":[3,0,1],
-"class_tut_stamping_unit_tests.html#a20e23d7ac461dced04d97d95f104b559":[3,0,1,5],
-"class_tut_stamping_unit_tests.html#a31c03c1c9db6fc3e92fc443c1bb510b2":[3,0,1,4],
-"class_tut_stamping_unit_tests.html#a3f879c3cd67a85c4a38a3ee069ab9670":[3,0,1,1],
-"class_tut_stamping_unit_tests.html#a74261416be0ec12e2a8852b99f030fdb":[3,0,1,0],
-"class_tut_stamping_unit_tests.html#abb090fb5531419463f4a63a464928d20":[3,0,1,2],
-"class_tut_stamping_unit_tests.html#ae8001d45387b24405b6d7277f827b883":[3,0,1,3],
+"class_tut_stamping_unit_tests.html#a20e23d7ac461dced04d97d95f104b559":[3,0,1,6],
+"class_tut_stamping_unit_tests.html#a31c03c1c9db6fc3e92fc443c1bb510b2":[3,0,1,5],
+"class_tut_stamping_unit_tests.html#a3f879c3cd67a85c4a38a3ee069ab9670":[3,0,1,2],
+"class_tut_stamping_unit_tests.html#a74261416be0ec12e2a8852b99f030fdb":[3,0,1,1],
+"class_tut_stamping_unit_tests.html#aa7fd4cb3188627cfe944edc709eb4117":[3,0,1,0],
+"class_tut_stamping_unit_tests.html#abb090fb5531419463f4a63a464928d20":[3,0,1,3],
+"class_tut_stamping_unit_tests.html#ae8001d45387b24405b6d7277f827b883":[3,0,1,4],
 "class_xm_bathymetry_intersector_unit_tests.html":[3,0,2],
 "class_xm_bathymetry_intersector_unit_tests.html#a19e5662e00620fabee20eb1e7b7ef2a6":[3,0,2,2],
 "class_xm_bathymetry_intersector_unit_tests.html#a77818ef5d6f87993aa2c33ac562be8c6":[3,0,2,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX0 =
 "classxms_1_1_xm_stamp_end_cap_impl.html#a1864c8917bb4e67272e28eb173c10e66":[3,0,0,15,10],
 "classxms_1_1_xm_stamp_end_cap_impl.html#a193bafbbea6d5aa8df6957f045b91e15":[3,0,0,15,2],
 "classxms_1_1_xm_stamp_end_cap_impl.html#a2dc18fb71ae82ea4804bd2561966b7a5":[3,0,0,15,3],
-"classxms_1_1_xm_stamp_end_cap_impl.html#a32afc317572fce7f4e2d75dfc3eabee9":[3,0,0,15,6],
-"classxms_1_1_xm_stamp_end_cap_impl.html#a3568aa3354094211fe199a5c2a3d60a0":[3,0,0,15,1]
+"classxms_1_1_xm_stamp_end_cap_impl.html#a32afc317572fce7f4e2d75dfc3eabee9":[3,0,0,15,6]
 };

@@ -10,6 +10,7 @@ var searchData=
   ['addtopolyidsandtvalues',['AddToPolyIdsAndTValues',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_multi_poly_intersection_sorter_terse.html#a0cb9995b0273c1953428f420f12eaffb',1,'xms::GmMultiPolyIntersectionSorterTerse']]],
   ['adjacentindexfound',['AdjacentIndexFound',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#ab66a31615263d8ea599d92d20316d329',1,'xms::TrTinImpl']]],
   ['adjacenttriangle',['AdjacentTriangle',['https://aquaveo.github.io/xmsinterp/classxms_1_1_interp_nat_neigh_impl.html#a13915edcf34f12baff5fbaa1b2f50a38',1,'xms::InterpNatNeighImpl::AdjacentTriangle()'],['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#ae50a008ac967323421d9574df798d69b',1,'xms::TrTinImpl::AdjacentTriangle()']]],
+  ['adjacenttriangleindex',['AdjacentTriangleIndex',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#a5fd85293103096659f5d7311c1e5f252',1,'xms::TrTinImpl']]],
   ['adjustcrosssection',['AdjustCrossSection',['../classxms_1_1_xm_stamp_end_cap_impl.html#a193bafbbea6d5aa8df6957f045b91e15',1,'xms::XmStampEndCapImpl']]],
   ['adjustendcapcrosssection',['AdjustEndCapCrossSection',['../classxms_1_1_xm_guide_bank_util_impl.html#a4dca2c06be611f471bc0fd078be2751a',1,'xms::XmGuideBankUtilImpl']]],
   ['anisotropicdistancesquared',['AnisotropicDistanceSquared',['https://aquaveo.github.io/xmsinterp/classxms_1_1_anisotropic_interpolator.html#a208cd08d32b9c9f29ef3c1899bc4e0a4',1,'xms::AnisotropicInterpolator']]],
