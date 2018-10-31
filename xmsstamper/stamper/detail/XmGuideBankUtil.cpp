@@ -342,51 +342,71 @@ void XmGuideBankUtilImpl::GetEndCapEndPoints(cs3dPtIdx& a_ptIdx,
                                              VecInt& a_lastEndCapEndPts,
                                              XmStamperIo& a_io)
 {
+  // utility functions
+  auto myLambda_AddEndPtsForward = [](VecInt& a_endPts, VecInt2d& a_pts2d) {
+    auto it = a_pts2d.begin();
+    auto end = a_pts2d.end();
+    for (; it != end; ++it)
+    {
+      if (!it->empty())
+        a_endPts.push_back(it->back());
+    }
+  };
+  auto myLambda_AddEndPtsReverse = [](VecInt& a_endPts, VecInt2d& a_pts2d) {
+    auto it = a_pts2d.rbegin();
+    auto end = a_pts2d.rend();
+    for (; it != end; ++it)
+    {
+      if (!it->empty())
+        a_endPts.push_back(it->back());
+    }
+  };
+  auto myLambda_AddEndPtsLastXs = [](VecInt& a_endPts, int a_clPtIdx, VecInt2d& a_pts2dReverse,
+                                      VecInt2d& a_pts2dForward) {
+    { // reverse add pts from cross section at end of guidebank that intersected bathymetry
+      // skip the first point because it was already added
+      VecInt& pts(a_pts2dReverse.back());
+      auto it = pts.rbegin();
+      it++;
+      auto end = pts.rend();
+      a_endPts.insert(a_endPts.end(), it, end);
+    }
+    a_endPts.push_back(a_clPtIdx);
+    { // forward add pts from cross section at end of guidebank that intersected bathymetry
+      // skip the last point because it will be added later
+      VecInt& pts(a_pts2dForward.back());
+      auto it = pts.begin();
+      auto end = pts.end();
+      end--;
+      a_endPts.insert(a_endPts.end(), it, end);
+    }
+  };
+
   if (a_io.m_lastEndCap.m_type == 0)
   { // last end cap
+    VecInt& cl(a_ptIdx.m_last_end_cap.m_centerLine);
+    myLambda_AddEndPtsForward(a_lastEndCapEndPts, a_ptIdx.m_last_end_cap.m_left);
+    // if the guidebank was cut off because of an intersection then we need to
+    // use the last cross section also
+    if (!cl.empty() && cl.size() == a_ptIdx.m_last_end_cap.m_left.size())
     {
-      VecInt2d& vLeft(a_ptIdx.m_last_end_cap.m_left);
-      auto it = vLeft.begin();
-      auto end = vLeft.end();
-      for (; it != end; ++it)
-      {
-        if (!it->empty())
-          a_lastEndCapEndPts.push_back(it->back());
-      }
+      myLambda_AddEndPtsLastXs(a_lastEndCapEndPts, cl.back(), a_ptIdx.m_last_end_cap.m_left,
+        a_ptIdx.m_last_end_cap.m_right);
     }
-    {
-      VecInt2d& vRight(a_ptIdx.m_last_end_cap.m_right);
-      auto it = vRight.rbegin();
-      auto end = vRight.rend();
-      for (; it != end; ++it)
-      {
-        if (!it->empty())
-          a_lastEndCapEndPts.push_back(it->back());
-      }
-    }
+    myLambda_AddEndPtsReverse(a_lastEndCapEndPts, a_ptIdx.m_last_end_cap.m_right);
   }
   if (a_io.m_firstEndCap.m_type == 0)
   { // first end cap
+    VecInt& cl(a_ptIdx.m_first_end_cap.m_centerLine);
+    myLambda_AddEndPtsForward(a_firstEndCapEndPts, a_ptIdx.m_first_end_cap.m_right);
+    // if the guidebank was cut off because of an intersection then we need to
+    // use the last cross section also
+    if (!cl.empty() && cl.size() == a_ptIdx.m_last_end_cap.m_left.size())
     {
-      VecInt2d& vRight(a_ptIdx.m_first_end_cap.m_right);
-      auto it = vRight.begin();
-      auto end = vRight.end();
-      for (; it != end; ++it)
-      {
-        if (!it->empty())
-          a_firstEndCapEndPts.push_back(it->back());
-      }
+      myLambda_AddEndPtsLastXs(a_lastEndCapEndPts, cl.back(), a_ptIdx.m_last_end_cap.m_right,
+        a_ptIdx.m_last_end_cap.m_left);
     }
-    {
-      VecInt2d& vLeft(a_ptIdx.m_first_end_cap.m_left);
-      auto it = vLeft.rbegin();
-      auto end = vLeft.rend();
-      for (; it != end; ++it)
-      {
-        if (!it->empty())
-          a_firstEndCapEndPts.push_back(it->back());
-      }
-    }
+    myLambda_AddEndPtsReverse(a_firstEndCapEndPts, a_ptIdx.m_first_end_cap.m_left);
   }
 } // XmGuideBankUtilImpl::GuideBankEndCapEndPoints
 //------------------------------------------------------------------------------

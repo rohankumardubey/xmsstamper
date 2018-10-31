@@ -9,6 +9,7 @@
 
 // 1. Precompiled header
 
+#pragma warning(disable : 4996) // boost code
 // 2. My own header
 #include <xmsstamper/stamper/detail/XmBreaklines.h>
 
@@ -261,6 +262,10 @@ void XmBreaklinesImpl::GetEndCapEndPoints(cs3dPtIdx& a_ptIdx,
   a_lastEndCapEndPts.resize(0);
   m_slopedAbutment->GetEndCapEndPoints(a_ptIdx, a_firstEndCapEndPts, a_lastEndCapEndPts, a_io);
   m_guideBank->GetEndCapEndPoints(a_ptIdx, a_firstEndCapEndPts, a_lastEndCapEndPts, a_io);
+  if (a_io.m_firstEndCap.m_type == 0) // guidebank used for first endcap
+  {
+    std::reverse(a_firstEndCapEndPts.begin(), a_firstEndCapEndPts.end());
+  }
 } // XmBreaklinesImpl::GetEndCapEndPoints
 //------------------------------------------------------------------------------
 /// \brief Check if any breakline segments intersect

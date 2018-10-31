@@ -103,6 +103,19 @@ void XmStampInterpCrossSectionImpl::InterpMissingCrossSections(XmStamperIo& a_)
 {
   m_io = &a_;
 
+  // make sure shoulder index is not 0 on any cross section
+  for (size_t i = 0; i < m_io->m_cs.size(); ++i)
+  {
+    auto& cs(m_io->m_cs[i]);
+    if (cs.m_left.size() > 1 || cs.m_right.size() > 1)
+    {
+      if (cs.m_idxLeftShoulder < 1)
+        cs.m_idxLeftShoulder = 1;
+      if (cs.m_idxRightShoulder < 1)
+        cs.m_idxRightShoulder = 1;
+    }
+  }
+
   int first = FindFirstValidCrossSection();
   // copy this cross section to any before it
   for (int i = 0; i < first; ++i)
@@ -607,29 +620,30 @@ void XmStampInterpCrossSectionUnitTests::test1()
   XmStampInterpCrossSectionImpl ip;
   ip.InterpMissingCrossSections(io);
   TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_left, io.m_cs[0].m_left);
-  TS_ASSERT_EQUALS(0, io.m_cs[0].m_idxLeftShoulder);
+  TS_ASSERT_EQUALS(1, io.m_cs[0].m_idxLeftShoulder);
   TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_right, io.m_cs[0].m_right);
-  TS_ASSERT_EQUALS(0, io.m_cs[0].m_idxRightShoulder);
+  TS_ASSERT_EQUALS(1, io.m_cs[0].m_idxRightShoulder);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_left, io.m_cs[5].m_left);
   TS_ASSERT_EQUALS(4, io.m_cs[5].m_idxLeftShoulder);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
   TS_ASSERT_EQUALS(4, io.m_cs[5].m_idxRightShoulder);
-  VecPt2d baseCs = {{0.00, 13.33}, {1.33, 13.0},  {2.0, 12.67},  {2.67, 12.67},
-                    {3.33, 13.33}, {4.22, 13.78}, {5.11, 14.22}, {6.89, 13.11},
-                    {7.78, 12.22}, {10.0, 10.0},  {12.22, 7.78}, {16.67, 3.33}};
+  VecPt2d baseCs = {{0.00, 13.33}, {1.60, 13.27}, {2.40, 13.07}, {3.20, 13.20},
+                    {4.00, 14.00}, {4.90, 14.43}, {6.71, 13.29}, {7.62, 12.38},
+                    {10.33, 9.67}, {12.14, 7.86}, {16.67, 3.33}};
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_left, 1e-2);
   TS_ASSERT_EQUALS(4, io.m_cs[2].m_idxLeftShoulder);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_right, 1e-2);
   TS_ASSERT_EQUALS(4, io.m_cs[2].m_idxRightShoulder);
-  baseCs = {{0.00, 16.67},  {2.67, 16.0},  {4.0, 15.33},   {5.33, 15.33},
-            {6.67, 16.67},  {7.44, 16.56}, {8.22, 16.44},  {9.78, 15.22},
-            {10.56, 14.44}, {12.5, 12.5},  {14.44, 10.56}, {18.33, 6.67}};
+  baseCs = {{0.00, 16.67},  {2.80, 16.13},  {4.20, 15.53}, {5.60, 15.60},
+            {7.00, 17.00},  {7.81, 16.86},  {9.43, 15.57}, {10.24, 14.76},
+            {12.67, 12.33}, {14.29, 10.71}, {18.33, 6.67}};
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_left, 1e-2);
   TS_ASSERT_EQUALS(4, io.m_cs[3].m_idxLeftShoulder);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_right, 1e-2);
   TS_ASSERT_EQUALS(4, io.m_cs[3].m_idxRightShoulder);
 } // XmStampInterpCrossSectionUnitTests::test0
-//! [snip_test_Example_XmStamper_Test1]
+//! [snip_test_Example_XmStamper_Test1]>
+
 //------------------------------------------------------------------------------
 /// \brief Tests symetric cross section interpolation
 //------------------------------------------------------------------------------
@@ -770,16 +784,16 @@ void XmStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
 void XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()
 {
   XmStamperIo io;
-  io.m_centerLine = { { 0, 0 },{ 5, 0 },{ 10, 0 },{ 15, 0 },{ 20, 0 },{ 25, 0 } };
+  io.m_centerLine = {{0, 0}, {5, 0}, {10, 0}, {15, 0}, {20, 0}, {25, 0}};
   io.m_cs.assign(6, XmStampCrossSection());
   XmStampCrossSection cs;
   io.m_stampingType = 0;
-  cs.m_left = { { 0, 10 },{ 1, 11 },{ 2, 12 },{ 4, 11 },{ 5, 10 },{ 10, 5 },{ 15, 0 } };
+  cs.m_left = {{0, 10}, {1, 11}, {2, 12}, {4, 11}, {5, 10}, {10, 5}, {15, 0}};
   cs.m_idxLeftShoulder = 2;
   cs.m_right = cs.m_left;
   cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
   io.m_cs[1] = cs;
-  cs.m_left = { { 0, 20 },{ 4, 19 },{ 6, 18 },{ 8, 18 },{ 10, 20 },{ 15, 15 },{ 20, 10 } };
+  cs.m_left = {{0, 20}, {4, 19}, {6, 18}, {8, 18}, {10, 20}, {15, 15}, {20, 10}};
   cs.m_idxLeftShoulder = 3;
   cs.m_right = cs.m_left;
   cs.m_idxRightShoulder = cs.m_idxLeftShoulder;
@@ -801,24 +815,22 @@ void XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()
   TS_ASSERT_EQUALS(3, io.m_cs[3].m_idxRightShoulder);
   TS_ASSERT_EQUALS(3, io.m_cs[4].m_idxRightShoulder);
   TS_ASSERT_EQUALS(3, io.m_cs[5].m_idxRightShoulder);
-  
+
   TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_left, io.m_cs[0].m_left);
   TS_ASSERT_EQUALS_VEC(io.m_cs[1].m_right, io.m_cs[0].m_right);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_left, io.m_cs[5].m_left);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
 
-  VecPt2d baseCs = { 
-    { 0.00, 13.33 },{ 2.00, 13.66 },{ 3.00, 13.66 },{ 4.00, 14.00 },
-    { 5.94, 13.94 },{ 6.11, 13.88 },{ 6.92, 13.07 },{ 11.38, 8.61 },
-    { 11.79, 8.20 },{ 16.66, 3.33 },
+  VecPt2d baseCs = {
+    {0.00, 13.33}, {2.00, 13.66}, {3.00, 13.66}, {4.00, 14.00}, {5.94, 13.94},
+    {6.11, 13.88}, {6.92, 13.07}, {11.38, 8.61}, {11.79, 8.20}, {16.66, 3.33},
   };
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_left, 0.02);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_right, 0.02);
 
   baseCs = {
-    { 0.00, 16.66 },{ 3.00, 16.33 },{ 4.50, 15.83 },{ 6.00, 16.00 },
-    { 7.89, 16.89 },{ 8.05, 16.94 },{ 8.84, 16.15 },{ 13.19, 11.80 },
-    { 13.58, 11.41 },{ 18.33, 6.66 },
+    {0.00, 16.66}, {3.00, 16.33}, {4.50, 15.83},  {6.00, 16.00},  {7.89, 16.89},
+    {8.05, 16.94}, {8.84, 16.15}, {13.19, 11.80}, {13.58, 11.41}, {18.33, 6.66},
   };
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_left, 0.02);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[3].m_right, 0.02);

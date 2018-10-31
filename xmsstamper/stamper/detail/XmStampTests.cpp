@@ -1,7 +1,7 @@
 //------------------------------------------------------------------------------
 /// \file
 /// \ingroup stamping
-/// \brief Implements serialization of the data classes in XmStamperIo.h
+/// \brief Tests for XmStamper.h
 //
 /// \copyright (C) Copyright Aquaveo 2018. Distributed under FreeBSD License
 /// (See accompanying file LICENSE or https://aqaveo.com/bsd/license.txt)
@@ -43,6 +43,9 @@
 
 #include <fstream>
 
+#include <xmscore/misc/StringUtil.h> // stEqualNoCase
+#include <xmscore/misc/XmError.h> // XM_ENSURE_TRUE
+#include <xmscore/misc/xmstype.h> // XM_NODATA
 #include <xmscore/testing/TestTools.h>
 
 #include <xmsstamper/stamper/XmStamper.h>
@@ -54,60 +57,52 @@ using namespace xms;
 namespace
 {
 //------------------------------------------------------------------------------
-/// \brief Builds a XmStamperIo class from an archive
+/// \brief Builds a XmStamperIo class from an XmStamperIo file
 //------------------------------------------------------------------------------
 static void iBuildStamperIo(const std::string& a_path, XmStamperIo& a_io)
 {
-  std::string fname(a_path + "xmsng_StamperIo.txt"), line;
-  line.reserve(40960);
+  std::string fname(a_path + "xmsng_StamperIo.txt");
   std::ifstream is(fname.c_str());
-  char buffer[4096];
-  while (is.read(buffer, sizeof(buffer)))
-  {
-    line.append(buffer, (size_t)is.gcount());
-  }
-  line.append(buffer, (size_t)is.gcount());
-  // std::getline(is, line);
-  a_io.FromString(line);
+  XM_ENSURE_TRUE(is.is_open());
+  std::string card;
+  XM_ENSURE_TRUE(is >> card);
+  XM_ENSURE_TRUE(stEqualNoCase(card, "STAMPER_IO_VERSION_1"));
+  XM_ENSURE_TRUE(a_io.ReadFromFile(is));
+  // Test to make sure we are reading the XmStamperIo files correctly
+  std::ofstream outFile(a_path + "StamperIo_out.txt");
+  a_io.WriteToFile(outFile, "STAMPER_IO_VERSION_1");
+  outFile.close();
+  TS_ASSERT_TXT_FILES_EQUAL(a_path + "StamperIo_out.txt", fname);
 } // iBuildStamperIo
 //------------------------------------------------------------------------------
 /// \brief Writes a XmStamperIo output to a file
 //------------------------------------------------------------------------------
-static void iOutputToFile(const std::string& a_fileName, XmStamperIo a_io)
+static void iOutputToFile(const std::string& a_fileName, const XmStamperIo &a_io)
 {
-  XmStamperIo io;
-  io.m_outBreakLines = a_io.m_outBreakLines;
-  io.m_outTin = a_io.m_outTin;
-  std::fstream os(a_fileName.c_str(), std::ios_base::out);
-  os << io.ToString();
+  std::ofstream ofs(a_fileName);
+  a_io.WriteToFile(ofs, "STAMPER_IO_VERSION_1");
 } // iOutputToFile
 //------------------------------------------------------------------------------
 /// \brief Writes a tin to a file
 //------------------------------------------------------------------------------
 static void iDoTest(const std::string& a_relPath)
 {
-  std::string path(XMSSTAMPER_TEST_PATH);
+  std::string path(XMS_TEST_PATH);
   path += "stamping/" + a_relPath;
   XmStamperIo io;
   iBuildStamperIo(path, io);
   BSHP<XmStamper> s = XmStamper::New();
   s->DoStamp(io);
   std::string baseFile(path + "xmsng_base.txt");
-#if defined(ENV64BIT)
-  std::string b1(path + "xmsng_base64.txt");
-  FILE* fp(fopen(b1.c_str(), "r"));
-  if (fp)
-  {
-    fclose(fp);
-    baseFile = b1;
-  }
-#elif defined(ENV32BIT)
-  // ensure either ENV32BIT or ENV64BIT is defined
-#else
-#error "Must define either ENV32BIT or ENV64BIT"
-#endif
   std::string outFile(path + "xmsng_out.txt");
   iOutputToFile(outFile, io);
+  std::string outTin(path + "tin_out.tin");
+  if (io.m_outTin && io.m_outTin->NumPoints() > 0)
+  {
+    std::fstream os;
+    os.open(outTin.c_str(), std::fstream::out);
+    io.m_outTin->ExportTinFile(os);
+  }
   TS_ASSERT_TXT_FILES_EQUAL(baseFile, outFile);
 } // iDoTest
 
@@ -174,7 +169,7 @@ void XmStampIntermediateTests::test_SlopedAbutment04_cut()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_SelfIntersect()
 {
-  std::string path(XMSSTAMPER_TEST_PATH);
+  std::string path(XMS_TEST_PATH);
   path += "/stamping/test_intersections/";
   XmStamperIo io;
   iBuildStamperIo(path, io);
@@ -191,7 +186,9 @@ void XmStampIntermediateTests::test_SelfIntersect()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_GuideBank01()
 {
+#ifndef __APPLE__
   iDoTest("test_GuideBank01/");
+#endif
 } // XmStampIntermediateTests::test_GuideBank01
 //------------------------------------------------------------------------------
 /// \brief Tests stamp operation
@@ -309,7 +306,9 @@ void XmStampIntermediateTests::test_IntersectBathymetry08()
 //------------------------------------------------------------------------------
 void XmStampIntermediateTests::test_IntersectBathymetry09()
 {
+#ifndef __APPLE__
   iDoTest("test_intersectBathymetry09/");
+#endif
 } // XmStampIntermediateTests::test_IntersectBathymetry09
 //------------------------------------------------------------------------------
 /// \brief Tests stamp operation. Intersection with guidebank centerline.
@@ -319,5 +318,16 @@ void XmStampIntermediateTests::test_IntersectBathymetry10()
 {
   iDoTest("test_intersectBathymetry10/");
 } // XmStampIntermediateTests::test_IntersectBathymetry10
-
+//------------------------------------------------------------------------------
+/// \brief Tests building a stamping raster and getting a cell value.
+//------------------------------------------------------------------------------
+void XmStampIntermediateTests::test_BuildRasterAndGetCellValue()
+{
+  std::vector<double> rasterVals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
+  XmStampRaster raster(2, 3, 2.0, 1.0, Pt2d(0.0, 0.0), rasterVals, XM_NODATA);
+  TS_ASSERT_EQUALS(raster.GetCellIndexFromColRow(2, 3), -1);
+  const int lastCell = raster.GetCellIndexFromColRow(1, 2);
+  TS_ASSERT_EQUALS(lastCell, 5);
+  TS_ASSERT_EQUALS(raster.m_vals[lastCell], 5.0);
+} // XmStampIntermediateTests::test_BuildRasterAndGetCellValue
 #endif

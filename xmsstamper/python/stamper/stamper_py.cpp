@@ -7,13 +7,14 @@
 
 //----- Included files ---------------------------------------------------------
 #include <pybind11/pybind11.h>
-#include <xmsgridtrace/python/gridtrace/gridtrace_py.h>
+#include <xmsstamper/python/stamper/stamper_py.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
 
 //----- Python Interface -------------------------------------------------------
 
-void initGridtrace(py::module &m) {
-  initXmGridTrace(m);
+void initStamper(py::module &m) {
+  initXmStamper(m);
+  initXmStamperIo(m);
 }
