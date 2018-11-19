@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['xmrasterformatenum',['XmRasterFormatEnum',['../classxms_1_1_xm_stamp_raster.html#a9e7579cb51f684d567308efb8fa9996a',1,'xms::XmStampRaster']]]
+  ['weightenum',['WeightEnum',['https://aquaveo.github.io/xmsinterp/classxms_1_1_interp_idw.html#a75db3e802021d0171f8a8e0077d9d0fc',1,'xms::InterpIdw']]]
 ];

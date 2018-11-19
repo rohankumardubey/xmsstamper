@@ -1,0 +1,351 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>XmStampRaster &mdash; XmsStamper Library  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="XmGuidebank" href="XmGuidebank.html" />
+    <link rel="prev" title="XmStamperIo" href="XmStamperIo.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> XmsStamper Library
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../gettingstarted.html">Getting Started</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../modules.html">Modules</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../../modules.html#module-xmsstamper_py.stamper">stamper</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="XmStamper.html">XmStamper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmStamperIo.html">XmStamperIo</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">XmStampRaster</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmGuidebank.html">XmGuidebank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmSlopedAbutment.html">XmSlopedAbutment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmStampCrossSection.html">XmStampCrossSection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmStamperCenterlineProfile.html">XmStamperCenterlineProfile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmStamperEndCap.html">XmStamperEndCap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="XmWingWall.html">XmWingWall</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">XmsStamper Library</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../../modules.html">Modules</a> &raquo;</li>
+        
+      <li>XmStampRaster</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/modules/stamper/XmStampRaster.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xmstampraster">
+<h1>XmStampRaster<a class="headerlink" href="#xmstampraster" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="xmsstamper_py.stamper.XmStampRaster">
+<em class="property">class </em><code class="descclassname">xmsstamper_py.stamper.</code><code class="descname">XmStampRaster</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.get_cell_index_from_col_row">
+<code class="descname">get_cell_index_from_col_row</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>col: int</em>, <em>row: int</em><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.get_cell_index_from_col_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the zero-based cell index from the given column and row.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>col (int): The zero-based column index for the raster.
+row (int): The zero-based row index for the raster.</dd>
+<dt>Returns:</dt>
+<dd>The zero-based cell index from the given a_col, a_row.</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.get_col_row_from_cell_index">
+<code class="descname">get_col_row_from_cell_index</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>int: int</em><span class="sig-paren">)</span> &#x2192; tuple<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.get_col_row_from_cell_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the zero-based column and row from the cell index.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>index (int): The zero-based raster cell index.</dd>
+<dt>Returns:</dt>
+<dd>Tuple of (col, row) of the cell by index</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.get_location_from_cell_index">
+<code class="descname">get_location_from_cell_index</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>index: int</em><span class="sig-paren">)</span> &#x2192; tuple<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.get_location_from_cell_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the location of the cell center from the zero-based cell index.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>index (int): The zero-based raster cell index.</dd>
+<dt>Returns:</dt>
+<dd>The location of the cell with the given index.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.min">
+<code class="descname">min</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.min" title="Permalink to this definition">¶</a></dt>
+<dd><p>Minimum (lower left) X, Y coordinate of the raster at the center of the 
+raster cell (Required)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.no_data">
+<code class="descname">no_data</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.no_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>NO DATA value for the raster</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.num_pixels_x">
+<code class="descname">num_pixels_x</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.num_pixels_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels in the X-direction (Required)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.num_pixels_y">
+<code class="descname">num_pixels_y</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.num_pixels_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Number of pixels in the Y-direction (Required)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.pixel_size_x">
+<code class="descname">pixel_size_x</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.pixel_size_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixel size in the X-direction (Required)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.pixel_size_y">
+<code class="descname">pixel_size_y</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.pixel_size_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pixel size in the Y-direction (Required)</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="xmsstamper_py.stamper.XmStampRaster.raster_format_enum">
+<em class="property">class </em><code class="descname">raster_format_enum</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.raster_format_enum" title="Permalink to this definition">¶</a></dt>
+<dd><p>weight_enum for InterpIdw class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.read_from_file">
+<code class="descname">read_from_file</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>file_name: unicode</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.read_from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads the XmStampRaster class information from a file.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>file_name (str): The input file.</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="xmsstamper_py.stamper.XmStampRaster.vals">
+<code class="descname">vals</code><a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.vals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raster values defined from the top left corner to the bottom right 
+corner (Required). Use the m_noData value to specify a cell value with 
+no data.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.write_grid_file">
+<code class="descname">write_grid_file</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>file_name: unicode</em>, <em>format: xms::XmStampRaster::XmRasterFormatEnum</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.write_grid_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the raster in the given format to the given filename.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>file_name (str): The output raster filename.
+format (): The output raster format</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="xmsstamper_py.stamper.XmStampRaster.write_to_file">
+<code class="descname">write_to_file</code><span class="sig-paren">(</span><em>self: xmsstamper_py.stamper.XmStampRaster</em>, <em>file_name: unicode</em>, <em>card_name: unicode</em><span class="sig-paren">)</span> &#x2192; None<a class="headerlink" href="#xmsstamper_py.stamper.XmStampRaster.write_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes the XmStampRaster class information to a file.</p>
+<dl class="docutils">
+<dt>Args:</dt>
+<dd>file_name (str): The input file.
+card_name (str): The card name to be written to the output file.</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="XmGuidebank.html" class="btn btn-neutral float-right" title="XmGuidebank" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="XmStamperIo.html" class="btn btn-neutral" title="XmStamperIo" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, aquaveo
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

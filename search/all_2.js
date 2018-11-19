@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['caarraysizehelper',['caArraySizeHelper',['https://aquaveo.github.io/xmscore/namespacexms.html#a7872de9419f714a93ed1c4ce76d35a6c',1,'xms']]],
   ['calctvals',['CalcTvals',['../classxms_1_1_xm_stamp_interp_cross_section_impl.html#a50bc78c37b0231bb414b879048769c5c',1,'xms::XmStampInterpCrossSectionImpl']]],
   ['calculatebuffer',['CalculateBuffer',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_multi_poly_intersector_impl.html#a535aad59183701eae8532bcb4c2ed2f0',1,'xms::GmMultiPolyIntersectorImpl']]],
   ['calculateidw',['CalculateIDW',['https://aquaveo.github.io/xmsinterp/classxms_1_1_anisotropic_interpolator.html#a5ac4d79af84045b2c57c57ff9cb1a3f7',1,'xms::AnisotropicInterpolator']]],
@@ -8,6 +9,7 @@ var searchData=
   ['checkpoint',['CheckPoint',['https://aquaveo.github.io/xmsinterp/class_gm_point_in_poly_tester__gm_point_in_polygon2_d.html#a49d08071fc94eaade3a90093804d1583',1,'GmPointInPolyTester_gmPointInPolygon2D::CheckPoint()'],['https://aquaveo.github.io/xmsinterp/class_gm_point_in_poly_tester___gm_polygon.html#a6266bdf8e4c1276bda6063a2c419576c',1,'GmPointInPolyTester_GmPolygon::CheckPoint()'],['https://aquaveo.github.io/xmsinterp/class_gm_point_in_poly_unit_tests.html#a6c8f3ccf1f1fc9b26f4354bea316c6a2',1,'GmPointInPolyUnitTests::CheckPoint()']]],
   ['checkpoints',['CheckPoints',['https://aquaveo.github.io/xmsinterp/class_gm_point_in_poly_unit_tests.html#a9fbcdd807e9e110065b9b44fe07755c0',1,'GmPointInPolyUnitTests']]],
   ['checktriangle',['CheckTriangle',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#a819d105df8de79aae59791e7316ee209',1,'xms::TrTinImpl']]],
+  ['clamp',['Clamp',['https://aquaveo.github.io/xmscore/namespacexms.html#a2fd4ced1304195c63c72c132a2318891',1,'xms']]],
   ['classifypoints',['ClassifyPoints',['../classxms_1_1_xm_bathymetry_intersector_impl.html#a133ebb887ab73048951bc0265fc62755',1,'xms::XmBathymetryIntersectorImpl']]],
   ['clear',['Clear',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_extents2d.html#a60780f3b3471ce34744412fed1938f47',1,'xms::GmExtents2d::Clear()'],['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_extents3d.html#af7b8f4955c9068c0853354ab1f34f297',1,'xms::GmExtents3d::Clear()'],['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#ac56cedd2e8a867bb3122716f8d30e1b8',1,'xms::TrTinImpl::Clear()']]],
   ['clearadjtrisifcreated',['ClearAdjTrisIfCreated',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_auto_fix_four_triangle_pts_impl.html#a359ac2134d3f2bc3b4c0c551f1cd27d7',1,'xms::TrAutoFixFourTrianglePtsImpl']]],
@@ -29,6 +31,7 @@ var searchData=
   ['convertto3d',['ConvertTo3d',['../classxms_1_1_xm_sloped_abutment_util_impl.html#ad6f90c439173753363bff510396d0e9d',1,'xms::XmSlopedAbutmentUtilImpl']]],
   ['convertto3dpts',['ConvertTo3dPts',['../classxms_1_1_xm_stamp_end_cap_impl.html#a2dc18fb71ae82ea4804bd2561966b7a5',1,'xms::XmStampEndCapImpl']]],
   ['convertxspointsto3d',['ConvertXsPointsTo3d',['../classxms_1_1_xm_util.html#ae388cbd7b7b9dcf1325d80bbf6fd4c8b',1,'xms::XmUtil']]],
+  ['copybshp',['CopyBSHP',['https://aquaveo.github.io/xmscore/namespacexms.html#a3d6d80550e13f3bd87b7d6680070ba39',1,'xms']]],
   ['coveredby',['CoveredBy',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_polygon_impl.html#ab532f128e5d4ac3c9d5084d639d0c3bf',1,'xms::GmPolygonImpl']]],
   ['createbathymetryintersector',['CreateBathymetryIntersector',['../classxms_1_1_xm_stamper_impl.html#affb207c0f0ae63e22a617cad1861003b',1,'xms::XmStamperImpl']]],
   ['createbreaklines',['CreateBreaklines',['../classxms_1_1_xm_breaklines_impl.html#adf567a125684a7a38045299dbe80e643',1,'xms::XmBreaklinesImpl::CreateBreaklines()'],['../classxms_1_1_xm_stamper_impl.html#ad67304393d8865e0c5579a48ea0bae5e',1,'xms::XmStamperImpl::CreateBreakLines()']]],

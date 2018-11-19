@@ -2,10 +2,11 @@ var searchData=
 [
   ['idx_5fpt',['idx_pt',['https://aquaveo.github.io/xmsinterp/classxms_1_1idx__pt.html#a2b7929bfcd2024966dd873f3e952a345',1,'xms::idx_pt::idx_pt(const Pt3d *a_, bool a_2d)'],['https://aquaveo.github.io/xmsinterp/classxms_1_1idx__pt.html#a709964a4e328dd7f2e693eb9833031c1',1,'xms::idx_pt::idx_pt(BSHP&lt; std::vector&lt; Pt3d &gt;&gt; a_, bool a_2d)']]],
   ['idx_5ftri',['idx_tri',['https://aquaveo.github.io/xmsinterp/classxms_1_1idx__tri.html#a18b7dba501483fa3ebb141f439497dfc',1,'xms::idx_tri']]],
+  ['ilistener',['iListener',['https://aquaveo.github.io/xmscore/namespacexms.html#a4e7e0625acb9a639f0a22b16a7c40267',1,'xms']]],
   ['incrementpoint',['IncrementPoint',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_triangulator_points.html#ab1dcfd044e79eadc9c91a6feebbb5726',1,'xms::TrTriangulatorPoints']]],
   ['inputerrorsfound',['InputErrorsFound',['../classxms_1_1_xm_stamper_impl.html#adada24a420bc63b4cd8ae2733711fdd5',1,'xms::XmStamperImpl']]],
   ['insertadjacenttriangle',['InsertAdjacentTriangle',['https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin_impl.html#a0d1478852f239878bae47c9e685e2453',1,'xms::TrTinImpl']]],
-  ['instance',['Instance',['https://aquaveo.github.io/xmscore/classxms_1_1_shared_singleton.html#a1276acc05cbe856a51c4b640ffdd7445',1,'xms::SharedSingleton::Instance()'],['https://aquaveo.github.io/xmscore/classxms_1_1_singleton.html#a9a8a1b054d5e8cea413f16a93afd480e',1,'xms::Singleton::Instance()'],['https://aquaveo.github.io/xmscore/classxms_1_1_singleton.html#a9a8a1b054d5e8cea413f16a93afd480e',1,'Singleton&lt; XmLog &gt;::Instance()']]],
+  ['instance',['Instance',['https://aquaveo.github.io/xmscore/classxms_1_1_singleton.html#a9a8a1b054d5e8cea413f16a93afd480e',1,'xms::Singleton::Instance()'],['https://aquaveo.github.io/xmscore/classxms_1_1_shared_singleton.html#a1276acc05cbe856a51c4b640ffdd7445',1,'xms::SharedSingleton::Instance()'],['https://aquaveo.github.io/xmscore/classxms_1_1_singleton.html#a9a8a1b054d5e8cea413f16a93afd480e',1,'xms::XmLog::Instance()']]],
   ['interpanisotropic',['InterpAnisotropic',['https://aquaveo.github.io/xmsinterp/classxms_1_1_interp_anisotropic.html#a0432a313b7e41c6a519ab06b3dbb96a0',1,'xms::InterpAnisotropic']]],
   ['interpanisotropicimpl',['InterpAnisotropicImpl',['https://aquaveo.github.io/xmsinterp/classxms_1_1_interp_anisotropic_impl.html#a73893769a24ae33fc3665b52b7024f15',1,'xms::InterpAnisotropicImpl']]],
   ['interpcs',['InterpCs',['../classxms_1_1_xm_stamp_interp_cross_section_impl.html#a3dbf4f6f6ae35c1aeb8c3c03ac1d7310',1,'xms::XmStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection &amp;a_prev, XmStampCrossSection &amp;a_next, double a_percent, XmStampCrossSection &amp;a_cs) override'],['../classxms_1_1_xm_stamp_interp_cross_section_impl.html#adc6a3b713e7270098390729a029db2da',1,'xms::XmStampInterpCrossSectionImpl::InterpCs(int a_prev, int a_next, double a_percent, XmStampCrossSection &amp;a_cs)']]],
@@ -39,8 +40,12 @@ var searchData=
   ['intersectwithtin',['IntersectWithTin',['../classxms_1_1_xm_stamper_impl.html#a5ea174d32e3ab42e2df8dad8cdf52b48',1,'xms::XmStamperImpl']]],
   ['intersectxsects',['IntersectXsects',['../classxms_1_1_xm_bathymetry_intersector_impl.html#aed9f02e164b27c5b51f77a67ca8c5e8a',1,'xms::XmBathymetryIntersectorImpl']]],
   ['intersectxsectside',['IntersectXsectSide',['../classxms_1_1_xm_bathymetry_intersector_impl.html#abf0f174f3a1b37cb45073098b7231633',1,'xms::XmBathymetryIntersectorImpl']]],
+  ['intpairfrompyiter',['IntPairFromPyIter',['https://aquaveo.github.io/xmscore/namespacexms.html#ad1c4eab1d9f098f293e8205a2c372788',1,'xms']]],
   ['is2d',['Is2D',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_pt_search_impl.html#a106b0a5f562d15608e27969a8fed1f5b',1,'xms::GmPtSearchImpl']]],
   ['ispointwithin',['IsPointWithin',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_extents3d.html#a902eb81668d4f9cf77dd6ddc558b40a7',1,'xms::GmExtents3d']]],
   ['isvalid',['IsValid',['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_extents2d.html#a8808cc09d89e82f4ab38c6fc649a026d',1,'xms::GmExtents2d::IsValid()'],['https://aquaveo.github.io/xmsinterp/classxms_1_1_gm_extents3d.html#a078c56a4d36e3db9fd038082418964fc',1,'xms::GmExtents3d::IsValid()']]],
+  ['itest_5fxm_5flog_5fdebug',['iTest_XM_LOG_debug',['https://aquaveo.github.io/xmscore/namespacexms.html#a0acbea17ab71fd0680dd8c0bbfa0de80',1,'xms']]],
+  ['itest_5fxm_5flog_5fgui',['iTest_XM_LOG_gui',['https://aquaveo.github.io/xmscore/namespacexms.html#a196857566df5570c425f3982f09a0ce0',1,'xms']]],
+  ['itest_5fxm_5flog_5fstackable',['iTest_XM_LOG_stackable',['https://aquaveo.github.io/xmscore/namespacexms.html#a561ace2fc12a6562ca762ea42fb500f9',1,'xms']]],
   ['ix',['ix',['https://aquaveo.github.io/xmsinterp/classxms_1_1ix.html#ab86596c140cee4b9ad0bc1e0865c3c2a',1,'xms::ix']]]
 ];
