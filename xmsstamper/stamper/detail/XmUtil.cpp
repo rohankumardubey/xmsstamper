@@ -47,7 +47,7 @@ namespace xms
 /// \param[out] a_3dpts (x,y,z) points that are filled by the this method
 //------------------------------------------------------------------------------
 void XmUtil::ConvertXsPointsTo3d(const Pt3d& a_cl,
-                                 const VecPt2d& a_pts,
+                                 const VecPt3d& a_pts,
                                  double a_maxX,
                                  double a_angle,
                                  VecPt3d2d& a_3dpts)
@@ -55,7 +55,7 @@ void XmUtil::ConvertXsPointsTo3d(const Pt3d& a_cl,
   if (a_pts.size() < 2 || a_maxX <= 0.0)
     return;
 
-  VecPt2d pts(a_pts);
+  VecPt3d pts(a_pts);
   XmUtil::EnsureVectorAtMaxX(pts, a_maxX);
 
   a_3dpts.push_back(VecPt3d());
@@ -91,30 +91,30 @@ void XmUtil::ScaleCrossSectionXvals(XmStampCrossSection& a_xs, double a_factor)
 /// \param[in,out] a_pts 2d points
 /// \param[in] a_maxX Max x value
 //------------------------------------------------------------------------------
-void XmUtil::EnsureVectorAtMaxX(VecPt2d& a_pts, double a_maxX)
+void XmUtil::EnsureVectorAtMaxX(VecPt3d& a_pts, double a_maxX)
 {
   if (a_pts.empty())
     return;
   if (a_pts.size() < 2)
   {
     a_pts[0].x = 0;
-    a_pts.push_back(Pt2d(a_maxX, a_pts.front().y));
+    a_pts.push_back(Pt3d(a_maxX, a_pts.front().y));
     return;
   }
   if (a_pts.back().x < a_maxX)
   {
-    Pt2d p0(a_pts[a_pts.size() - 2]), p1(a_pts.back());
+    Pt3d p0(a_pts[a_pts.size() - 2]), p1(a_pts.back());
     double t = (a_maxX - p0.x) / (p1.x - p0.x);
     double z = p0.y + t * (p1.y - p0.y);
-    a_pts.back() = Pt2d(a_maxX, z);
+    a_pts.back() = Pt3d(a_maxX, z);
     return;
   }
 
   if (a_pts.front().x > a_maxX)
   {
-    VecPt2d vp(2);
-    vp[0] = Pt2d(0, a_pts.front().y);
-    vp[1] = Pt2d(a_maxX, vp[0].y);
+    VecPt3d vp(2);
+    vp[0] = Pt3d(0, a_pts.front().y);
+    vp[1] = Pt3d(a_maxX, vp[0].y);
     a_pts.swap(vp);
     return;
   }
@@ -125,10 +125,10 @@ void XmUtil::EnsureVectorAtMaxX(VecPt2d& a_pts, double a_maxX)
   {
     if (a_pts[i].x > a_maxX)
     {
-      Pt2d p0(a_pts[i - 1]), p1(a_pts[i]);
+      Pt3d p0(a_pts[i - 1]), p1(a_pts[i]);
       double t = (a_maxX - p0.x) / (p1.x - p0.x);
       double z = p0.y + t * (p1.y - p0.y);
-      Pt2d p3(Pt2d(a_maxX, z));
+      Pt3d p3(Pt3d(a_maxX, z));
       a_pts.resize(i);
       a_pts.push_back(p3);
       done = true;
@@ -199,7 +199,7 @@ using namespace xms;
 //------------------------------------------------------------------------------
 void XmUtilUnitTests::test_EnsureVectorAtMaxX()
 {
-  VecPt2d pts, basePts;
+  VecPt3d pts, basePts;
 
   pts = {{5, 6}};
   XmUtil::EnsureVectorAtMaxX(pts, 3);

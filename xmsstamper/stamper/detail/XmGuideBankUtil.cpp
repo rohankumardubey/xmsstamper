@@ -215,7 +215,7 @@ void XmGuideBankUtilImpl::AdjustEndCapCrossSection()
   // adjust the cross section for guide bank width
   double halfWidth = gb.m_width / 2;
 
-  auto myLambda = [](double halfWidth, int idx, VecPt2d& v, double& maxX) {
+  auto myLambda = [](double halfWidth, int idx, VecPt3d& v, double& maxX) {
     if (idx < (int)v.size())
     {
       double oldHalfWidth = v[idx].x;
@@ -292,7 +292,7 @@ void XmGuideBankUtilImpl::GuideBankEndCap()
   ;
   startAngle = gmConvertAngleToBetween0And360(startAngle);
 
-  auto myLambda = [](VecPt3d& pts, VecPt2d& v, double angle, Pt3d& p0, double factor) {
+  auto myLambda = [](VecPt3d& pts, VecPt3d& v, double angle, Pt3d& p0, double factor) {
     pts.assign(v.size() - 1, p0);
     for (size_t i = 1; i < v.size(); ++i)
     {

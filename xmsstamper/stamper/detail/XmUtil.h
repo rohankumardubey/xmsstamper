@@ -37,11 +37,11 @@ public:
   virtual ~XmUtil();
 
   static void ConvertXsPointsTo3d(const Pt3d& a_cl,
-                                  const VecPt2d& a_pts,
+                                  const VecPt3d& a_pts,
                                   double a_maxX,
                                   double a_angle,
                                   VecPt3d2d& a_3dpts);
-  static void EnsureVectorAtMaxX(VecPt2d& a_pts, double a_maxX);
+  static void EnsureVectorAtMaxX(VecPt3d& a_pts, double a_maxX);
   static void GetAnglesFromCenterLine(size_t a_idx,
                                       const VecPt3d& a_cl,
                                       double& a_leftAngle,

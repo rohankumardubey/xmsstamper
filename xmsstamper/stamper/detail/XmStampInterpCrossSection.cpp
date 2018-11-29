@@ -63,16 +63,16 @@ public:
   int FindLastValidCrossSection();
   int FindNextValidCrossSection(int a_idx);
   void InterpCs(int a_prev, int a_next, double a_percent, XmStampCrossSection& a_cs);
-  void InterpPts(VecPt2d& a_v1,
+  void InterpPts(VecPt3d& a_v1,
                  int a_beg1,
                  int a_end1,
-                 VecPt2d& a_v2,
+                 VecPt3d& a_v2,
                  int a_beg2,
                  int a_end2,
                  double a_percent,
-                 VecPt2d& a_interpPts);
-  void CalcTvals(VecPt2d& a_v, int a_beg, int a_end, VecDbl& a_t);
-  Pt2d PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t, double a_tval);
+                 VecPt3d& a_interpPts);
+  void CalcTvals(VecPt3d& a_v, int a_beg, int a_end, VecDbl& a_t);
+  Pt3d PtFromT(VecPt3d& a_v, int a_beg, VecDbl& a_t, double a_tval);
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -250,7 +250,7 @@ void XmStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
   XM_ENSURE_TRUE(!nCs.m_left.empty() || !nCs.m_right.empty());
   // get the interpolated center line location because the Interp pts
   // method will not do the t = 0 location
-  Pt2d pt, p1, p2;
+  Pt3d pt, p1, p2;
   if (!pCs.m_left.empty())
     p1 = pCs.m_left[0];
   else if (!pCs.m_right.empty())
@@ -265,7 +265,7 @@ void XmStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
   a_cs.m_right.assign(1, pt);
 
   // Left side interpolation
-  VecPt2d &l1(pCs.m_left), &l2(nCs.m_left), &l3(a_cs.m_left);
+  VecPt3d &l1(pCs.m_left), &l2(nCs.m_left), &l3(a_cs.m_left);
   int ls1(pCs.m_idxLeftShoulder), ls2(nCs.m_idxLeftShoulder);
   // interpolate points between the center line and the left shoulder
   InterpPts(l1, 0, ls1, l2, 0, ls2, a_percent, l3);
@@ -277,7 +277,7 @@ void XmStampInterpCrossSectionImpl::InterpCs(XmStampCrossSection& a_prev,
   a_cs.m_leftMax = a_prev.m_leftMax - (a_percent * (a_prev.m_leftMax - a_next.m_leftMax));
 
   // Right side interpolation
-  VecPt2d &r1(pCs.m_right), &r2(nCs.m_right), &r3(a_cs.m_right);
+  VecPt3d &r1(pCs.m_right), &r2(nCs.m_right), &r3(a_cs.m_right);
   int rs1(pCs.m_idxRightShoulder), rs2(nCs.m_idxRightShoulder);
   // interpolate points between the center line and the left shoulder
   InterpPts(r1, 0, rs1, r2, 0, rs2, a_percent, r3);
@@ -378,14 +378,14 @@ void XmStampInterpCrossSectionImpl::InterpFromCenterlineProfile(
 /// sections.
 /// \param[out] a_interpPts Vector of newly interpolated points
 //------------------------------------------------------------------------------
-void XmStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
+void XmStampInterpCrossSectionImpl::InterpPts(VecPt3d& a_v1,
                                               int a_beg1,
                                               int a_end1,
-                                              VecPt2d& a_v2,
+                                              VecPt3d& a_v2,
                                               int a_beg2,
                                               int a_end2,
                                               double a_percent,
-                                              VecPt2d& a_interpPts)
+                                              VecPt3d& a_interpPts)
 {
   VecDbl t1, t2;
   CalcTvals(a_v1, a_beg1, a_end1, t1);
@@ -394,7 +394,7 @@ void XmStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
   SetDbl tvals(t1.begin(), t1.end());
   tvals.insert(t2.begin(), t2.end());
 
-  Pt2d p1, p2, pt;
+  Pt3d p1, p2, pt;
   tvals.erase(0.0);
   for (const auto& t : tvals)
   {
@@ -413,7 +413,7 @@ void XmStampInterpCrossSectionImpl::InterpPts(VecPt2d& a_v1,
 /// \param[in] a_end Index to the end of the section of a_v
 /// \param[out] a_t Vector of calculated t values
 //------------------------------------------------------------------------------
-void XmStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end, VecDbl& a_t)
+void XmStampInterpCrossSectionImpl::CalcTvals(VecPt3d& a_v, int a_beg, int a_end, VecDbl& a_t)
 {
   if (a_v.empty())
     return;
@@ -434,14 +434,14 @@ void XmStampInterpCrossSectionImpl::CalcTvals(VecPt2d& a_v, int a_beg, int a_end
 /// \param[in] a_tval Parametric tvalue
 /// \return the x,y location of the point at a_tval
 //------------------------------------------------------------------------------
-Pt2d XmStampInterpCrossSectionImpl::PtFromT(VecPt2d& a_v, int a_beg, VecDbl& a_t, double a_tval)
+Pt3d XmStampInterpCrossSectionImpl::PtFromT(VecPt3d& a_v, int a_beg, VecDbl& a_t, double a_tval)
 {
   if (a_v.empty())
-    return Pt2d();
+    return Pt3d();
   if (a_t.size() == 1 && a_t[0] == 0.0)
     return a_v[0];
 
-  Pt2d r, p1, p2;
+  Pt3d r, p1, p2;
   double t1(-1), t2(-1);
   int idx(-1);
   // find where t is
@@ -560,13 +560,13 @@ void XmStampInterpCrossSectionUnitTests::test0()
   TS_ASSERT_EQUALS(io.m_cs[4].m_rightMax, io.m_cs[5].m_rightMax);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
   TS_ASSERT_EQUALS(io.m_cs[4].m_idxRightShoulder, io.m_cs[5].m_idxRightShoulder);
-  VecPt2d baseCs = {{0.00, 13.33}, {1.33, 13.83}, {2.67, 14.33}, {4.0, 13.67},
+  VecPt3d baseCs = {{0.00, 13.33}, {1.33, 13.83}, {2.67, 14.33}, {4.0, 13.67},
                     {5.33, 13.33}, {6.67, 13.33}, {11.67, 8.33}, {16.67, 3.33}};
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_left, 1e-2);
   TS_ASSERT_EQUALS(5, io.m_cs[2].m_idxLeftShoulder);
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_right, 1e-2);
   TS_ASSERT_EQUALS(5, io.m_cs[2].m_idxRightShoulder);
-  VecPt2d baseCs1 = {{0, 16.67},    {1.67, 16.67}, {3.33, 16.67},  {5.0, 15.83},
+  VecPt3d baseCs1 = {{0, 16.67},    {1.67, 16.67}, {3.33, 16.67},  {5.0, 15.83},
                      {6.67, 15.67}, {8.33, 16.67}, {13.33, 11.67}, {18.33, 6.67}};
   TS_ASSERT_DELTA_VECPT2D(baseCs1, io.m_cs[3].m_left, 1e-2);
   TS_ASSERT_EQUALS(5, io.m_cs[3].m_idxLeftShoulder);
@@ -627,7 +627,7 @@ void XmStampInterpCrossSectionUnitTests::test1()
   TS_ASSERT_EQUALS(4, io.m_cs[5].m_idxLeftShoulder);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
   TS_ASSERT_EQUALS(4, io.m_cs[5].m_idxRightShoulder);
-  VecPt2d baseCs = {{0.00, 13.33}, {1.60, 13.27}, {2.40, 13.07}, {3.20, 13.20},
+  VecPt3d baseCs = {{0.00, 13.33}, {1.60, 13.27}, {2.40, 13.07}, {3.20, 13.20},
                     {4.00, 14.00}, {4.90, 14.43}, {6.71, 13.29}, {7.62, 12.38},
                     {10.33, 9.67}, {12.14, 7.86}, {16.67, 3.33}};
   TS_ASSERT_DELTA_VECPT2D(baseCs, io.m_cs[2].m_left, 1e-2);
@@ -697,7 +697,7 @@ void XmStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()
     TS_ASSERT_EQUALS(c1.m_rightMax, c0.m_rightMax);
   }
 
-  VecPt2d csPts = {{0, 15},       {2, 14.5},      {3, 14},       {4, 14},
+  VecPt3d csPts = {{0, 15},       {2, 14.5},      {3, 14},       {4, 14},
                    {5, 15},       {5.83, 15.17},  {6.67, 15.33}, {8.33, 14.17},
                    {9.17, 13.33}, {11.25, 11.25}, {13.33, 9.17}, {17.5, 5}};
   XmStampCrossSection oCs;
@@ -821,7 +821,7 @@ void XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_left, io.m_cs[5].m_left);
   TS_ASSERT_EQUALS_VEC(io.m_cs[4].m_right, io.m_cs[5].m_right);
 
-  VecPt2d baseCs = {
+  VecPt3d baseCs = {
     {0.00, 13.33}, {2.00, 13.66}, {3.00, 13.66}, {4.00, 14.00}, {5.94, 13.94},
     {6.11, 13.88}, {6.92, 13.07}, {11.38, 8.61}, {11.79, 8.20}, {16.66, 3.33},
   };

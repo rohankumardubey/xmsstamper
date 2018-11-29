@@ -324,7 +324,7 @@ void XmStampIntermediateTests::test_IntersectBathymetry10()
 void XmStampIntermediateTests::test_BuildRasterAndGetCellValue()
 {
   std::vector<double> rasterVals = {0.0, 1.0, 2.0, 3.0, 4.0, 5.0};
-  XmStampRaster raster(2, 3, 2.0, 1.0, Pt2d(0.0, 0.0), rasterVals, XM_NODATA);
+  XmStampRaster raster(2, 3, 2.0, 1.0, Pt3d(0.0, 0.0), rasterVals, XM_NODATA);
   TS_ASSERT_EQUALS(raster.GetCellIndexFromColRow(2, 3), -1);
   const int lastCell = raster.GetCellIndexFromColRow(1, 2);
   TS_ASSERT_EQUALS(lastCell, 5);

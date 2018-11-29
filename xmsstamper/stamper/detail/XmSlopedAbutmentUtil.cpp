@@ -232,7 +232,7 @@ bool XmSlopedAbutmentUtilImpl::SlopedAbutmentTo2dCrossSection()
 {
   m_saXsect.m_idxLeftShoulder = m_saXsect.m_idxRightShoulder = 0;
   m_saXsect.m_leftMax = m_saXsect.m_rightMax = m_sa.m_maxX;
-  VecPt2d pts(m_sa.m_slope);
+  VecPt3d pts(m_sa.m_slope);
   XM_ENSURE_TRUE(pts.size() > 1, false);
   // extend to the max x
   double x1 = pts[pts.size() - 2].x;
@@ -243,7 +243,7 @@ bool XmSlopedAbutmentUtilImpl::SlopedAbutmentTo2dCrossSection()
     double z1 = pts[pts.size() - 2].y;
     double z2 = pts.back().y;
     double z3 = ((x3 - x1) / (x2 - x1) * (z2 - z1)) + z1;
-    Pt2d p(x3, z3);
+    Pt3d p(x3, z3);
     pts.back() = p;
   }
   m_saXsect.m_left = m_saXsect.m_right = pts;
@@ -383,13 +383,13 @@ void XmSlopedAbutmentUtilImpl::ConvertTo3d(int a_side)
     if (!m_first)
       angleRad += XM_PI;
     double maxX(cs.m_leftMax);
-    VecPt2d* vPtr(&cs.m_left);
+    VecPt3d* vPtr(&cs.m_left);
     if (a_side == SA_RIGHT)
     {
       maxX = cs.m_rightMax;
       vPtr = &cs.m_right;
     }
-    VecPt2d& pts(*vPtr);
+    VecPt3d& pts(*vPtr);
     XmUtil::ConvertXsPointsTo3d(p0, pts, maxX, angleRad, out3dPts);
   }
 } // XmSlopedAbutmentUtilImpl::ConvertTo3d

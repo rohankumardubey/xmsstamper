@@ -100,33 +100,6 @@ bool iReadVecDblFromFile(std::ifstream &a_file, VecDbl &a_vals)
   return true;
 } // iReadVecDblFromFile
 //------------------------------------------------------------------------------
-/// \brief Writes a VecPt2d to an ASCII file
-//------------------------------------------------------------------------------
-void iWriteVecPt2dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt2d &a_pts)
-{
-  XM_ENSURE_TRUE(a_file.is_open());
-  a_file << a_cardName + " " << a_pts.size() << "\n";
-  for (const auto &pt : a_pts)
-  {
-    a_file << iDblToStr(pt.x) << " " << iDblToStr(pt.y) << "\n";
-  }
-} // iWriteVecPt2dToFile
-//------------------------------------------------------------------------------
-/// \brief Reads a VecPt2d from an ASCII file
-//------------------------------------------------------------------------------
-bool iReadVecPt2dFromFile(std::ifstream &a_file, VecPt2d &a_pts)
-{
-  XM_ENSURE_TRUE(a_file.is_open(), false);
-  int numPts(0);
-  XM_ENSURE_TRUE(a_file >> numPts, false);
-  a_pts.assign(numPts, xms::Pt2d());
-  for (auto &pt : a_pts)
-  {
-    XM_ENSURE_TRUE(a_file >> pt.x >> pt.y, false);
-  }
-  return true;
-} // iReadVecPt2dFromFile
-//------------------------------------------------------------------------------
 /// \brief Writes a VecPt3d to an ASCII file
 //------------------------------------------------------------------------------
 void iWriteVecPt3dToFile(std::ofstream &a_file, const std::string &a_cardName, const VecPt3d &a_pts)
@@ -149,7 +122,11 @@ bool iReadVecPt3dFromFile(std::ifstream &a_file, VecPt3d &a_pts)
   a_pts.assign(numPts, xms::Pt3d());
   for (auto &pt : a_pts)
   {
-    XM_ENSURE_TRUE(a_file >> pt.x >> pt.y >> pt.z, false);
+    XM_ENSURE_TRUE(a_file >> pt.x >> pt.y, false);
+    if (a_file.peek() != '\n')
+    {
+      XM_ENSURE_TRUE(a_file >> pt.z, false);
+    }
   }
   return true;
 } // iReadVecPt3dFromFile
@@ -289,7 +266,7 @@ bool iReadTinFromFile(std::ifstream &a_file, const BSHP<TrTin> &a_tin)
 /// pixels where no value exists.
 //------------------------------------------------------------------------------
 XmStampRaster::XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
-  const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData)
+  const double a_pixelSizeY, const Pt3d &a_min, const std::vector<double> &a_vals, const int a_noData)
   : m_numPixelsX(a_numPixelsX)
   , m_numPixelsY(a_numPixelsY)
   , m_pixelSizeX(a_pixelSizeX)
@@ -346,13 +323,13 @@ void XmStampRaster::GetColRowFromCellIndex(const int a_index, int &a_col, int &a
 /// \param[in] a_index: The zero-based raster cell index.
 /// \return The location of the cell with the given index.
 //------------------------------------------------------------------------------
-Pt2d XmStampRaster::GetLocationFromCellIndex(const int a_index) const
+Pt3d XmStampRaster::GetLocationFromCellIndex(const int a_index) const
 {
   int col, row;
   GetColRowFromCellIndex(a_index, col, row);
   if (col >= 0 && row >= 0)
   {
-    Pt2d loc;
+    Pt3d loc;
     loc.x = m_min.x + col * m_pixelSizeX;
     loc.y = m_min.y + (m_numPixelsY - 1 - row) * m_pixelSizeY;
     return loc;
@@ -478,7 +455,7 @@ void XmSlopedAbutment::WriteToFile(std::ofstream &a_file, const std::string &a_c
   XM_ENSURE_TRUE(a_file.is_open());
   a_file << a_cardName + "\n";
   a_file << "MAX_X " << std::fixed << std::setprecision(13) << m_maxX << "\n";
-  iWriteVecPt2dToFile(a_file, "SLOPE", m_slope);
+  iWriteVecPt3dToFile(a_file, "SLOPE", m_slope);
 } // XmSlopedAbutment::WriteToFile
 //------------------------------------------------------------------------------
 /// \brief Reads the XmSlopedAbutment class information to a file.
@@ -494,7 +471,7 @@ bool XmSlopedAbutment::ReadFromFile(std::ifstream &a_file)
   XM_ENSURE_TRUE(a_file >> m_maxX, false);
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "SLOPE"), false);
-  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_slope), false);
+  XM_ENSURE_TRUE(iReadVecPt3dFromFile(a_file, m_slope), false);
   return true;
 } // XmSlopedAbutment::ReadFromFile
 //------------------------------------------------------------------------------
@@ -588,10 +565,10 @@ void XmStampCrossSection::WriteToFile(std::ofstream &a_file, const std::string &
 {
   XM_ENSURE_TRUE(a_file.is_open());
   a_file << a_cardName + "\n";
-  iWriteVecPt2dToFile(a_file, "LEFT", m_left);
+  iWriteVecPt3dToFile(a_file, "LEFT", m_left);
   a_file << "LEFT_MAX " << std::fixed << std::setprecision(13) << m_leftMax << "\n";
   a_file << "IDX_LEFT_SHOULDER " << m_idxLeftShoulder << "\n";
-  iWriteVecPt2dToFile(a_file, "RIGHT", m_right);
+  iWriteVecPt3dToFile(a_file, "RIGHT", m_right);
   a_file << "RIGHT_MAX " << std::fixed << std::setprecision(13) << m_rightMax << "\n";
   a_file << "IDX_RIGHT_SHOULDER " << m_idxRightShoulder << "\n";
 } // XmStampCrossSection::WriteToFile
@@ -608,7 +585,7 @@ bool XmStampCrossSection::ReadFromFile(std::ifstream &a_file)
   XM_ENSURE_TRUE(stEqualNoCase(card, "CS"), false);
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "LEFT"), false);
-  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_left), false);
+  XM_ENSURE_TRUE(iReadVecPt3dFromFile(a_file, m_left), false);
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "LEFT_MAX"), false);
   XM_ENSURE_TRUE(a_file >> m_leftMax, false);
@@ -617,7 +594,7 @@ bool XmStampCrossSection::ReadFromFile(std::ifstream &a_file)
   XM_ENSURE_TRUE(a_file >> m_idxLeftShoulder, false);
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "RIGHT"), false);
-  XM_ENSURE_TRUE(iReadVecPt2dFromFile(a_file, m_right), false);
+  XM_ENSURE_TRUE(iReadVecPt3dFromFile(a_file, m_right), false);
   XM_ENSURE_TRUE(a_file >> card, false);
   XM_ENSURE_TRUE(stEqualNoCase(card, "RIGHT_MAX"), false);
   XM_ENSURE_TRUE(a_file >> m_rightMax, false);

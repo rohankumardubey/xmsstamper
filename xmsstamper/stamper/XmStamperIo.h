@@ -34,7 +34,7 @@ class XmStampRaster
 {
 public:
   XmStampRaster(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX,
-    const double a_pixelSizeY, const Pt2d &a_min, const std::vector<double> &a_vals, const int a_noData);
+    const double a_pixelSizeY, const Pt3d &a_min, const std::vector<double> &a_vals, const int a_noData);
   XmStampRaster();
   /// /breif enum the identify the format of the raster
   enum XmRasterFormatEnum {RS_ARCINFO_ASCII};
@@ -42,13 +42,13 @@ public:
   int m_numPixelsY; ///< Number of pixels in the Y-direction (Required)
   double m_pixelSizeX; ///< Pixel size in the X-direction (Required)
   double m_pixelSizeY; ///< Pixel size in the Y-direction (Required)
-  Pt2d m_min; ///< Minimum (lower left) X, Y coordinate of the raster at the center of the raster cell (Required)
+  Pt3d m_min; ///< Minimum (lower left) X, Y coordinate of the raster at the center of the raster cell (Required)
   std::vector<double> m_vals; ///< Raster values defined from the top left corner to the bottom right corner (Required)
                               ///< Use the m_noData value to specify a cell value with no data.
   int m_noData; ///< NO DATA value for the raster (typically XM_NODATA)
   int GetCellIndexFromColRow(const int a_col, const int a_row) const;
   void GetColRowFromCellIndex(const int a_index, int & a_col, int & a_row) const;
-  Pt2d GetLocationFromCellIndex(const int a_index) const;
+  Pt3d GetLocationFromCellIndex(const int a_index) const;
   void WriteGridFile(const std::string &a_fileName, const XmRasterFormatEnum a_format);
   void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
   bool ReadFromFile(std::ifstream & a_file);
@@ -84,7 +84,7 @@ public:
   }
 
   double m_maxX;   ///< max distance from center line
-  VecPt2d m_slope; ///< x,y pairs defining slope from center line
+  VecPt3d m_slope; ///< x,y pairs defining slope from center line
 
   void WriteToFile(std::ofstream &a_file, const std::string &a_cardName) const;
   bool ReadFromFile(std::ifstream & a_file);
@@ -153,11 +153,11 @@ public:
   }
 
   /// left side of the cross section
-  VecPt2d m_left;        ///< points defining the cross section
+  VecPt3d m_left;        ///< points defining the cross section
   double m_leftMax;      ///< max x value for left side
   int m_idxLeftShoulder; ///< index to the shoulder point in the m_left vector
   /// right side of the cross section
-  VecPt2d m_right;        ///< points defining the cross section
+  VecPt3d m_right;        ///< points defining the cross section
   double m_rightMax;      ///< max x value for right side
   int m_idxRightShoulder; ///< index to the shoulder point in the m_right vector
 

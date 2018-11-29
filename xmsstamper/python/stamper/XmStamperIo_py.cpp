@@ -7,16 +7,21 @@
 //------------------------------------------------------------------------------
 
 //----- Included files ---------------------------------------------------------
-#include <pybind11/pybind11.h>
-#include <pybind11/numpy.h>
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
 #include <boost/shared_ptr.hpp> // boost::shared_ptr
-#include <xmsstamper/stamper/XmStamperIo.h>
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
+
 #include <xmscore/misc/xmstype.h> // XM_NODATA
 #include <xmscore/python/misc/PyUtils.h> // PyIterFromVecPt3d, etc.
+
 #include <xmsinterp/triangulate/TrTin.h>
+
+#include <xmsstamper/python/stamper/stamper_py.h>
+#include <xmsstamper/stamper/XmStamperIo.h>
 
 //----- Namespace declaration --------------------------------------------------
 namespace py = pybind11;
@@ -85,11 +90,11 @@ void initXmStamperIo(py::module &m)
   stamp_raster.def_property("min",
   [](xms::XmStampRaster &self) -> py::tuple 
   {
-    return xms::PyIterFromPt2d(self.m_min);
+    return xms::PyIterFromPt3d(self.m_min);
   },
   [](xms::XmStampRaster &self, py::tuple _min)
   {
-    self.m_min = xms::Pt2dFromPyIter(_min);
+    self.m_min = xms::Pt3dFromPyIter(_min);
   }
   , min_doc);
   // ---------------------------------------------------------------------------
@@ -161,7 +166,7 @@ void initXmStamperIo(py::module &m)
   stamp_raster.def("get_location_from_cell_index",
   [](xms::XmStampRaster &self, int index)
   {
-    return xms::PyIterFromPt2d(self.GetLocationFromCellIndex(index));
+    return xms::PyIterFromPt3d(self.GetLocationFromCellIndex(index));
   },
   get_location_from_cell_index_doc, py::arg("index"));
   // ---------------------------------------------------------------------------
@@ -217,6 +222,12 @@ void initXmStamperIo(py::module &m)
   }
     ,
     write_to_file_raster_doc, py::arg("file_name"), py::arg("card_name"));
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamp_raster.def("__repr__", [](xms::XmStampRaster &self) {
+    return PyReprStringFromXmStampRaster(self);
+  });
 // -----------------------------------------------------------------------------
 // XMSTAMPRASTERENUM
 // -----------------------------------------------------------------------------
@@ -245,6 +256,12 @@ void initXmStamperIo(py::module &m)
     ss << "wing_wall_angle: " << self.m_wingWallAngle << std::endl;
     return ss.str();
   });
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_wing_wall.def("__repr__", [](xms::XmWingWall &self) {
+    return PyReprStringFromXmWingWall(self);
+  });
 
 // -----------------------------------------------------------------------------
 // XMSLOPEDABUTMENT
@@ -269,11 +286,11 @@ void initXmStamperIo(py::module &m)
   stamper_sloped_abutment.def_property("slope",
     [](xms::XmSlopedAbutment &self) -> py::iterable
   {
-    return xms::PyIterFromVecPt2d(self.m_slope);
+    return xms::PyIterFromVecPt3d(self.m_slope);
   },
     [](xms::XmSlopedAbutment &self, py::iterable slope)
   {
-    self.m_slope = *xms::VecPt2dFromPyIter(slope);
+    self.m_slope = *xms::VecPt3dFromPyIter(slope);
   },
   slope_doc);
   stamper_sloped_abutment.def("__str__", [](xms::XmSlopedAbutment &self) {
@@ -408,11 +425,11 @@ void initXmStamperIo(py::module &m)
   stamper_cross_section.def_property("left",
             [](xms::XmStampCrossSection &self) -> py::iterable
             {
-                return xms::PyIterFromVecPt2d(self.m_left);
+                return xms::PyIterFromVecPt3d(self.m_left);
             },
             [](xms::XmStampCrossSection &self, py::iterable left)
             {
-                self.m_left = *xms::VecPt2dFromPyIter(left);
+                self.m_left = *xms::VecPt3dFromPyIter(left);
             },
             left_doc
         );
@@ -441,11 +458,11 @@ void initXmStamperIo(py::module &m)
   stamper_cross_section.def_property("right",
             [](xms::XmStampCrossSection &self) -> py::iterable
             {
-                return xms::PyIterFromVecPt2d(self.m_right);
+                return xms::PyIterFromVecPt3d(self.m_right);
             },
             [](xms::XmStampCrossSection &self, py::iterable right)
             {
-                self.m_right = *xms::VecPt2dFromPyIter(right);
+                self.m_right = *xms::VecPt3dFromPyIter(right);
             },
             right_doc
         );
