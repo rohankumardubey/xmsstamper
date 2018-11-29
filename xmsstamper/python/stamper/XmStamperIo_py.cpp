@@ -14,6 +14,7 @@
 #include <sstream>
 #include <boost/shared_ptr.hpp> // boost::shared_ptr
 #include <xmsstamper/stamper/XmStamperIo.h>
+#include <xmscore/misc/xmstype.h> // XM_NODATA
 #include <xmscore/python/misc/PyUtils.h> // PyIterFromVecPt3d, etc.
 #include <xmsinterp/triangulate/TrTin.h>
 
@@ -29,8 +30,11 @@ void initXmStamperIo(py::module &m)
 // XMSTAMPRASTER
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStampRaster, boost::shared_ptr<xms::XmStampRaster>>
-    stamp_raster(m, "XmStampRaster");
-  stamp_raster.def(py::init<>());
+    stamp_raster(m, "StampRaster");
+  stamp_raster.def(py::init<>([]() {
+    boost::shared_ptr<xms::XmStampRaster> xm_stamp_raster(new xms::XmStampRaster());
+    return xm_stamp_raster;
+  }));
   // ---------------------------------------------------------------------------
   // property: num_pixels_x
   // ---------------------------------------------------------------------------
@@ -226,7 +230,7 @@ void initXmStamperIo(py::module &m)
 // XMWINGWALL
 // -----------------------------------------------------------------------------
   py::class_<xms::XmWingWall, boost::shared_ptr<xms::XmWingWall>> 
-    stamper_wing_wall(m, "XmWingWall");
+    stamper_wing_wall(m, "WingWall");
   stamper_wing_wall.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: wing_wall_angle
@@ -246,7 +250,7 @@ void initXmStamperIo(py::module &m)
 // XMSLOPEDABUTMENT
 // -----------------------------------------------------------------------------
   py::class_<xms::XmSlopedAbutment, boost::shared_ptr<xms::XmSlopedAbutment>>
-    stamper_sloped_abutment(m, "XmSlopedAbutment");
+    stamper_sloped_abutment(m, "SlopedAbutment");
   stamper_sloped_abutment.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: max_x
@@ -283,7 +287,7 @@ void initXmStamperIo(py::module &m)
 // XMGUIDEBANK
 // -----------------------------------------------------------------------------
   py::class_<xms::XmGuidebank, boost::shared_ptr<xms::XmGuidebank>>
-    stamper_guide_bank(m, "XmGuidebank");
+    stamper_guide_bank(m, "Guidebank");
   stamper_guide_bank.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: side
@@ -339,7 +343,7 @@ void initXmStamperIo(py::module &m)
 // XMSTAMPERENDCAP
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStamperEndCap, boost::shared_ptr<xms::XmStamperEndCap>>
-    stamper_end_cap(m, "XmStamperEndCap");
+    stamper_end_cap(m, "StamperEndCap");
   stamper_end_cap.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: type
@@ -393,7 +397,7 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStampCrossSection, 
     boost::shared_ptr<xms::XmStampCrossSection>> 
-    stamper_cross_section(m, "XmStampCrossSection");
+    stamper_cross_section(m, "StampCrossSection");
   stamper_cross_section.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: left
@@ -469,7 +473,7 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStamperCenterlineProfile, 
     boost::shared_ptr<xms::XmStamperCenterlineProfile>> 
-    stamper_centerline_profile(m, "XmStamperCenterlineProfile");
+    stamper_centerline_profile(m, "StamperCenterlineProfile");
   stamper_centerline_profile.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: distance
@@ -538,7 +542,7 @@ void initXmStamperIo(py::module &m)
 // XMSTAMPERIO
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStamperIo, boost::shared_ptr<xms::XmStamperIo>> 
-    stamper_io(m, "XmStamperIo");
+    stamper_io(m, "StamperIo");
   stamper_io.def(py::init<>());
   // ---------------------------------------------------------------------------
   // property: centerline

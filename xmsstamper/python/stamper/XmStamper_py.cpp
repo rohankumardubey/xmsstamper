@@ -22,7 +22,7 @@ PYBIND11_DECLARE_HOLDER_TYPE(T, boost::shared_ptr<T>);
 
 void initXmStamper(py::module &m)
 {
-  py::class_<xms::XmStamper, boost::shared_ptr<xms::XmStamper>> stamper(m, "XmStamper");
+  py::class_<xms::XmStamper, boost::shared_ptr<xms::XmStamper>> stamper(m, "Stamper");
   stamper.def(py::init(&xms::XmStamper::New));
   // ---------------------------------------------------------------------------
   // function: do_stamp

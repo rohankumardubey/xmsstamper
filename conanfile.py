@@ -64,8 +64,9 @@ class XmsstamperConan(ConanFile):
             self.requires("pybind11/2.2.2@aquaveo/stable")
 
         # Use the dev version of XMSCore, XMSInterp, XMSGrid, XMSExtractor
-        self.requires("xmscore/[>=1.0.43,<2.0]@aquaveo/stable")
-        self.requires("xmsinterp/[>=1.0.23,<2.0]@aquaveo/stable")
+        #TODO: These should not bet testing
+        self.requires("xmscore/[>=2.0.0,<3.0]@aquaveo/testing")
+        self.requires("xmsinterp/[>=2.0.0,<3.0]@aquaveo/testing")
 
     def build(self):
         cmake = CMake(self)
@@ -109,15 +110,12 @@ class XmsstamperConan(ConanFile):
                          '*_pyt.py -s ../xmsstamper/python', cwd="./lib")
 
     def package(self):
-        self.copy("*.pyd", dst="site-packages", keep_path=False)
-        self.copy("*_py.*.so", dst="site-packages", keep_path=False)
-        self.copy("*_py.so", dst="site-packages", keep_path=False)
         self.copy("license", dst="licenses", ignore_case=True, keep_path=False)
 
     def package_info(self):
         self.env_info.PYTHONPATH.append(os.path.join(self.package_folder,
                                                      "site-packages"))
         if self.settings.build_type == 'Debug':
-            self.cpp_info.libs = ["xmsstamper_d"]
+            self.cpp_info.libs = ["xmsstamperlib_d"]
         else:
-            self.cpp_info.libs = ["xmsstamper"]
+            self.cpp_info.libs = ["xmsstamperlib"]

@@ -1,13 +1,13 @@
-"""Test XmStamper_py.cpp"""
+"""Test Stamper_py.cpp"""
 import unittest
 import numpy as np
 import os
-import xmsstamper_py
+import xmsstamper
 import xmsinterp_py
 
 
-class TestXmStamper(unittest.TestCase):
-    """XmStamper tests"""
+class TestStamper(unittest.TestCase):
+    """Stamper tests"""
     def setUp(self):
         script_file = os.path.abspath(os.path.realpath(__file__))
         script_path = os.path.dirname(script_file)
@@ -43,21 +43,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_fill_embankment(self):
         """Test stamp fill embankment"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 1
         io.centerline = ((0, 0, 15), (0, 10, 15))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 15), (5, 15), (6, 14))
         cs1.left_max = 20
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 15), (5, 15), (6, 14))
         cs1.right_max = 20
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 15), (5, 15), (6, 14))
         cs2.left_max = 20
         cs2.index_left_shoulder = 1
@@ -73,7 +73,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-20.0, 0.0)
         raster_vals = [5] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -83,7 +83,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -94,7 +94,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "raster_stamp_fill_embankment_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -113,21 +113,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_cut_embankment(self):
         """Test stamp cut embankment"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 0
         io.centerline = ((0, 0, 0), (0, 10, 0))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 0), (5, 0), (6, 1))
         cs1.left_max = 20
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 0), (5, 0), (6, 1))
         cs1.right_max = 20
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 0), (5, 0), (6, 1))
         cs2.left_max = 20
         cs2.index_left_shoulder = 1
@@ -143,7 +143,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-20.0, 0.0)
         raster_vals = [5] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -153,7 +153,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -164,7 +164,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "raster_stamp_cut_embankment_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -183,21 +183,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_wing_wall(self):
         """Test stamp wing wall"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 1
         io.centerline = ((0, 0, 15), (20, 20, 15))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 15), (5, 15), (6, 14))
         cs1.left_max = 20
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 15), (5, 15), (6, 14))
         cs1.right_max = 20
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 15), (5, 15), (6, 14))
         cs2.left_max = 20
         cs2.index_left_shoulder = 1
@@ -219,7 +219,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-16.0, -8.0)
         raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -229,7 +229,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -240,7 +240,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "raster_wing_wall_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -259,21 +259,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_sloped_abutment(self):
         """Test stamp sloped abutment"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 1
         io.centerline = ((0, 0, 15), (20, 20, 15))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 15), (5, 15), (6, 14))
         cs1.left_max = 20
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 15), (5, 15), (6, 14))
         cs1.right_max = 20
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 15), (5, 15), (6, 14))
         cs2.left_max = 20
         cs2.index_left_shoulder = 1
@@ -302,7 +302,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-17.0, -17.0)
         raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -312,7 +312,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -323,7 +323,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "test_sloped_abutment_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -346,21 +346,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_guide_bank(self):
         """Test stamp guidebank"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 1
         io.centerline = ((0, 0, 15), (50, 50, 15))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 15), (5, 15), (6, 14))
         cs1.left_max = 10
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 15), (5, 15), (6, 14))
         cs1.right_max = 10
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 15), (5, 15), (6, 14))
         cs2.left_max = 10
         cs2.index_left_shoulder = 1
@@ -393,7 +393,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-21.0, -12.0)
         raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -403,7 +403,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -414,7 +414,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "test_guidebank_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -422,21 +422,21 @@ class TestXmStamper(unittest.TestCase):
 
     def test_stamp_intersect_bathymetry(self):
         """Test stamp guidebank"""
-        io = xmsstamper_py.stamper.XmStamperIo()
+        io = xmsstamper.stamper.StamperIo()
 
         # Type and centerline
         io.stamping_type = 1
         io.centerline = ((0, 0, 15), (10, 10, 15))
 
         # Cross sections
-        cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs1 = xmsstamper.stamper.StampCrossSection()
         cs1.left = ((0, 15), (5, 15), (6, 14))
         cs1.left_max = 20
         cs1.index_left_shoulder = 1
         cs1.right = ((0, 15), (5, 15), (6, 14))
         cs1.right_max = 20
         cs1.index_right_shoulder = 1
-        cs2 = xmsstamper_py.stamper.XmStampCrossSection()
+        cs2 = xmsstamper.stamper.StampCrossSection()
         cs2.left = ((0, 15), (5, 15), (6, 14))
         cs2.left_max = 20
         cs2.index_left_shoulder = 1
@@ -460,7 +460,7 @@ class TestXmStamper(unittest.TestCase):
         pixel_size = 1
         min_pt = (-10.0, -8.0)
         raster_vals = [no_data] * (num_pixels_x * num_pixels_y)
-        raster = xmsstamper_py.stamper.XmStampRaster()
+        raster = xmsstamper.stamper.StampRaster()
         raster.no_data = no_data
         raster.num_pixels_x = num_pixels_x
         raster.num_pixels_y = num_pixels_y
@@ -470,7 +470,7 @@ class TestXmStamper(unittest.TestCase):
         raster.vals = raster_vals
         io.raster = raster
 
-        st = xmsstamper_py.stamper.XmStamper()
+        st = xmsstamper.stamper.Stamper()
         st.do_stamp(io)
 
         base_file = os.path.join(
@@ -481,7 +481,7 @@ class TestXmStamper(unittest.TestCase):
             self.output_file_path, "test_intersect_bathymetry_out.asc"
         )
 
-        raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+        raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
         # Verify grid file
@@ -497,7 +497,7 @@ class TestXmStamper(unittest.TestCase):
 
 #     def test_real_data_stamping(self):
 #         """Test real data stamping"""
-#         io = xmsstamper_py.stamper.XmStamperIo()
+#         io = xmsstamper.stamper.StamperIo()
 #         io.stamping_type = 1
 #         io.centerline = (
 #             (1001673.2, 14390623.5, 336.0),
@@ -533,7 +533,7 @@ class TestXmStamper(unittest.TestCase):
 #             (1001156.9, 14390561.4, 336.0),
 #         )
         
-#         cs1 = xmsstamper_py.stamper.XmStampCrossSection()
+#         cs1 = xmsstamper.stamper.StampCrossSection()
 #         cs1.left = ((0.0, 332.0), (12.5, 332.0), (13.5, 331.0))
 #         cs1.left_max = 35.0
 #         cs1.index_left_shoulder = 1
@@ -556,7 +556,7 @@ class TestXmStamper(unittest.TestCase):
 #         io.last_end_cap.angle = 0
 
 #         # Raster to stamp
-#         raster = xmsstamper_py.stamper.XmStampRaster()
+#         raster = xmsstamper.stamper.StampRaster()
 #         raster.read_from_file(os.path.join(
 #             self.base_file_path, "stamping", "rasterTestFiles", 
 #             "dpipe_base.asc"
@@ -564,7 +564,7 @@ class TestXmStamper(unittest.TestCase):
 
 #         io.raster = raster
 
-#         st = xmsstamper_py.stamper.XmStamper()
+#         st = xmsstamper.stamper.Stamper()
 #         st.do_stamp(io)
 
 #         base_file = os.path.join(
@@ -576,7 +576,7 @@ class TestXmStamper(unittest.TestCase):
 #             self.output_file_path, "real_data_out.asc"
 #         )
 
-#         raster_format_enum = xmsstamper_py.stamper.XmStampRaster.raster_format_enum
+#         raster_format_enum = xmsstamper.stamper.StampRaster.raster_format_enum
 #         io.raster.write_grid_file(output_file, raster_format_enum.RS_ARCINFO_ASCII)
 
 #         # Verify grid file

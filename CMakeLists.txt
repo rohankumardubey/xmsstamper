@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.1.2)
 cmake_policy(SET CMP0015 NEW) # Link Directory Pathing
 set(CMAKE_DEBUG_POSTFIX _d)
 
-project(xmsstamper C CXX)
+project(xmsstamperlib C CXX)
 
 if (APPLE)  
   set(CMAKE_POSITION_INDEPENDENT_CODE False)
@@ -181,26 +181,26 @@ endif()
 
 #Pybind11
 if(IS_PYTHON_BUILD)
-    pybind11_add_module(xmsstamper_py
+    pybind11_add_module(xmsstamper
       ${xmsstamper_py} ${xmsstamper_py_headers}
     )
-    target_include_directories(xmsstamper_py
+    target_include_directories(xmsstamper
       PRIVATE
           ${EXT_LIBS}
           ${PYTHON_INCLUDE_DIRS}
     )
-    target_link_libraries(xmsstamper_py
+    target_link_libraries(xmsstamper
     PRIVATE
       ${EXT_LIBS}
       ${PROJECT_NAME}
   )
-    set_target_properties(xmsstamper_py PROPERTIES
+    set_target_properties(xmsstamper PROPERTIES
     LINKER_LANGUAGE CXX
   )
 
   # Install recipe
   install(
-    TARGETS xmsstamper_py
+    TARGETS xmsstamper
     ARCHIVE DESTINATION "site-packages"
     LIBRARY DESTINATION "site-packages"
   )

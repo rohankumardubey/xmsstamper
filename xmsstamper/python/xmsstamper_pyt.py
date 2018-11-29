@@ -1,12 +1,12 @@
-"""Test xmsstamper_py.cpp"""
+"""Test xmsstamper.cpp"""
 import unittest
-import xmsstamper_py
+import xmsstamper
 
 
-class TestXmStamper(unittest.TestCase):
+class TestStamper(unittest.TestCase):
     """Tests for the main module"""
     def test_package_docstring(self):
         """Test package has docstring"""
-        doc_string = xmsstamper_py.__doc__
+        doc_string = xmsstamper.__doc__
         self.assertIsNotNone(doc_string)
         self.assertGreater(len(doc_string), 0)
