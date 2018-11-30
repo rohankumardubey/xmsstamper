@@ -36,10 +36,65 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmStampRaster, boost::shared_ptr<xms::XmStampRaster>>
     stamp_raster(m, "StampRaster");
-  stamp_raster.def(py::init<>([]() {
+
+  const char* stamper_raster_init_doc = R"pydoc(
+       StampRaster Initializer
+
+       Args:
+           num_pixels_x (int): Number of pixes in the X-direction
+           num_pixels_y (int): Number of pixes in the X-direction
+           pixel_size_x (float): Number of pixes in the X-direction
+           pixel_size_y (float): Number of pixes in the X-direction
+           min (iterable): Number of pixes in the X-direction
+           vals (iterable): Number of pixes in the X-direction
+           no_data (int): Number of pixes in the X-direction
+  )pydoc";
+  stamp_raster.def(py::init<>([](std::string file_name) {
     boost::shared_ptr<xms::XmStampRaster> xm_stamp_raster(new xms::XmStampRaster());
+    std::ifstream is;
+    is.open(file_name, std::ios::in);
+    xm_stamp_raster->ReadFromFile(is);
+    is.close();
     return xm_stamp_raster;
-  }));
+  }), stamper_raster_init_doc, py::arg("file_name");
+  stamp_raster.def(py::init<>([](py::object num_pixels_x, py::object num_pixels_y,
+           py::object pixel_size_x, py::object pixel_size_y, py::object min,
+           py::object vals, py::object no_data) {
+    boost::shared_ptr<xms::XmStampRaster> xm_stamp_raster(new xms::XmStampRaster());
+    if (!num_pixels_x.is_none())
+    {
+      xm_stamp_raster->m_numPixelsX = py::cast<int>(num_pixels_x);
+    }
+    if (!num_pixels_y.is_none())
+    {
+      xm_stamp_raster->m_numPixelsY = py::cast<int>(num_pixels_y);
+    }
+    if (!pixel_size_x.is_none())
+    {
+      xm_stamp_raster->m_pixelSizeX = py::cast<double>(pixel_size_x);
+    }
+    if (!pixel_size_y.is_none())
+    {
+      xm_stamp_raster->m_pixelSizeY = py::cast<double>(pixel_size_y);
+    }
+    if (!min.is_none())
+    {
+      xm_stamp_raster->m_min = xms::Pt3dFromPyIter(min);
+    }
+    if (!vals.is_none())
+    {
+      xm_stamp_raster->m_vals = *xms::VecDblFromPyIter(vals);
+    }
+    if (!no_data.is_none())
+    {
+      xm_stamp_raster->m_noData = py::cast<int>(no_data);
+    }
+    return xm_stamp_raster;
+  }), stamper_raster_init_doc,
+  py::arg("num_pixels_x") = py::none(), py::arg("num_pixels_y") = py::none(),
+  py::arg("pixel_size_x") = py::none(), py::arg("pixel_size_y") = py::none(),
+  py::arg("min") = py::none(), py::arg("vals") = py::none(),
+  py::arg("no_data") = py::none());
   // ---------------------------------------------------------------------------
   // property: num_pixels_x
   // ---------------------------------------------------------------------------
@@ -242,7 +297,22 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmWingWall, boost::shared_ptr<xms::XmWingWall>> 
     stamper_wing_wall(m, "WingWall");
-  stamper_wing_wall.def(py::init<>());
+
+
+  const char* init_doc = R"pydoc(
+       WingWall Initializer
+
+       Args:
+           wing_wall_angle (float): Wing wall angle
+  )pydoc";
+  stamper_wing_wall.def(py::init<>([](py::object wing_wall_angle) {
+    boost::shared_ptr<xms::XmWingWall> rval(new xms::XmWingWall());
+    if (!wing_wall_angle.is_none())
+    {
+      rval->m_wingWallAngle = py::cast<double>(wing_wall_angle);
+    }
+    return rval;
+  }), init_doc, py::arg("wing_wall_angle") = py::none());
   // ---------------------------------------------------------------------------
   // property: wing_wall_angle
   // ---------------------------------------------------------------------------
@@ -298,6 +368,12 @@ void initXmStamperIo(py::module &m)
     ss << "max_x: " << self.m_maxX << std::endl;
     ss << "slope: " << self.m_slope << std::endl;
     return ss.str();
+  });
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_sloped_abutment.def("__repr__", [](xms::XmSlopedAbutment &self) {
+    return PyReprStringFromXmSlopedAbutment(self);
   });
 
 // -----------------------------------------------------------------------------
@@ -355,6 +431,12 @@ void initXmStamperIo(py::module &m)
     ss << "n_pts: " << self.m_nPts << std::endl;
     return ss.str();
   });
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_guide_bank.def("__repr__", [](xms::XmGuidebank &self) {
+    return PyReprStringFromXmGuidebank(self);
+  });
 
 // -----------------------------------------------------------------------------
 // XMSTAMPERENDCAP
@@ -407,6 +489,12 @@ void initXmStamperIo(py::module &m)
     ss << "type: " << self.m_type << std::endl;
     ss << "angle: " << self.m_angle << std::endl;
     return ss.str();
+  });
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_end_cap.def("__repr__", [](xms::XmStamperEndCap &self) {
+    return PyReprStringFromXmStamperEndCap(self);
   });
 
 // -----------------------------------------------------------------------------
@@ -482,8 +570,12 @@ void initXmStamperIo(py::module &m)
   )pydoc";
   stamper_cross_section.def_readwrite("index_right_shoulder", &xms::XmStampCrossSection::
     m_idxRightShoulder, index_right_shoulder_doc);
-
-
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_cross_section.def("__repr__", [](xms::XmStampCrossSection &self) {
+    return PyReprStringFromXmStampCrossSection(self);
+  });
 
 // -----------------------------------------------------------------------------
 // XMSTAMPERCENTERLINEPROFILE
@@ -554,6 +646,12 @@ void initXmStamperIo(py::module &m)
     self.m_cs = vec_cs;
   },
   cs_centerline_doc);
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_centerline_profile.def("__repr__", [](xms::XmStamperCenterlineProfile &self) {
+    return PyReprStringFromXmStamperCenterlineProfile(self);
+  });
 
 // -----------------------------------------------------------------------------
 // XMSTAMPERIO
@@ -728,4 +826,10 @@ void initXmStamperIo(py::module &m)
   }
   ,
   write_to_file_doc, py::arg("file_name"), py::arg("card_name"));
+  // -------------------------------------------------------------------------
+  // function: __repr__
+  // -------------------------------------------------------------------------
+  stamper_io.def("__repr__", [](xms::XmStamperIo &self) {
+    return PyReprStringFromXmStamperIo(self);
+  });
 }

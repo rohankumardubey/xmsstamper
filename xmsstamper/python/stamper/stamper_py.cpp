@@ -10,8 +10,9 @@
 
 #include <pybind11/pybind11.h>
 
-#include <xmscore/stl/vector.h>
 #include <xmscore/misc/StringUtil.h>
+#include <xmscore/python/misc/PyUtils.h>
+#include <xmscore/stl/vector.h>
 
 #include <xmsstamper/python/stamper/stamper_py.h>
 #include <xmsstamper/stamper/XmStamperIo.h>
@@ -38,13 +39,13 @@ std::string PyReprStringFromXmStampRaster(const xms::XmStampRaster& a_stampRaste
   ss << "pixel_size_x: " << a_stampRaster.m_pixelSizeX << "\n";
   ss << "pixel_size_y: " << a_stampRaster.m_pixelSizeY << "\n";
   ss << "min: (" << a_stampRaster.m_min.x << ", " << a_stampRaster.m_min.y << ")\n";
-  ss << "vals: " << StringFromVecDbl(a_stampRaster.m_vals) << "\n";
+  ss << "vals: " << StringFromVecDbl(a_stampRaster.m_vals);
   ss << "no_data: " << a_stampRaster.m_noData;
   return ss.str();
 } // PyReprStringFromXmStampRaster
 //------------------------------------------------------------------------------
 /// \brief Create string from XmWingWall
-/// \param[in] a_stampRaster: XmWingWall object
+/// \param[in] a_wingWall: XmWingWall object
 /// \return a string
 //------------------------------------------------------------------------------
 std::string PyReprStringFromXmWingWall(const xms::XmWingWall& a_wingWall)
@@ -55,15 +56,99 @@ std::string PyReprStringFromXmWingWall(const xms::XmWingWall& a_wingWall)
 } // PyReprStringFromXmWingWall
 //------------------------------------------------------------------------------
 /// \brief Create string from XmSlopedAbutment
-/// \param[in] a_stampRaster: XmSlopedAbutment object
+/// \param[in] a_slopedAbutment: XmSlopedAbutment object
 /// \return a string
 //------------------------------------------------------------------------------
 std::string PyReprStringFromXmSlopedAbutment(const xms::XmSlopedAbutment& a_slopedAbutment)
 {
   std::stringstream ss;
-
+  ss << "max_x: " << a_slopedAbutment.m_maxX << "\n";
+  ss << "slope: " << xms::StringFromVecPt3d(a_slopedAbutment.m_slope);
   return ss.str();
 } // PyReprStringFromXmSlopedAbutment
+//------------------------------------------------------------------------------
+/// \brief Create string from XmGuidebank
+/// \param[in] a_guideBank: XmGuidebank object
+/// \return a string
+//------------------------------------------------------------------------------
+std::string PyReprStringFromXmGuidebank(const xms::XmGuidebank& a_guideBank)
+{
+  std::stringstream ss;
+  ss << "side: " << a_guideBank.m_side << "\n";
+  ss << "radius1: " << a_guideBank.m_radius1 << "\n";
+  ss << "radius2: " << a_guideBank.m_radius2 << "\n";
+  ss << "width: " << a_guideBank.m_width << "\n";
+  ss << "n_pts: " << a_guideBank.m_nPts;
+  return ss.str();
+} // PyReprStringFromXmGuidebank
+//------------------------------------------------------------------------------
+/// \brief Create string from XmStamperEndCap
+/// \param[in] a_endCap: XmStamperEndCap object
+/// \return a string
+//------------------------------------------------------------------------------
+std::string PyReprStringFromXmStamperEndCap(const xms::XmStamperEndCap& a_endCap)
+{
+  std::stringstream ss;
+  ss << "type: " << a_endCap.m_type << "\n";
+  ss << "angle: " << a_endCap.m_angle << "\n";
+  ss << "guidebank: \n" << PyReprStringFromXmGuidebank(a_endCap.m_guidebank) << "\n";
+  ss << "sloped_abutment: \n" << PyReprStringFromXmSlopedAbutment(a_endCap.m_slopedAbutment) << "\n";
+  ss << "wing_wall: \n" << PyReprStringFromXmWingWall(a_endCap.m_wingWall);
+  return ss.str();
+} // PyReprStringFromXmStamperEndCap
+//------------------------------------------------------------------------------
+/// \brief Create string from XmStampCrossSection
+/// \param[in] a_stampCrossSection: XmStampCrossSection object
+/// \return a string
+//------------------------------------------------------------------------------
+std::string PyReprStringFromXmStampCrossSection(const xms::XmStampCrossSection& a_stampCrossSection)
+{
+  std::stringstream ss;
+  ss << "left: \n" << xms::StringFromVecPt3d(a_stampCrossSection.m_left);
+  ss << "left_max: " << a_stampCrossSection.m_leftMax << "\n";
+  ss << "index_left_shoulder: " << a_stampCrossSection.m_idxLeftShoulder << "\n";
+  ss << "right: \n" << xms::StringFromVecPt3d(a_stampCrossSection.m_right);
+  ss << "right_max: " << a_stampCrossSection.m_rightMax << "\n";
+  ss << "index_right_shoulder: " << a_stampCrossSection.m_idxRightShoulder;
+  return ss.str();
+} // PyReprStringFromXmStampCrossSection
+//------------------------------------------------------------------------------
+/// \brief Create string from XmStamperCenterlineProfile
+/// \param[in] a_stampCenterlineProfile: XmStamperCenterlineProfile object
+/// \return a string
+//------------------------------------------------------------------------------
+std::string PyReprStringFromXmStamperCenterlineProfile(const xms::XmStamperCenterlineProfile& a_stampCenterlineProfile)
+{
+  std::stringstream ss;
+  ss << "distance: " << StringFromVecDbl(a_stampCenterlineProfile.m_distance) << "\n";
+  ss << "elevation: " << StringFromVecDbl(a_stampCenterlineProfile.m_elevation) << "\n";
+  for (int i = 0; i < a_stampCenterlineProfile.m_cs.size(); ++i)
+  {
+    ss << "Cross Section #" << i + 1 << ":\n";
+    ss << PyReprStringFromXmStampCrossSection(a_stampCenterlineProfile.m_cs[i]) << "\n";
+  }
+  return ss.str();
+} // PyReprStringFromXmStamperCenterlineProfile
+//------------------------------------------------------------------------------
+/// \brief Create string from XmStamperIo
+/// \param[in] a_stamperIo: XmStamperIo object
+/// \return a string
+//------------------------------------------------------------------------------
+std::string PyReprStringFromXmStamperIo(const xms::XmStamperIo& a_stamperIo)
+{
+  std::stringstream ss;
+  ss << "center_line: \n" << xms::StringFromVecPt3d(a_stamperIo.m_centerLine);
+  ss << "stamping_type: " << a_stamperIo.m_stampingType << "\n";
+  for (int i = 0; i < a_stamperIo.m_cs.size(); ++i)
+  {
+    ss << "Cross Section #" << i + 1 << ":\n";
+    ss << PyReprStringFromXmStampCrossSection(a_stamperIo.m_cs[i]) << "\n";
+  }
+  ss << "first_end_cap: \n" << PyReprStringFromXmStamperEndCap(a_stamperIo.m_firstEndCap);
+  ss << "last_end_cap: \n" << PyReprStringFromXmStamperEndCap(a_stamperIo.m_lastEndCap);
+  ss << "bathymetry: " << "TIN GOES HERE";
+  return ss.str();
+} // PyReprStringFromXmStamperIo
 //------------------------------------------------------------------------------
 /// \brief Create a __repr__ string from a VecDbl
 /// \param[in] a_vals: VecDbl

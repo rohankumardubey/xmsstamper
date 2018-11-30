@@ -1,4 +1,4 @@
-STAMPER_IO_VERSION_1
+STAMPER_StamperIoIO_VERSION_1
 CENTER_LINE 4
        0.0        0.0       50.0
       16.0       20.0       50.0

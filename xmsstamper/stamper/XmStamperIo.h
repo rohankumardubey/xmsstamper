@@ -125,7 +125,7 @@ public:
   , m_angle(0)
   {
   }
-
+  // TODO: Make this string a string for type?
   int m_type;              ///< type of end cap: 0- guidebank, 1- sloped abutment, 2- wing wall
   double m_angle;          ///< degrees from -45 to 45
   XmGuidebank m_guidebank; ///< guidebank definition
@@ -199,6 +199,7 @@ public:
   /// Required. Center line for the feature stamp
   VecPt3d m_centerLine;
   /// Stamping type 0 - Cut, 1 - Fill, 2 - Both
+  // TODO: Make these strings instaed of ints for python?
   int m_stampingType;
   /// cross sections along the polyLine
   std::vector<XmStampCrossSection> m_cs;
