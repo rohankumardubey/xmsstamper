@@ -653,7 +653,7 @@ void XmBathymetryIntersectorUnitTests::testCreateClass()
 //------------------------------------------------------------------------------
 void XmBathymetryIntersectorUnitTests::testIntersectCenterLine()
 {
-  BSHP<TrTin> tin = trBuildTestTin(), stTin;
+  BSHP<TrTin> tin = trBuildTin(), stTin;
   VecPt3d& pts(tin->Points());
   pts[3].z = pts[4].z = pts[7].z = pts[8].z = 10.0;
   XmStamperIo io;
@@ -670,7 +670,7 @@ void XmBathymetryIntersectorUnitTests::testIntersectCenterLine()
 //------------------------------------------------------------------------------
 void XmBathymetryIntersectorUnitTests::testIntersectXsects()
 {
-  BSHP<TrTin> tin = trBuildTestTin(), stTin;
+  BSHP<TrTin> tin = trBuildTin(), stTin;
   VecPt3d& pts(tin->Points());
   pts[3].z = pts[4].z = pts[7].z = pts[8].z = 10.0;
 
@@ -691,7 +691,7 @@ void XmBathymetryIntersectorUnitTests::testIntersectXsects()
 //------------------------------------------------------------------------------
 void XmBathymetryIntersectorUnitTests::testClassifyPoints()
 {
-  BSHP<TrTin> tin = trBuildTestTin(), stTin;
+  BSHP<TrTin> tin = trBuildTin(), stTin;
   XmBathymetryIntersectorImpl b(tin, stTin);
   VecPt3d pts = {{0, 0, 0}, {4, 6, 0}, {5, 5, 11}, {6, 6, -1}, {9, 9, 9.9}};
   VecInt ptLoc;
@@ -713,7 +713,7 @@ void XmBathymetryIntersectorUnitTests::testClassifyPoints()
 //------------------------------------------------------------------------------
 void XmBathymetryIntersectorUnitTests::testDescomposeCenterLine()
 {
-  BSHP<TrTin> tin = trBuildTestTin(), stTin;
+  BSHP<TrTin> tin = trBuildTin(), stTin;
   VecPt3d& pts(tin->Points());
   pts[1].z = 10;
 
@@ -762,4 +762,38 @@ void XmBathymetryIntersectorUnitTests::testDescomposeCenterLine()
 
 } // XmBathymetryIntersectorUnitTests::testDescomposeCenterLine
 
+//------------------------------------------------------------------------------
+/// \brief Builds a simple TIN with a hole in the middle.
+/// \verbatim
+///
+///  15.0        9
+///             /|\
+///           /  |  \
+///         /  8 | 9  \
+///  10.0  6-----7-----8
+///        |\  5 |\  6 |\
+///        |  \  |  \  |  \
+///        | 4  \|    \| 7  \
+///   5.0  2-----3-----4-----5
+///         \  0 |\  2 | 3  /
+///           \  |  \  |  /
+///             \| 1  \|/
+///   0.0        0-----1
+///
+///      0.0   5.0   10.0  15.0
+///
+/// \endverbatim
+/// \return The tin.
+//------------------------------------------------------------------------------
+BSHP<TrTin> trBuildTin()
+{
+  BSHP<TrTin> tin = TrTin::New();
+
+  tin->Points() = {{5, 0, 0},  {10, 0, 0}, {0, 5, 0},  {5, 5, 0},   {10, 5, 0},
+                   {15, 5, 0}, {0, 10, 0}, {5, 10, 0}, {10, 10, 0}, {5, 15, 0}};
+  tin->Triangles() = {0, 3, 2, 0, 1, 3, 1, 4, 3, 1, 5, 4, 2, 3, 6,
+                      3, 7, 6, 4, 8, 7, 4, 5, 8, 6, 7, 9, 7, 8, 9};
+  tin->BuildTrisAdjToPts();
+  return tin;
+} // trBuildTin
 #endif
