@@ -637,7 +637,6 @@ using namespace xms;
 #include <xmsstamper/stamper/detail/XmBathymetryIntersector.t.h>
 
 #include <xmscore/testing/TestTools.h>
-#include <xmsinterp/triangulate/TrTin.t.h>
 
 //------------------------------------------------------------------------------
 /// \brief Tests XmBathymetryIntersectorUnitTests
