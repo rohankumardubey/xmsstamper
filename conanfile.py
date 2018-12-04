@@ -66,7 +66,7 @@ class XmsstamperConan(ConanFile):
         # Use the dev version of XMSCore, XMSInterp, XMSGrid, XMSExtractor
         #TODO: These should not bet testing
         self.requires("xmscore/[>=2.0.0,<3.0]@aquaveo/stable")
-        self.requires("xmsinterp/[>=2.0.0,<3.0]@aquaveo/testing")
+        self.requires("xmsinterp/[>=2.0.0,<3.0]@aquaveo/stable")
 
     def build(self):
         cmake = CMake(self)
