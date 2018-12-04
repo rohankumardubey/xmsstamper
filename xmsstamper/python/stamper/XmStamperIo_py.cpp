@@ -56,7 +56,7 @@ void initXmStamperIo(py::module &m)
     xm_stamp_raster->ReadFromFile(is);
     is.close();
     return xm_stamp_raster;
-  }), stamper_raster_init_doc, py::arg("file_name");
+  }), stamper_raster_init_doc, py::arg("file_name"));
   stamp_raster.def(py::init<>([](py::object num_pixels_x, py::object num_pixels_y,
            py::object pixel_size_x, py::object pixel_size_y, py::object min,
            py::object vals, py::object no_data) {
@@ -338,7 +338,27 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmSlopedAbutment, boost::shared_ptr<xms::XmSlopedAbutment>>
     stamper_sloped_abutment(m, "SlopedAbutment");
-  stamper_sloped_abutment.def(py::init<>());
+
+  const char* stamper_sloped_abutment_init_doc = R"pydoc(
+       SlopedAbutment Initializer
+
+       Args:
+           pixel_size_y (float): Max distance from the centerline
+           min (iterable): x, y pairs defining slope from the centerline
+  )pydoc";
+  stamper_sloped_abutment.def(py::init<>([](py::object max_x, py::object slope) {
+    boost::shared_ptr<xms::XmSlopedAbutment> xm_sloped_abutment(new xms::XmSlopedAbutment());
+    if (!max_x.is_none())
+    {
+      xm_sloped_abutment->m_maxX = py::cast<double>(max_x);
+    }
+    if (!slope.is_none())
+    {
+      xm_sloped_abutment->m_slope = *xms::VecPt3dFromPyIter(slope);
+    }
+    return xm_sloped_abutment;
+  }), stamper_sloped_abutment_init_doc,
+  py::arg("max_x") = py::none(), py::arg("slope") = py::none());
   // ---------------------------------------------------------------------------
   // property: max_x
   // ---------------------------------------------------------------------------
@@ -381,7 +401,54 @@ void initXmStamperIo(py::module &m)
 // -----------------------------------------------------------------------------
   py::class_<xms::XmGuidebank, boost::shared_ptr<xms::XmGuidebank>>
     stamper_guide_bank(m, "Guidebank");
-  stamper_guide_bank.def(py::init<>());
+
+  const char* guidebank_init_doc = R"pydoc(
+       Guidebank Initializer
+
+       Args:
+           side (int): Position of guidebank relative to center line, 0-left, 1-right
+           radius1 (float): first radius (R1) for guidebank creation
+           radius2 (float): second radius (R2) for guidebank creation
+           width (float): width of guidebank about the center line
+           n_pts (int): number of points created along the center line to create the guidebank
+  )pydoc";
+  stamper_guide_bank.def(py::init<>([](py::object side, py::object radius1,
+           py::object radius2, py::object width, py::object n_pts) {
+    boost::shared_ptr<xms::XmStampRaster> xm_stamp_raster(new xms::XmStampRaster());
+    if (!num_pixels_x.is_none())
+    {
+      xm_stamp_raster->m_numPixelsX = py::cast<int>(num_pixels_x);
+    }
+    if (!num_pixels_y.is_none())
+    {
+      xm_stamp_raster->m_numPixelsY = py::cast<int>(num_pixels_y);
+    }
+    if (!pixel_size_x.is_none())
+    {
+      xm_stamp_raster->m_pixelSizeX = py::cast<double>(pixel_size_x);
+    }
+    if (!pixel_size_y.is_none())
+    {
+      xm_stamp_raster->m_pixelSizeY = py::cast<double>(pixel_size_y);
+    }
+    if (!min.is_none())
+    {
+      xm_stamp_raster->m_min = xms::Pt3dFromPyIter(min);
+    }
+    if (!vals.is_none())
+    {
+      xm_stamp_raster->m_vals = *xms::VecDblFromPyIter(vals);
+    }
+    if (!no_data.is_none())
+    {
+      xm_stamp_raster->m_noData = py::cast<int>(no_data);
+    }
+    return xm_stamp_raster;
+  }), guidebank_init_doc,
+  py::arg("num_pixels_x") = py::none(), py::arg("num_pixels_y") = py::none(),
+  py::arg("pixel_size_x") = py::none(), py::arg("pixel_size_y") = py::none(),
+  py::arg("min") = py::none(), py::arg("vals") = py::none(),
+  py::arg("no_data") = py::none());
   // ---------------------------------------------------------------------------
   // property: side
   // ---------------------------------------------------------------------------

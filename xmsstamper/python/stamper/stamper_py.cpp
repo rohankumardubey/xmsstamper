@@ -63,7 +63,7 @@ std::string PyReprStringFromXmSlopedAbutment(const xms::XmSlopedAbutment& a_slop
 {
   std::stringstream ss;
   ss << "max_x: " << a_slopedAbutment.m_maxX << "\n";
-  ss << "slope: " << xms::StringFromVecPt3d(a_slopedAbutment.m_slope);
+  ss << "slope: \n" << xms::StringFromVecPt3d(a_slopedAbutment.m_slope);
   return ss.str();
 } // PyReprStringFromXmSlopedAbutment
 //------------------------------------------------------------------------------
