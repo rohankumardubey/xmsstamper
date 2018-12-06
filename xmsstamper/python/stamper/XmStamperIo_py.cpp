@@ -414,41 +414,32 @@ void initXmStamperIo(py::module &m)
   )pydoc";
   stamper_guide_bank.def(py::init<>([](py::object side, py::object radius1,
            py::object radius2, py::object width, py::object n_pts) {
-    boost::shared_ptr<xms::XmStampRaster> xm_stamp_raster(new xms::XmStampRaster());
-    if (!num_pixels_x.is_none())
+    boost::shared_ptr<xms::XmGuidebank> xm_guidebank(new xms::XmGuidebank());
+    if (!side.is_none())
     {
-      xm_stamp_raster->m_numPixelsX = py::cast<int>(num_pixels_x);
+      xm_guidebank->m_side = py::cast<int>(side);
     }
-    if (!num_pixels_y.is_none())
+    if (!radius1.is_none())
     {
-      xm_stamp_raster->m_numPixelsY = py::cast<int>(num_pixels_y);
+      xm_guidebank->m_radius1 = py::cast<double>(radius1);
     }
-    if (!pixel_size_x.is_none())
+    if (!radius2.is_none())
     {
-      xm_stamp_raster->m_pixelSizeX = py::cast<double>(pixel_size_x);
+      xm_guidebank->m_radius2 = py::cast<double>(radius2);
     }
-    if (!pixel_size_y.is_none())
+    if (!width.is_none())
     {
-      xm_stamp_raster->m_pixelSizeY = py::cast<double>(pixel_size_y);
+      xm_guidebank->m_width = py::cast<double>(width);
     }
-    if (!min.is_none())
+    if (!n_pts.is_none())
     {
-      xm_stamp_raster->m_min = xms::Pt3dFromPyIter(min);
+      xm_guidebank->m_nPts = py::cast<int>(n_pts);
     }
-    if (!vals.is_none())
-    {
-      xm_stamp_raster->m_vals = *xms::VecDblFromPyIter(vals);
-    }
-    if (!no_data.is_none())
-    {
-      xm_stamp_raster->m_noData = py::cast<int>(no_data);
-    }
-    return xm_stamp_raster;
+    return xm_guidebank;
   }), guidebank_init_doc,
-  py::arg("num_pixels_x") = py::none(), py::arg("num_pixels_y") = py::none(),
-  py::arg("pixel_size_x") = py::none(), py::arg("pixel_size_y") = py::none(),
-  py::arg("min") = py::none(), py::arg("vals") = py::none(),
-  py::arg("no_data") = py::none());
+  py::arg("side") = py::none(), py::arg("radius1") = py::none(),
+  py::arg("radius2") = py::none(), py::arg("width") = py::none(),
+  py::arg("n_pts") = py::none());
   // ---------------------------------------------------------------------------
   // property: side
   // ---------------------------------------------------------------------------
