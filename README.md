@@ -1,9 +1,16 @@
-[![Build Status](https://travis-ci.org/Aquaveo/xmsgridtrace.svg?branch=master)](https://travis-ci.org/Aquaveo/xmsstamper)
-[![Build status](https://ci.appveyor.com/api/projects/status/tkgmhrs31cc4l3ph?svg=true)](https://ci.appveyor.com/project/Aquaveo/xmsstamper)
 
-XMSStamper
+XMS Stamper
 ========
-Stamper for XMS products.
+Support library for XMS products
+
+
+Master Branch Status
+--------------------
+
+[![Build Status](https://travis-ci.org/Aquaveo/xmsstamper.svg?branch=master)](https://travis-ci.org/Aquaveo/xmsstamper)
+
+[![Build status](https://ci.appveyor.com/api/projects/status/ge70j1mysr2ns6cd?svg=true)](https://ci.appveyor.com/project/Aquaveo/xmsstamper)
+
 
 Prerequisites
 --------------
@@ -19,6 +26,6 @@ See xmscore build [instructions](https://github.com/Aquaveo/xmscore/wiki/Buildin
 Documentation
 -------------
 
-C++: [xmsstamper](https://aquaveo.github.io/xmsstamper/)
+[C++ Documentation](https://aquaveo.github.io/xmsstamper/)
 
-Python:[xmsstamper python]((https://aquaveo.github.io/xmsstamper/pydocs)
+[Python Documentation](https://aquaveo.github.io/xmscore/pydocs)

@@ -7,7 +7,7 @@
 XmsStamper |version|
 ********************
 
-**Last Updated:** October 5, 2018
+**Last Updated:** December 6, 2018
 
 The xmsstamper library is a stamping library for other aquaveo products. This library contains classes used to create stamping.
 

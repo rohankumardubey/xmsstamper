@@ -25,7 +25,8 @@ copyright = '2018, aquaveo'
 author = 'aquaveo'
 
 # The short X.Y version
-version = ''
+import xmsstamper
+version = xmsstamper.__version__
 # The full version, including alpha/beta/rc tags
 release = ''
 
