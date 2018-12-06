@@ -149,6 +149,10 @@ void XmSlopedAbutmentUtilImpl::DoConvertTo3d(bool a_first,
   XM_ENSURE_TRUE(a_io.m_centerLine.size() > 1);
   XM_ENSURE_TRUE(a_3dpts.m_xsPts.m_left.size() > 1);
   XM_ENSURE_TRUE(a_3dpts.m_xsPts.m_right.size() > 1);
+  double maxX = a_io.m_firstEndCap.m_slopedAbutment.m_maxX;
+  if (!a_first)
+    maxX = a_io.m_lastEndCap.m_slopedAbutment.m_maxX;
+  XM_ENSURE_TRUE(maxX > 0);
 
   if (a_first)
     m_cap = a_io.m_firstEndCap;

@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import os
 import xmsstamper
-import xmsinterp_py
+import xmsinterp
 
 
 class TestStamper(unittest.TestCase):
@@ -292,7 +292,7 @@ class TestStamper(unittest.TestCase):
         # last end cap
         io.last_end_cap.type = 1
         io.last_end_cap.sloped_abutment.slope = ((0, 15), (1, 14))
-        io.last_end_cap.sloped_abutment.max_x = 10  #TODO: Hangs when this is not set
+        io.last_end_cap.sloped_abutment.max_x = 10
         io.last_end_cap.angle = 20
 
         # Raster to stamp
@@ -446,11 +446,9 @@ class TestStamper(unittest.TestCase):
         io.cs = (cs1, cs2)
 
         # Create a TIN to represent bathymetry
-        tin = xmsinterp_py.triangulate.TrTin()
         pts = ((-1, 25, 6), (-15, 11, 6), (5, -11, 10), (20, 4, 10))
         tris = (0, 1, 2, 1, 3, 2)
-        tin.set_points(pts)
-        tin.set_triangles(tris)
+        tin = xmsinterp.triangulate.Tin(pts, tris)
         io.bathymetry = tin
 
         # Raster to stamp

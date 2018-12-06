@@ -12,7 +12,6 @@
 
 #include <xmscore/misc/StringUtil.h>
 #include <xmscore/python/misc/PyUtils.h>
-#include <xmscore/stl/vector.h>
 
 #include <xmsstamper/python/stamper/stamper_py.h>
 #include <xmsstamper/stamper/XmStamperIo.h>
@@ -62,7 +61,7 @@ std::string PyReprStringFromXmWingWall(const xms::XmWingWall& a_wingWall)
 std::string PyReprStringFromXmSlopedAbutment(const xms::XmSlopedAbutment& a_slopedAbutment)
 {
   std::stringstream ss;
-  ss << "max_x: " << a_slopedAbutment.m_maxX << "\n";
+  ss << "max_x: " << xms::STRstd(a_slopedAbutment.m_maxX) << "\n";
   ss << "slope: \n" << xms::StringFromVecPt3d(a_slopedAbutment.m_slope);
   return ss.str();
 } // PyReprStringFromXmSlopedAbutment
@@ -74,10 +73,10 @@ std::string PyReprStringFromXmSlopedAbutment(const xms::XmSlopedAbutment& a_slop
 std::string PyReprStringFromXmGuidebank(const xms::XmGuidebank& a_guideBank)
 {
   std::stringstream ss;
-  ss << "side: " << a_guideBank.m_side << "\n";
-  ss << "radius1: " << a_guideBank.m_radius1 << "\n";
-  ss << "radius2: " << a_guideBank.m_radius2 << "\n";
-  ss << "width: " << a_guideBank.m_width << "\n";
+  ss << "side: " << xms::STRstd(a_guideBank.m_side) << "\n";
+  ss << "radius1: " << xms::STRstd(a_guideBank.m_radius1) << "\n";
+  ss << "radius2: " << xms::STRstd(a_guideBank.m_radius2) << "\n";
+  ss << "width: " << xms::STRstd(a_guideBank.m_width) << "\n";
   ss << "n_pts: " << a_guideBank.m_nPts;
   return ss.str();
 } // PyReprStringFromXmGuidebank
@@ -90,7 +89,7 @@ std::string PyReprStringFromXmStamperEndCap(const xms::XmStamperEndCap& a_endCap
 {
   std::stringstream ss;
   ss << "type: " << a_endCap.m_type << "\n";
-  ss << "angle: " << a_endCap.m_angle << "\n";
+  ss << "angle: " << xms::STRstd(a_endCap.m_angle) << "\n";
   ss << "guidebank: \n" << PyReprStringFromXmGuidebank(a_endCap.m_guidebank) << "\n";
   ss << "sloped_abutment: \n" << PyReprStringFromXmSlopedAbutment(a_endCap.m_slopedAbutment) << "\n";
   ss << "wing_wall: \n" << PyReprStringFromXmWingWall(a_endCap.m_wingWall);

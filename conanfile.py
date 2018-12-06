@@ -64,7 +64,6 @@ class XmsstamperConan(ConanFile):
             self.requires("pybind11/2.2.2@aquaveo/stable")
 
         # Use the dev version of XMSCore, XMSInterp, XMSGrid, XMSExtractor
-        #TODO: These should not bet testing
         self.requires("xmscore/[>=2.0.0,<3.0]@aquaveo/stable")
         self.requires("xmsinterp/[>=2.0.0,<3.0]@aquaveo/stable")
 
