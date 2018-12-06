@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import os
 import xmsstamper
-import xmsinterp_py
+import xmsinterp
 
 
 class TestStamper(unittest.TestCase):
@@ -446,9 +446,9 @@ class TestStamper(unittest.TestCase):
         io.cs = (cs1, cs2)
 
         # Create a TIN to represent bathymetry
-        tin = xmsinterp_py.triangulate.TrTin()
         pts = ((-1, 25, 6), (-15, 11, 6), (5, -11, 10), (20, 4, 10))
         tris = (0, 1, 2, 1, 3, 2)
+        tin = xmsinterp.triangulate.Tin(pts, tris)
         tin.set_points(pts)
         tin.set_triangles(tris)
         io.bathymetry = tin
