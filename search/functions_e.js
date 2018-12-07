@@ -16,6 +16,5 @@ var searchData=
   ['rotatecrosssection',['RotateCrossSection',['../classxms_1_1_xm_stamp_end_cap_impl.html#a14a501bfe10b0eaa3b4ee65b96cd18d2',1,'xms::XmStampEndCapImpl']]],
   ['rotatecrosssectionfortype',['RotateCrossSectionForType',['../classxms_1_1_xm_stamp_end_cap_impl.html#ade2813d1e38dabd45cdaf61eb8276a12',1,'xms::XmStampEndCapImpl']]],
   ['rotateendcapcrosssections',['RotateEndCapCrossSections',['../classxms_1_1_xm_stamp_end_cap_impl.html#a48f4513f01c0817323b6e74fdd4b6bca',1,'xms::XmStampEndCapImpl']]],
-  ['round',['Round',['https://aquaveo.github.io/xmscore/namespacexms.html#adfc1700dbd9064558f9fc863ebf041eb',1,'xms']]],
   ['runthreads',['RunThreads',['https://aquaveo.github.io/xmsinterp/classxms_1_1_thread_mgr.html#a6ce6f8ca944cc8ed7944b276e1ccd34d',1,'xms::ThreadMgr::RunThreads()'],['https://aquaveo.github.io/xmsinterp/classxms_1_1_thread_mgr_impl.html#a2ce51491b83dc2225dd205cff2e7cdbe',1,'xms::ThreadMgrImpl::RunThreads()']]]
 ];

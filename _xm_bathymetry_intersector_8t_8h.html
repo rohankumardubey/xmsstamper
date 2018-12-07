@@ -88,12 +88,15 @@ $(document).ready(function(){initNavTree('_xm_bathymetry_intersector_8t_8h.html'
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">XmBathymetryIntersector.t.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;cxxtest/TestSuite.h&gt;</code><br />
+<div class="textblock"><code>#include &lt;boost/shared_ptr.hpp&gt;</code><br />
+<code>#include &lt;cxxtest/TestSuite.h&gt;</code><br />
 </div>
 <p><a href="_xm_bathymetry_intersector_8t_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -102,18 +105,73 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_xm_bathymetry_intersector_unit_tests.html">XmBathymetryIntersectorUnitTests</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tests the StStampEndCap class.  <a href="class_xm_bathymetry_intersector_unit_tests.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacexms"><td class="memItemLeft" align="right" valign="top"> &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexms.html">xms</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a5b010ba8a70f4345187ebe874332af5a"><td class="memItemLeft" align="right" valign="top">boost::shared_ptr&lt; <a class="elRef" doxygen="/home/conan/Doxygen/xmsinterp.tag:https://aquaveo.github.io/xmsinterp/" href="https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin.html">xms::TrTin</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_xm_bathymetry_intersector_8t_8h.html#a5b010ba8a70f4345187ebe874332af5a">trBuildTin</a> ()</td></tr>
+<tr class="memdesc:a5b010ba8a70f4345187ebe874332af5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds a simple TIN with a hole in the middle.  <a href="#a5b010ba8a70f4345187ebe874332af5a">More...</a><br /></td></tr>
+<tr class="separator:a5b010ba8a70f4345187ebe874332af5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section copyright"><dt>Copyright</dt><dd>(C) Copyright Aquaveo 2018. Distributed under FreeBSD License (See accompanying file LICENSE or <a href="https://aqaveo.com/bsd/license.txt">https://aqaveo.com/bsd/license.txt</a>) </dd></dl>
 
 <p class="definition">Definition in file <a class="el" href="_xm_bathymetry_intersector_8t_8h_source.html">XmBathymetryIntersector.t.h</a>.</p>
-</div></div><!-- contents -->
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="a5b010ba8a70f4345187ebe874332af5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b010ba8a70f4345187ebe874332af5a">&#9670;&nbsp;</a></span>trBuildTin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::shared_ptr&lt;<a class="elRef" doxygen="/home/conan/Doxygen/xmsinterp.tag:https://aquaveo.github.io/xmsinterp/" href="https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin.html">xms::TrTin</a>&gt; trBuildTin </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Builds a simple TIN with a hole in the middle. </p>
+<pre class="fragment">///
+///  15.0        9
+///             /|\
+///           /  |  \
+///         /  8 | 9  \
+///  10.0  6-----7-----8
+///        |\  5 |\  6 |\
+///        |  \  |  \  |  \
+///        | 4  \|    \| 7  \
+///   5.0  2-----3-----4-----5
+///         \  0 |\  2 | 3  /
+///           \  |  \  |  /
+///             \| 1  \|/
+///   0.0        0-----1
+///
+///      0.0   5.0   10.0  15.0
+///
+/// </pre> <dl class="section return"><dt>Returns</dt><dd>The tin. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html#l00788">788</a> of file <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html">XmBathymetryIntersector.cpp</a>.</p>
+
+<p class="reference">References <a class="elRef" doxygen="/home/conan/Doxygen/xmsinterp.tag:https://aquaveo.github.io/xmsinterp/" href="https://aquaveo.github.io/xmsinterp/classxms_1_1_tr_tin.html#ab1227a106b70c3061bd03cb3fb9833a7">xms::TrTin::New()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html#l00692">XmBathymetryIntersectorUnitTests::testClassifyPoints()</a>, <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html#l00714">XmBathymetryIntersectorUnitTests::testDescomposeCenterLine()</a>, <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html#l00654">XmBathymetryIntersectorUnitTests::testIntersectCenterLine()</a>, and <a class="el" href="_xm_bathymetry_intersector_8cpp_source.html#l00671">XmBathymetryIntersectorUnitTests::testIntersectXsects()</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_94ee4b71bc4c170ddc49438e374b5b30.html">xmsstamper</a></li><li class="navelem"><a class="el" href="dir_c54185dc121d37166deed2db8e71f8d3.html">stamper</a></li><li class="navelem"><a class="el" href="dir_7e6adcf32009b18c314e62751395100e.html">detail</a></li><li class="navelem"><a class="el" href="_xm_bathymetry_intersector_8t_8h.html">XmBathymetryIntersector.t.h</a></li>
-    <li class="footer">Generated on Mon Nov 19 2018 15:27:52 for xmsstamper by
+    <li class="footer">Generated on Fri Dec 7 2018 16:03:59 for xmsstamper by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>

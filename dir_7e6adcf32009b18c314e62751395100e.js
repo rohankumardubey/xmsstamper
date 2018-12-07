@@ -1,14 +1,10 @@
 var dir_7e6adcf32009b18c314e62751395100e =
 [
-    [ "XmBathymetryIntersector.cpp", "_xm_bathymetry_intersector_8cpp.html", [
-      [ "XmBathymetryIntersectorImpl", "classxms_1_1_xm_bathymetry_intersector_impl.html", "classxms_1_1_xm_bathymetry_intersector_impl" ]
-    ] ],
+    [ "XmBathymetryIntersector.cpp", "_xm_bathymetry_intersector_8cpp.html", "_xm_bathymetry_intersector_8cpp" ],
     [ "XmBathymetryIntersector.h", "_xm_bathymetry_intersector_8h.html", [
       [ "XmBathymetryIntersector", "classxms_1_1_xm_bathymetry_intersector.html", "classxms_1_1_xm_bathymetry_intersector" ]
     ] ],
-    [ "XmBathymetryIntersector.t.h", "_xm_bathymetry_intersector_8t_8h.html", [
-      [ "XmBathymetryIntersectorUnitTests", "class_xm_bathymetry_intersector_unit_tests.html", "class_xm_bathymetry_intersector_unit_tests" ]
-    ] ],
+    [ "XmBathymetryIntersector.t.h", "_xm_bathymetry_intersector_8t_8h.html", "_xm_bathymetry_intersector_8t_8h" ],
     [ "XmBreaklines.cpp", "_xm_breaklines_8cpp.html", "_xm_breaklines_8cpp" ],
     [ "XmBreaklines.h", "_xm_breaklines_8h.html", [
       [ "XmBreaklines", "classxms_1_1_xm_breaklines.html", "classxms_1_1_xm_breaklines" ]

@@ -14,7 +14,6 @@ var searchData=
   ['xmlog_2ecpp',['XmLog.cpp',['https://aquaveo.github.io/xmscore/_xm_log_8cpp.html',1,'']]],
   ['xmlog_2eh',['XmLog.h',['https://aquaveo.github.io/xmscore/_xm_log_8h.html',1,'']]],
   ['xmlog_2et_2eh',['XmLog.t.h',['https://aquaveo.github.io/xmscore/_xm_log_8t_8h.html',1,'']]],
-  ['xmscore_5fpy_2ecpp',['xmscore_py.cpp',['https://aquaveo.github.io/xmscore/xmscore__py_8cpp.html',1,'']]],
   ['xmslopedabutmentutil_2ecpp',['XmSlopedAbutmentUtil.cpp',['../_xm_sloped_abutment_util_8cpp.html',1,'']]],
   ['xmslopedabutmentutil_2eh',['XmSlopedAbutmentUtil.h',['../_xm_sloped_abutment_util_8h.html',1,'']]],
   ['xmstampendcap_2ecpp',['XmStampEndCap.cpp',['../_xm_stamp_end_cap_8cpp.html',1,'']]],

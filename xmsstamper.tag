@@ -10,6 +10,13 @@
     <includes id="_xm_bathymetry_intersector_8t_8h" name="XmBathymetryIntersector.t.h" local="no" imported="no">xmsstamper/stamper/detail/XmBathymetryIntersector.t.h</includes>
     <class kind="class">xms::XmBathymetryIntersectorImpl</class>
     <namespace>xms</namespace>
+    <member kind="function">
+      <type>BSHP&lt; TrTin &gt;</type>
+      <name>trBuildTin</name>
+      <anchorfile>_xm_bathymetry_intersector_8cpp.html</anchorfile>
+      <anchor>ac12532f58f35486466d65964121712bc</anchor>
+      <arglist>()</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>XmBathymetryIntersector.h</name>
@@ -23,6 +30,14 @@
     <path>/home/conan/xmsstamper/stamper/detail/</path>
     <filename>_xm_bathymetry_intersector_8t_8h</filename>
     <class kind="class">XmBathymetryIntersectorUnitTests</class>
+    <namespace>xms</namespace>
+    <member kind="function">
+      <type>boost::shared_ptr&lt; xms::TrTin &gt;</type>
+      <name>trBuildTin</name>
+      <anchorfile>_xm_bathymetry_intersector_8t_8h.html</anchorfile>
+      <anchor>a5b010ba8a70f4345187ebe874332af5a</anchor>
+      <arglist>()</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>XmBreaklines.cpp</name>
@@ -851,10 +866,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>VecPt2d</type>
+      <type>VecPt3d</type>
       <name>m_slope</name>
       <anchorfile>classxms_1_1_xm_sloped_abutment.html</anchorfile>
-      <anchor>a4707e0064befddb86e20bd17534fdef6</anchor>
+      <anchor>abca787e033f793856971f0bb9ea51ff3</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -1130,10 +1145,10 @@
       <arglist>(std::ifstream &amp;a_file)</arglist>
     </member>
     <member kind="variable">
-      <type>VecPt2d</type>
+      <type>VecPt3d</type>
       <name>m_left</name>
       <anchorfile>classxms_1_1_xm_stamp_cross_section.html</anchorfile>
-      <anchor>a4ac57976850e78aadeb918c9899b4814</anchor>
+      <anchor>a4328b6d08341b31c921bd71bca00128b</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -1151,10 +1166,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>VecPt2d</type>
+      <type>VecPt3d</type>
       <name>m_right</name>
       <anchorfile>classxms_1_1_xm_stamp_cross_section.html</anchorfile>
-      <anchor>a6cacb081b2bba9f670ac0c7faeb2a159</anchor>
+      <anchor>ae703f150a6589ef5aed99a75904a7317</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -2013,22 +2028,22 @@
       <type>void</type>
       <name>InterpPts</name>
       <anchorfile>classxms_1_1_xm_stamp_interp_cross_section_impl.html</anchorfile>
-      <anchor>afd95dd77881cde15e71dd797ec6cd393</anchor>
-      <arglist>(VecPt2d &amp;a_v1, int a_beg1, int a_end1, VecPt2d &amp;a_v2, int a_beg2, int a_end2, double a_percent, VecPt2d &amp;a_interpPts)</arglist>
+      <anchor>a999d09b6f146b19927a03f7f4fb82f4a</anchor>
+      <arglist>(VecPt3d &amp;a_v1, int a_beg1, int a_end1, VecPt3d &amp;a_v2, int a_beg2, int a_end2, double a_percent, VecPt3d &amp;a_interpPts)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
       <name>CalcTvals</name>
       <anchorfile>classxms_1_1_xm_stamp_interp_cross_section_impl.html</anchorfile>
-      <anchor>a50bc78c37b0231bb414b879048769c5c</anchor>
-      <arglist>(VecPt2d &amp;a_v, int a_beg, int a_end, VecDbl &amp;a_t)</arglist>
+      <anchor>ac91f4e1b03164f162cf6d51029146971</anchor>
+      <arglist>(VecPt3d &amp;a_v, int a_beg, int a_end, VecDbl &amp;a_t)</arglist>
     </member>
     <member kind="function">
-      <type>Pt2d</type>
+      <type>Pt3d</type>
       <name>PtFromT</name>
       <anchorfile>classxms_1_1_xm_stamp_interp_cross_section_impl.html</anchorfile>
-      <anchor>ab2fee2bf4fb4bbab6663dc7182b17ba1</anchor>
-      <arglist>(VecPt2d &amp;a_v, int a_beg, VecDbl &amp;a_t, double a_tval)</arglist>
+      <anchor>aab8919fb3e7355665a1ce21660fbeaff</anchor>
+      <arglist>(VecPt3d &amp;a_v, int a_beg, VecDbl &amp;a_t, double a_tval)</arglist>
     </member>
     <member kind="variable">
       <type>BSHP&lt; Observer &gt;</type>
@@ -2091,8 +2106,8 @@
       <type></type>
       <name>XmStampRaster</name>
       <anchorfile>classxms_1_1_xm_stamp_raster.html</anchorfile>
-      <anchor>a103364ab534f8e71ffd763f788361218</anchor>
-      <arglist>(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX, const double a_pixelSizeY, const Pt2d &amp;a_min, const std::vector&lt; double &gt; &amp;a_vals, const int a_noData)</arglist>
+      <anchor>a24f576cd212d8e870cdcdcb6ef935955</anchor>
+      <arglist>(const int a_numPixelsX, const int a_numPixelsY, const double a_pixelSizeX, const double a_pixelSizeY, const Pt3d &amp;a_min, const std::vector&lt; double &gt; &amp;a_vals, const int a_noData)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -2116,10 +2131,10 @@
       <arglist>(const int a_index, int &amp;a_col, int &amp;a_row) const</arglist>
     </member>
     <member kind="function">
-      <type>Pt2d</type>
+      <type>Pt3d</type>
       <name>GetLocationFromCellIndex</name>
       <anchorfile>classxms_1_1_xm_stamp_raster.html</anchorfile>
-      <anchor>ab19978ed36e54ae05d6dd507993b7526</anchor>
+      <anchor>a5642c038bc92e486d10d032c7dc621ba</anchor>
       <arglist>(const int a_index) const</arglist>
     </member>
     <member kind="function">
@@ -2172,10 +2187,10 @@
       <arglist></arglist>
     </member>
     <member kind="variable">
-      <type>Pt2d</type>
+      <type>Pt3d</type>
       <name>m_min</name>
       <anchorfile>classxms_1_1_xm_stamp_raster.html</anchorfile>
-      <anchor>a6c0463108a395163dce78cbd846f2f73</anchor>
+      <anchor>a97cc65bc2f66f8c4d230357c4ef521f6</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable">
@@ -2200,15 +2215,15 @@
       <type>static void</type>
       <name>ConvertXsPointsTo3d</name>
       <anchorfile>classxms_1_1_xm_util.html</anchorfile>
-      <anchor>ae388cbd7b7b9dcf1325d80bbf6fd4c8b</anchor>
-      <arglist>(const Pt3d &amp;a_cl, const VecPt2d &amp;a_pts, double a_maxX, double a_angle, VecPt3d2d &amp;a_3dpts)</arglist>
+      <anchor>a24ec6b66e8a333b4e660f24ce29389f4</anchor>
+      <arglist>(const Pt3d &amp;a_cl, const VecPt3d &amp;a_pts, double a_maxX, double a_angle, VecPt3d2d &amp;a_3dpts)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
       <name>EnsureVectorAtMaxX</name>
       <anchorfile>classxms_1_1_xm_util.html</anchorfile>
-      <anchor>a03ddfcffd1f8622bb6aa717c9e4b2d0b</anchor>
-      <arglist>(VecPt2d &amp;a_pts, double a_maxX)</arglist>
+      <anchor>ac0efc495eacc3fe83684be570f9be8d1</anchor>
+      <arglist>(VecPt3d &amp;a_pts, double a_maxX)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static void</type>
