@@ -19,7 +19,6 @@ var searchData=
   ['xmstampendcapimpl',['XmStampEndCapImpl',['../classxms_1_1_xm_stamp_end_cap_impl.html',1,'xms']]],
   ['xmstamper',['XmStamper',['../classxms_1_1_xm_stamper.html',1,'xms']]],
   ['xmstamper3dpts',['XmStamper3dPts',['../classxms_1_1_xm_stamper3d_pts.html',1,'xms']]],
-  ['xmstampercenterlineprofile',['XmStamperCenterlineProfile',['../classxms_1_1_xm_stamper_centerline_profile.html',1,'xms']]],
   ['xmstamperendcap',['XmStamperEndCap',['../classxms_1_1_xm_stamper_end_cap.html',1,'xms']]],
   ['xmstamperimpl',['XmStamperImpl',['../classxms_1_1_xm_stamper_impl.html',1,'xms']]],
   ['xmstamperio',['XmStamperIo',['../classxms_1_1_xm_stamper_io.html',1,'xms']]],

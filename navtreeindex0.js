@@ -101,7 +101,6 @@ var NAVTREEINDEX0 =
 "class_xm_stamp_intermediate_tests.html#ae5e957cfc66abd7ac56239ce98c15344":[3,0,3,17],
 "class_xm_stamp_intermediate_tests.html#af99b6e13d35830f54dcf08ac0577e08a":[3,0,3,9],
 "class_xm_stamp_interp_cross_section_unit_tests.html":[3,0,4],
-"class_xm_stamp_interp_cross_section_unit_tests.html#a45bcd8324f90fa1d365b3c3baa85c354":[3,0,4,3],
 "class_xm_stamp_interp_cross_section_unit_tests.html#a7f515ac6a6da61b7c652f97932c68dbf":[3,0,4,0],
 "class_xm_stamp_interp_cross_section_unit_tests.html#a96bdd1ea3b29220d8ae8c28ef645ebc3":[3,0,4,2],
 "class_xm_stamp_interp_cross_section_unit_tests.html#aa8ce210c70282e15c359e7811384c5b0":[3,0,4,1],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "classxms_1_1_xm_stamp_end_cap_impl.html#a11a1804b0ae96ebdae0c07a3b9db2e75":[3,0,0,15,0],
 "classxms_1_1_xm_stamp_end_cap_impl.html#a14a501bfe10b0eaa3b4ee65b96cd18d2":[3,0,0,15,7],
 "classxms_1_1_xm_stamp_end_cap_impl.html#a1864c8917bb4e67272e28eb173c10e66":[3,0,0,15,10],
-"classxms_1_1_xm_stamp_end_cap_impl.html#a193bafbbea6d5aa8df6957f045b91e15":[3,0,0,15,2]
+"classxms_1_1_xm_stamp_end_cap_impl.html#a193bafbbea6d5aa8df6957f045b91e15":[3,0,0,15,2],
+"classxms_1_1_xm_stamp_end_cap_impl.html#a2dc18fb71ae82ea4804bd2561966b7a5":[3,0,0,15,3]
 };

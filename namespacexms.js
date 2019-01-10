@@ -18,7 +18,6 @@ var namespacexms =
     [ "XmStampEndCapImpl", "classxms_1_1_xm_stamp_end_cap_impl.html", "classxms_1_1_xm_stamp_end_cap_impl" ],
     [ "XmStamper", "classxms_1_1_xm_stamper.html", "classxms_1_1_xm_stamper" ],
     [ "XmStamper3dPts", "classxms_1_1_xm_stamper3d_pts.html", "classxms_1_1_xm_stamper3d_pts" ],
-    [ "XmStamperCenterlineProfile", "classxms_1_1_xm_stamper_centerline_profile.html", "classxms_1_1_xm_stamper_centerline_profile" ],
     [ "XmStamperEndCap", "classxms_1_1_xm_stamper_end_cap.html", "classxms_1_1_xm_stamper_end_cap" ],
     [ "XmStamperImpl", "classxms_1_1_xm_stamper_impl.html", "classxms_1_1_xm_stamper_impl" ],
     [ "XmStamperIo", "classxms_1_1_xm_stamper_io.html", "classxms_1_1_xm_stamper_io" ],

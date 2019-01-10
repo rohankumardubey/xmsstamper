@@ -32,7 +32,6 @@ var hierarchy =
       [ "xms::XmStamperImpl", "classxms_1_1_xm_stamper_impl.html", null ]
     ] ],
     [ "xms::XmStamper3dPts", "classxms_1_1_xm_stamper3d_pts.html", null ],
-    [ "xms::XmStamperCenterlineProfile", "classxms_1_1_xm_stamper_centerline_profile.html", null ],
     [ "xms::XmStamperEndCap", "classxms_1_1_xm_stamper_end_cap.html", null ],
     [ "xms::XmStamperIo", "classxms_1_1_xm_stamper_io.html", null ],
     [ "xms::XmStampInterpCrossSection", "classxms_1_1_xm_stamp_interp_cross_section.html", [

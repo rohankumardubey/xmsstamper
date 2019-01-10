@@ -119,9 +119,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a3dbf4f6f6ae35c1aeb8c3c03ac1d7310"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxms_1_1_xm_stamp_interp_cross_section_impl.html#a3dbf4f6f6ae35c1aeb8c3c03ac1d7310">InterpCs</a> (<a class="el" href="classxms_1_1_xm_stamp_cross_section.html">XmStampCrossSection</a> &amp;a_prev, <a class="el" href="classxms_1_1_xm_stamp_cross_section.html">XmStampCrossSection</a> &amp;a_next, double a_percent, <a class="el" href="classxms_1_1_xm_stamp_cross_section.html">XmStampCrossSection</a> &amp;a_cs) override</td></tr>
 <tr class="memdesc:a3dbf4f6f6ae35c1aeb8c3c03ac1d7310"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interpolates a cross section from 2 other cross sections using a weight (a_percent)  <a href="#a3dbf4f6f6ae35c1aeb8c3c03ac1d7310">More...</a><br /></td></tr>
 <tr class="separator:a3dbf4f6f6ae35c1aeb8c3c03ac1d7310"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a993d75e03b408a10cf23404837e183fe"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxms_1_1_xm_stamp_interp_cross_section_impl.html#a993d75e03b408a10cf23404837e183fe">InterpFromCenterlineProfile</a> (<a class="el" href="classxms_1_1_xm_stamper_io.html">XmStamperIo</a> &amp;a_io, <a class="el" href="classxms_1_1_xm_stamper_centerline_profile.html">XmStamperCenterlineProfile</a> &amp;a_profile) override</td></tr>
-<tr class="memdesc:a993d75e03b408a10cf23404837e183fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts <a class="el" href="classxms_1_1_xm_stamper_centerline_profile.html" title="Cross section for stamping using distance rather than polyline index. ">XmStamperCenterlineProfile</a> class to <a class="el" href="classxms_1_1_xm_stamper_io.html" title="Stamping inputs/outputs class. ">XmStamperIo</a> class inputs.  <a href="#a993d75e03b408a10cf23404837e183fe">More...</a><br /></td></tr>
-<tr class="separator:a993d75e03b408a10cf23404837e183fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a809868a193aa7b1b83c4a5858beecb8a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxms_1_1_xm_stamp_interp_cross_section_impl.html#a809868a193aa7b1b83c4a5858beecb8a">FindFirstValidCrossSection</a> ()</td></tr>
 <tr class="memdesc:a809868a193aa7b1b83c4a5858beecb8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the first valid cross section in the inputs.  <a href="#a809868a193aa7b1b83c4a5858beecb8a">More...</a><br /></td></tr>
 <tr class="separator:a809868a193aa7b1b83c4a5858beecb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,9 +213,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00416">416</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00339">339</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00381">InterpPts()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00304">InterpPts()</a>.</p>
 
 </div>
 </div>
@@ -240,11 +237,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Finds the first valid cross section in the inputs. </p>
 <dl class="section return"><dt>Returns</dt><dd>The index to the first valid cross section in the inputs. -1 is returned if no valid cross sections exist. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00173">173</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00171">171</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00201">FindNextValidCrossSection()</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00199">FindNextValidCrossSection()</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00102">InterpMissingCrossSections()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00161">ValidCrossSectionsExist()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00100">InterpMissingCrossSections()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00159">ValidCrossSectionsExist()</a>.</p>
 
 </div>
 </div>
@@ -266,11 +263,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Finds the last valid cross section in the inputs. </p>
 <dl class="section return"><dt>Returns</dt><dd>The index to the last valid cross section in the inputs. -1 is returned if no valid cross sections exist. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00182">182</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00180">180</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamper_io_8h_source.html#l00205">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00060">m_io</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamper_io_8h_source.html#l00193">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00058">m_io</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00102">InterpMissingCrossSections()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00100">InterpMissingCrossSections()</a>.</p>
 
 </div>
 </div>
@@ -299,11 +296,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The index to the next valid cross section in the inputs. If none exists then -1 is returned. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00201">201</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00199">199</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamper_io_8h_source.html#l00205">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00060">m_io</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamper_io_8h_source.html#l00193">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00058">m_io</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00173">FindFirstValidCrossSection()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00102">InterpMissingCrossSections()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00171">FindFirstValidCrossSection()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00100">InterpMissingCrossSections()</a>.</p>
 
 </div>
 </div>
@@ -364,11 +361,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00243">243</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00241">241</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00381">InterpPts()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00158">xms::XmStampCrossSection::m_idxLeftShoulder</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00162">xms::XmStampCrossSection::m_idxRightShoulder</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00156">xms::XmStampCrossSection::m_left</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00157">xms::XmStampCrossSection::m_leftMax</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00160">xms::XmStampCrossSection::m_right</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00161">xms::XmStampCrossSection::m_rightMax</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/_xm_error_8h.html#a3dc5059ab2a87bfa4876b29ca6567376">XM_ENSURE_TRUE</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00304">InterpPts()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00158">xms::XmStampCrossSection::m_idxLeftShoulder</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00162">xms::XmStampCrossSection::m_idxRightShoulder</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00156">xms::XmStampCrossSection::m_left</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00157">xms::XmStampCrossSection::m_leftMax</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00160">xms::XmStampCrossSection::m_right</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00161">xms::XmStampCrossSection::m_rightMax</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/_xm_error_8h.html#a3dc5059ab2a87bfa4876b29ca6567376">XM_ENSURE_TRUE</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00226">InterpCs()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00296">InterpFromCenterlineProfile()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00102">InterpMissingCrossSections()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00224">InterpCs()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00100">InterpMissingCrossSections()</a>.</p>
 
 </div>
 </div>
@@ -421,60 +418,9 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00226">226</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00224">224</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00243">InterpCs()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00205">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00060">m_io</a>.</p>
-
-</div>
-</div>
-<a id="a993d75e03b408a10cf23404837e183fe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a993d75e03b408a10cf23404837e183fe">&#9670;&nbsp;</a></span>InterpFromCenterlineProfile()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void xms::XmStampInterpCrossSectionImpl::InterpFromCenterlineProfile </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxms_1_1_xm_stamper_io.html">XmStamperIo</a> &amp;&#160;</td>
-          <td class="paramname"><em>a_io</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxms_1_1_xm_stamper_centerline_profile.html">XmStamperCenterlineProfile</a> &amp;&#160;</td>
-          <td class="paramname"><em>a_profile</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Converts <a class="el" href="classxms_1_1_xm_stamper_centerline_profile.html" title="Cross section for stamping using distance rather than polyline index. ">XmStamperCenterlineProfile</a> class to <a class="el" href="classxms_1_1_xm_stamper_io.html" title="Stamping inputs/outputs class. ">XmStamperIo</a> class inputs. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramdir">[in,out]</td><td class="paramname">a_io</td><td>The stamping input/output class </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">a_profile</td><td>The stamping centerline profile class </td></tr>
-  </table>
-  </dd>
-</dl>
-
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00296">296</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
-
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00243">InterpCs()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00200">xms::XmStamperIo::m_centerLine</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00176">xms::XmStamperCenterlineProfile::m_cs</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00205">xms::XmStamperIo::m_cs</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00174">xms::XmStamperCenterlineProfile::m_distance</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00175">xms::XmStamperCenterlineProfile::m_elevation</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/math_8h.html#a98aa9ce14bd15da1a7bf8967c9fe7859">Mdist()</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a3870f08593cabc47fd5d213ea1c0898a">xms::Pt3&lt; T &gt;::x</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/_xm_error_8h.html#a5c82c2e747cf320d95402dfdf2fdba85">XM_ASSERT</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/_xm_error_8h.html#a3dc5059ab2a87bfa4876b29ca6567376">XM_ENSURE_TRUE</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a218217ff3405493c7b6dce94935f1290">xms::Pt3&lt; T &gt;::y</a>.</p>
-
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00650">XmStampInterpCrossSectionUnitTests::testInterpFromCenterlineProfile0()</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00241">InterpCs()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00193">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00058">m_io</a>.</p>
 
 </div>
 </div>
@@ -510,11 +456,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00102">102</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00100">100</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00173">FindFirstValidCrossSection()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00182">FindLastValidCrossSection()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00201">FindNextValidCrossSection()</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmsinterp.tag:https://aquaveo.github.io/xmsinterp/" href="https://aquaveo.github.io/xmsinterp/geoms_8cpp.html#a67d8975fe80c8ec9c9b424cf26e5e755">gmXyDistance()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00243">InterpCs()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00200">xms::XmStamperIo::m_centerLine</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00205">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00060">m_io</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00171">FindFirstValidCrossSection()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00180">FindLastValidCrossSection()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00199">FindNextValidCrossSection()</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmsinterp.tag:https://aquaveo.github.io/xmsinterp/" href="https://aquaveo.github.io/xmsinterp/geoms_8cpp.html#a67d8975fe80c8ec9c9b424cf26e5e755">gmXyDistance()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00241">InterpCs()</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00189">xms::XmStamperIo::m_centerLine</a>, <a class="el" href="_xm_stamper_io_8h_source.html#l00193">xms::XmStamperIo::m_cs</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00058">m_io</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00510">XmStampInterpCrossSectionUnitTests::test0()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00602">XmStampInterpCrossSectionUnitTests::test1()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00784">XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00433">XmStampInterpCrossSectionUnitTests::test0()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00525">XmStampInterpCrossSectionUnitTests::test1()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00573">XmStampInterpCrossSectionUnitTests::testCrossSectionTutorial()</a>.</p>
 
 </div>
 </div>
@@ -595,11 +541,11 @@ Additional Inherited Members</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00381">381</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00304">304</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00416">CalcTvals()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00437">PtFromT()</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a3870f08593cabc47fd5d213ea1c0898a">xms::Pt3&lt; T &gt;::x</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a218217ff3405493c7b6dce94935f1290">xms::Pt3&lt; T &gt;::y</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00339">CalcTvals()</a>, <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00360">PtFromT()</a>, <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a3870f08593cabc47fd5d213ea1c0898a">xms::Pt3&lt; T &gt;::x</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a218217ff3405493c7b6dce94935f1290">xms::Pt3&lt; T &gt;::y</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00243">InterpCs()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00241">InterpCs()</a>.</p>
 
 </div>
 </div>
@@ -653,11 +599,11 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the x,y location of the point at a_tval </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00437">437</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00360">360</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
 <p class="reference">References <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a3870f08593cabc47fd5d213ea1c0898a">xms::Pt3&lt; T &gt;::x</a>, and <a class="elRef" doxygen="/home/conan/Doxygen/xmscore.tag:https://aquaveo.github.io/xmscore/" href="https://aquaveo.github.io/xmscore/classxms_1_1_pt3.html#a218217ff3405493c7b6dce94935f1290">xms::Pt3&lt; T &gt;::y</a>.</p>
 
-<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00381">InterpPts()</a>.</p>
+<p class="reference">Referenced by <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00304">InterpPts()</a>.</p>
 
 </div>
 </div>
@@ -694,9 +640,9 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if there are any valid cross sections </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00161">161</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00159">159</a> of file <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html">XmStampInterpCrossSection.cpp</a>.</p>
 
-<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00173">FindFirstValidCrossSection()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00060">m_io</a>.</p>
+<p class="reference">References <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00171">FindFirstValidCrossSection()</a>, and <a class="el" href="_xm_stamp_interp_cross_section_8cpp_source.html#l00058">m_io</a>.</p>
 
 </div>
 </div>
@@ -709,7 +655,7 @@ Additional Inherited Members</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespacexms.html">xms</a></li><li class="navelem"><a class="el" href="classxms_1_1_xm_stamp_interp_cross_section_impl.html">XmStampInterpCrossSectionImpl</a></li>
-    <li class="footer">Generated on Fri Dec 7 2018 16:03:59 for xmsstamper by
+    <li class="footer">Generated on Thu Jan 10 2019 22:53:12 for xmsstamper by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>

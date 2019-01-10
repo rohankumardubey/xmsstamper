@@ -19,7 +19,6 @@ var dir_c54185dc121d37166deed2db8e71f8d3 =
       [ "XmGuidebank", "classxms_1_1_xm_guidebank.html", "classxms_1_1_xm_guidebank" ],
       [ "XmStamperEndCap", "classxms_1_1_xm_stamper_end_cap.html", "classxms_1_1_xm_stamper_end_cap" ],
       [ "XmStampCrossSection", "classxms_1_1_xm_stamp_cross_section.html", "classxms_1_1_xm_stamp_cross_section" ],
-      [ "XmStamperCenterlineProfile", "classxms_1_1_xm_stamper_centerline_profile.html", "classxms_1_1_xm_stamper_centerline_profile" ],
       [ "XmStamperIo", "classxms_1_1_xm_stamper_io.html", "classxms_1_1_xm_stamper_io" ]
     ] ]
 ];

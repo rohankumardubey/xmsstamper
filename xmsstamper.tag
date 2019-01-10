@@ -254,7 +254,6 @@
     <class kind="class">xms::XmGuidebank</class>
     <class kind="class">xms::XmStamperEndCap</class>
     <class kind="class">xms::XmStampCrossSection</class>
-    <class kind="class">xms::XmStamperCenterlineProfile</class>
     <class kind="class">xms::XmStamperIo</class>
     <namespace>xms</namespace>
   </compound>
@@ -1317,31 +1316,6 @@
     </member>
   </compound>
   <compound kind="class">
-    <name>xms::XmStamperCenterlineProfile</name>
-    <filename>classxms_1_1_xm_stamper_centerline_profile.html</filename>
-    <member kind="variable">
-      <type>VecDbl</type>
-      <name>m_distance</name>
-      <anchorfile>classxms_1_1_xm_stamper_centerline_profile.html</anchorfile>
-      <anchor>ab295c90cde5e263560934ed8c476faea</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>VecDbl</type>
-      <name>m_elevation</name>
-      <anchorfile>classxms_1_1_xm_stamper_centerline_profile.html</anchorfile>
-      <anchor>ad7dbe38a8af8d8cd7a0b0f07fec17899</anchor>
-      <arglist></arglist>
-    </member>
-    <member kind="variable">
-      <type>std::vector&lt; XmStampCrossSection &gt;</type>
-      <name>m_cs</name>
-      <anchorfile>classxms_1_1_xm_stamper_centerline_profile.html</anchorfile>
-      <anchor>a71fe711393cd563ad2a258bd0b8e52f0</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="class">
     <name>xms::XmStamperEndCap</name>
     <filename>classxms_1_1_xm_stamper_end_cap.html</filename>
     <member kind="function">
@@ -1404,13 +1378,6 @@
       <anchorfile>classxms_1_1_xm_stamper_impl.html</anchorfile>
       <anchor>a57a125112766e6dfce3107eb8481fb38</anchor>
       <arglist>(XmStamperIo &amp;a_io) override</arglist>
-    </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>FillStamperIoFromCenterlineProfile</name>
-      <anchorfile>classxms_1_1_xm_stamper_impl.html</anchorfile>
-      <anchor>a4b2c602905ac35770661b8d0517bc1a2</anchor>
-      <arglist>(XmStamperIo &amp;a_io, XmStamperCenterlineProfile &amp;a_profile) override</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual const VecPt3d &amp;</type>
@@ -1989,13 +1956,6 @@
       <anchor>a3dbf4f6f6ae35c1aeb8c3c03ac1d7310</anchor>
       <arglist>(XmStampCrossSection &amp;a_prev, XmStampCrossSection &amp;a_next, double a_percent, XmStampCrossSection &amp;a_cs) override</arglist>
     </member>
-    <member kind="function" virtualness="virtual">
-      <type>virtual void</type>
-      <name>InterpFromCenterlineProfile</name>
-      <anchorfile>classxms_1_1_xm_stamp_interp_cross_section_impl.html</anchorfile>
-      <anchor>a993d75e03b408a10cf23404837e183fe</anchor>
-      <arglist>(XmStamperIo &amp;a_io, XmStamperCenterlineProfile &amp;a_profile) override</arglist>
-    </member>
     <member kind="function">
       <type>int</type>
       <name>FindFirstValidCrossSection</name>
@@ -2075,13 +2035,6 @@
       <name>test1</name>
       <anchorfile>class_xm_stamp_interp_cross_section_unit_tests.html</anchorfile>
       <anchor>aa8ce210c70282e15c359e7811384c5b0</anchor>
-      <arglist>()</arglist>
-    </member>
-    <member kind="function">
-      <type>void</type>
-      <name>testInterpFromCenterlineProfile0</name>
-      <anchorfile>class_xm_stamp_interp_cross_section_unit_tests.html</anchorfile>
-      <anchor>a45bcd8324f90fa1d365b3c3baa85c354</anchor>
       <arglist>()</arglist>
     </member>
     <member kind="function">
@@ -2297,7 +2250,6 @@
     <class kind="class">xms::XmStampEndCapImpl</class>
     <class kind="class">xms::XmStamper</class>
     <class kind="class">xms::XmStamper3dPts</class>
-    <class kind="class">xms::XmStamperCenterlineProfile</class>
     <class kind="class">xms::XmStamperEndCap</class>
     <class kind="class">xms::XmStamperImpl</class>
     <class kind="class">xms::XmStamperIo</class>

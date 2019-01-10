@@ -12,7 +12,6 @@ var classxms_1_1_xm_stamper_impl =
     [ "CreateOutputs", "classxms_1_1_xm_stamper_impl.html#aad12b1b9387ed4298f44a6aed6bc61d6", null ],
     [ "DecomposeCenterLine", "classxms_1_1_xm_stamper_impl.html#a70ab2ca03b37381e774b6fb07c12622c", null ],
     [ "DoStamp", "classxms_1_1_xm_stamper_impl.html#a57a125112766e6dfce3107eb8481fb38", null ],
-    [ "FillStamperIoFromCenterlineProfile", "classxms_1_1_xm_stamper_impl.html#a4b2c602905ac35770661b8d0517bc1a2", null ],
     [ "GetBreaklineTypes", "classxms_1_1_xm_stamper_impl.html#ad7b668f94c94056e42277eec52ffd620", null ],
     [ "GetPoints", "classxms_1_1_xm_stamper_impl.html#a94baceb25834e1d426cb8a826b1def23", null ],
     [ "GetSegments", "classxms_1_1_xm_stamper_impl.html#a6e5412510e56af1a9ff8bd652ee58f37", null ],

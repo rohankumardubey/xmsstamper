@@ -76,7 +76,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_tut_stamping_8cpp.html",
-"classxms_1_1_xm_stamp_end_cap_impl.html#a2dc18fb71ae82ea4804bd2561966b7a5"
+"classxms_1_1_xm_stamp_end_cap_impl.html#a32afc317572fce7f4e2d75dfc3eabee9"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
