@@ -25,7 +25,7 @@ setup(
     python_requires='==3.6.*',
     name='xmsstamper',
     version=version,
-    packages=['xms.stamper'],
+    packages=['xms.stamper', 'xms.stamper.stamping', 'xms.stamper.api'],
     include_package_data=True,
     license='BSD 2-Clause License',
     description='',
