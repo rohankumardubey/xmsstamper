@@ -55,24 +55,13 @@ class XmsstamperConan(ConanFile):
 
     def requirements(self):
         """Requirements"""
-        # If building for XMS, use the older, custom boost
-        if self.options.xms and self.settings.compiler.version == "12":
-            self.requires("boost/1.60.0@aquaveo/stable")
-            self.requires("zlib/1.2.11@conan/stable")
-        elif self.settings.compiler == 'apple-clang':
-            self.requires("boost/1.74.0@aquaveo/stable")
-        else:
-            self.requires("boost/1.66.0@conan/stable")
+        self.requires("boost/1.74.0@aquaveo/stable")
+        if self.options.pybind:
+            self.requires("pybind11/2.5.0@aquaveo/testing")
 
-        # Pybind if not visual studio 2013
-        if not (self.settings.compiler == 'Visual Studio' \
-                and self.settings.compiler.version == "12") \
-                and self.options.pybind:
-            self.requires("pybind11/2.2.2@aquaveo/stable")
-
-        self.requires("xmscore/[>=3.2.3 <4.0.0]@aquaveo/stable")
-        self.requires("xmsgrid/[>=4.2.4 <5.0.0]@aquaveo/stable")
-        self.requires("xmsinterp/[>=3.1.2 <4.0.0]@aquaveo/stable")
+        self.requires("xmscore/[>=4.0.0 <5.0.0]@aquaveo/testing")
+        self.requires("xmsgrid/[>=5.0.0 <6.0.0]@aquaveo/testing")
+        self.requires("xmsinterp/[>=4.0.0 <5.0.0]@aquaveo/testing")
 
     def build(self):
         cmake = CMake(self)
