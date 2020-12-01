@@ -48,7 +48,7 @@ if __name__ == "__main__":
         # pybind option
         if settings['arch'] == "x86_64" and settings['build_type'] != 'Debug':
             pybind_options = dict(options)
-            pybind_options.update({'xmsstamper:pybind': True})
+            pybind_options.update({'xmsstamper:pybind': python_target_version})
             pybind_updated_builds.append([settings, pybind_options, env_vars, build_requires])
 
         pybind_updated_builds.append([settings, options, env_vars, build_requires])
@@ -57,7 +57,7 @@ if __name__ == "__main__":
     testing_updated_builds = []
     for settings, options, env_vars, build_requires, reference in builder.items:
         # testing option
-        if not options.get('xmsstamper:xms', False) and not options.get('xmsstamper:pybind', False):
+        if not options.get('xmsstamper:xms', False) and not options.get('xmsstamper:pybind', None):
             testing_options = dict(options)
             testing_options.update({'xmsstamper:testing': True})
             testing_updated_builds.append([settings, testing_options, env_vars, build_requires])
